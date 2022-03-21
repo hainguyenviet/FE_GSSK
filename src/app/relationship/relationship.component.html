@@ -1,0 +1,53 @@
+<form>
+    <h1>THÔNG TIN THÂN NHÂN</h1>
+    <div class="radio-group">
+        <mat-form-field class="margin-right-40">
+            <mat-label>Thân nhân</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of relationship" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="margin-right-40">
+            <mat-label>Họ và tên</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+
+        <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1" class="margin-right-40">Nam</mat-radio-button>
+            <mat-radio-button value="2">Nữ</mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field class="">
+            <mat-label>Tuổi hiện tại</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+    </div>
+    <div>
+        <label class="margin-right-10">Bệnh chính trong danh sách kể trên (Nếu Có)</label>
+        <mat-form-field class="">
+            <input type="text" matInput />
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field class="margin-right-40">
+            <mat-label>Tuổi lúc chuẩn đoán</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+        <mat-form-field class="">
+            <mat-label>Tuổi lúc tử vong</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+    </div>
+    <div class="height-80">
+        <mat-form-field class="margin-right-40 width-300">
+            <mat-label>Nguyên nhân tử vong</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let option of causeOfdeath" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</form>

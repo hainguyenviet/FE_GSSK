@@ -1,0 +1,118 @@
+<form class="person-form">
+    <section>
+        <h1>HỒ SƠ BỆNH LÝ</h1>
+        <div>
+            <mat-label class="margin-right-40">Bạn có anh em song sinh không ? </mat-label>
+            <mat-checkbox class=" margin-right-40">Có</mat-checkbox>
+            <mat-checkbox class="margin-right-40">Không</mat-checkbox>
+        </div>
+        <div class="margin-top-10">
+            <mat-label class="margin-right-40">Bạn có được nhận nuôi không ? </mat-label>
+            <mat-checkbox class="margin-right-40">Có</mat-checkbox>
+            <mat-checkbox>Không</mat-checkbox>
+        </div>
+        <div>
+            <label class="margin-right-10">chiều cao</label>
+            <mat-form-field class="margin-right-10">
+                <input matInput />
+            </mat-form-field>
+            <label class="margin-right-10">cân nặng</label>
+            <mat-form-field>
+                <input matInput />
+            </mat-form-field>
+        </div>
+        <div class="">
+            <mat-label class="margin-right-40">Bố mẹ có quan hệ họ hàng không ? </mat-label>
+            <mat-checkbox class="margin-right-40">Có</mat-checkbox>
+            <mat-checkbox class="">Không</mat-checkbox>
+        </div>
+        <div class="margin-top-10">
+            <h2>Điền vào các mục sau nếu bạn là nữ:</h2>
+            <div>
+                <label class="margin-right-10"> Tuổi có kinh đầu: </label>
+                <mat-form-field class="margin-right-10">
+                    <input type="text" matInput />
+                </mat-form-field>
+                <label class="margin-right-10">Khoảng thời gian dùng thuốc tránh thai: </label>
+                <mat-form-field class="margin-right-10 width-100">
+                    <input type="text" matInput class="width-100" />
+                </mat-form-field>
+            </div>
+            <div>
+                <label class="margin-right-10">Số lần mang thai: </label>
+                <mat-form-field class="margin-right-10">
+                    <input type="text" matInput />
+                </mat-form-field>
+                <label class="margin-right-10">Tuổi có con đầu tiên: </label>
+                <mat-form-field class="margin-right-10">
+                    <input type="text" matInput />
+                </mat-form-field>
+            </div>
+
+        </div>
+
+        <div>
+            <h2>Điền vào các mục sau cho cả nam và nữ:</h2>
+            <div>
+                <mat-label class="margin-right-40">Bạn có hút thuốc không ? </mat-label>
+                <mat-checkbox class="margin-right-40">Có</mat-checkbox>
+                <mat-checkbox class="margin-right-40">Không</mat-checkbox>
+            </div>
+
+
+            <label class="margin-right-10">Từng hút: </label>
+            <mat-form-field class="margin-right-10">
+                <input type="text" matInput />
+            </mat-form-field>
+            <label class="margin-right-10">Bỏ thuốc năm nào: </label>
+            <mat-form-field class="margin-right-10">
+                <input type="text" matInput />
+            </mat-form-field>
+            <label class="margin-right-10"> Mỗi tuần bạn uống bao nhiêu ly rượu ? </label>
+            <mat-form-field class="margin-right-10 width-100">
+                <input type="text" matInput />
+            </mat-form-field>
+            <label class="margin-right-10"> Một tuần bạn tập thể dục bao nhiêu lần ? </label>
+            <mat-form-field class="margin-right-10 width-100">
+                <input type="text" matInput />
+            </mat-form-field>
+            <br>
+            <label class="margin-right-10"> Nếu có, bạn tập bộ môn gì ? </label>
+            <mat-form-field class="margin-right-10">
+                <input type="text" matInput />
+            </mat-form-field>
+        </div>
+    </section>
+    <section>
+        <h1>Thông tin sức khỏe</h1>
+        <p>Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu cần.</p>
+        <div>
+            <mat-form-field class="example-full-width margin-right-40">
+                <mat-label>Nhóm bệnh</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let option of illNessGroup" [value]="option">
+                        {{ option.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width margin-right-10">
+                <mat-label>Tên Bệnh</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let option of ill" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+            <mat-form-field class="margin-right-10 width-100">
+                <input type="text" matInput />
+            </mat-form-field>
+        </div>
+
+
+
+    </section>
+
+</form>
