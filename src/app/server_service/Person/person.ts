@@ -3,7 +3,7 @@ export class person {
   firstName: string;
   lastName: string;
   phone: number;
-  idCard: number;
+  idCard: string;
   date: Date;
   mail: string;
 
@@ -12,7 +12,7 @@ export class person {
     firstName: string,
     lastName: string,
     phone: number,
-    idCard: number,
+    idCard: string,
     date: Date,
     mail: string
   ) {
