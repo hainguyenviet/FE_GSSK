@@ -1,0 +1,64 @@
+
+    <h1>THÔNG TIN THÂN NHÂN</h1>
+    <div class="radio-group" *ngFor="let obj of list_of_relationship; let i = index">
+        <mat-form-field class="margin-right-40">
+            <mat-label>Thân nhân</mat-label>
+            <mat-select [(ngModel)]="list_of_relationship[i].relationship"
+                            (selectionChange)="selectRelation(list_of_relationship[i].relationship)">
+                <mat-option *ngFor="let option of relationships" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    
+    
+        <mat-form-field class="margin-right-40">
+            <mat-label>Họ và tên</mat-label>
+            <input type="text" matInput name="ten" [(ngModel)] = "list_of_relationship[i].firstName"  />
+        </mat-form-field>
+
+     
+        <mat-radio-group aria-label="Select an option" [(ngModel)] = "list_of_relationship[i].sex" >
+            <mat-radio-button class="margin-right-40"  *ngFor="let sex of list_of_sex" [value]="sex">
+                {{sex}}
+            </mat-radio-button>
+        </mat-radio-group>
+        
+        <mat-form-field class="margin-right-40">
+            <mat-label> Số CMND/CCCD/Passport  </mat-label>
+            <input  matInput placeholder="Số CMND/CCCD/Passport"  />
+        </mat-form-field>
+    
+
+        <mat-form-field class="margin-right-40">
+            <mat-label>Tuổi hiện tại</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+
+        <mat-form-field class="margin-right-40" >
+            <mat-label>Thứ tự trong gia đình</mat-label>
+            <mat-select name="selected_orderFamily" [(ngModel)]="list_of_relationship[i].orderFamily" >
+                <mat-option *ngFor="let order of orderFamily_option" [value]="order">
+                    {{ order}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field  *ngIf="list_of_relationship[i].orderFamily === 'Khác'">
+            <mat-label>Vd: Con tư, con năm,...</mat-label>
+            <input type="text" matInput />
+        </mat-form-field>
+
+        <mat-form-field class="margin-right-40" *ngIf="list_of_relationship[i].relationship === 'Anh/em họ' || list_of_relationship[i].relationship === 'Chị/em họ' ">
+            <mat-label>Con của</mat-label>
+            <mat-select  >
+                <mat-option *ngFor="let option of list_of_parent_nephew" [value]="option">
+                    {{ option}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <button mat-raised-button color="success" (click)="addNewRelation()" class="margin-right-80">add</button>
+    <button mat-raised-button color="warn" (click)="removeRelation()" class="margin-right-20">remove</button>
