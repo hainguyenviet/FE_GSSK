@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { relationship } from './relationship.model';
 import { illness } from '../illness/illness';
 import { IllnessComponent } from '../illness/illness.component';
+
 @Component({
   selector: 'app-relationship',
   templateUrl: './relationship.component.html',
@@ -10,15 +11,12 @@ import { IllnessComponent } from '../illness/illness.component';
 })
 export class RelationshipComponent implements OnInit {
 
- 
-  relationships: any[] = ['Cha', 'Mẹ', 'Anh ruột', 'Em ruột', 'Chị ruột',
-  'Cậu','Dì', 'Cô', 'Chú',
-  'Ông ngoại','Bà ngoại', 'Ông nội', 'Bà nội',
-    'Con ruột' 
+  relationship: any[] = [
+    'con ruột', 'anh ruột', 'em ruột', 'chị ruột', 'cô', 'dì', 'chú','ông ngoại','bà ngoại', 'cha','mẹ','ông nội', 'bà nội'
   ]
-  list_of_sex: string[] = ['Nam', 'Nữ']
-  orderFamily_option: any[] = ['Con cả', 'Con hai', 'Con ba', 'Khác']
+
   causeOfdeath: any[] = ['Tai nạn','Ung thư','Đái tháo đường','Bệnh tim mạch','Bệnh hô hấp','Nhiễm trùng','Đột quỵ','Đột tử trẻ sơ sinh (Sudant infant death syndrome – SIDS)','không có','khác']
+
   index_of_relationship = 0
   index_of_ill = 0
   list_of_parent_nephew: any[] = []
@@ -36,6 +34,7 @@ export class RelationshipComponent implements OnInit {
   list_of_ill: string[] = [""]
   constructor() { 
   }
+  constructor() { }
 
   ngOnInit(): void {
   }

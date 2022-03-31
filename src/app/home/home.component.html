@@ -1,0 +1,23 @@
+<app-progress #progress (stateChange)="onStateChange($event)">
+    <app-progress-step>
+
+        <app-person></app-person>
+
+        <button progressStepPrev mat-raised-button color="accent" (click)="goNext(progress)">next</button>
+    </app-progress-step>
+    <app-progress-step class="padding-bottom-50 height">
+
+        <app-illness></app-illness>
+
+        <button progressStepPrev mat-raised-button color="accent" (click)="goPrev(progress)" class="margin-right-10">prev</button>
+        <button progressStepNext mat-raised-button color="primary" (click)="goNext(progress)">next</button>
+    </app-progress-step>
+    <app-progress-step>
+
+        <app-relationship></app-relationship>
+
+        <button progressStepNext mat-raised-button color="primary" (click)="goPrev(progress)" class="margin-right-10">prev</button>
+        <button progressStepNext mat-raised-button color="basic">save</button>
+        <button progressStepNext mat-raised-button color="basic" [routerLink]="['/genogram']">Phân Tích</button>
+    </app-progress-step>
+</app-progress>
