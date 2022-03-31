@@ -56,7 +56,11 @@ export class RelationshipComponent implements OnInit {
 
 
   removeRelation() {
-    this.list_of_relationship.pop()
+    if (this.list_of_relationship.length > 1)
+    {
+      this.list_of_relationship.pop()
+    }
+    
   }
 
   selectRelation(value: string){
