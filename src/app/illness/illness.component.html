@@ -86,12 +86,12 @@
     <section>
         <h1>Thông tin sức khỏe</h1>
         <p>Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu cần.</p>
-        <div>
+        <div *ngFor="let obj of listOfIllNess; let i = index">
             <mat-form-field class="example-full-width margin-right-40">
                 <mat-label>Nhóm bệnh</mat-label>
                 <mat-select>
                     <mat-option *ngFor="let option of illNessGroup" [value]="option">
-                        {{ option.name }}
+                        {{ option }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -109,8 +109,8 @@
             <mat-form-field class="margin-right-10 width-100">
                 <input type="text" matInput />
             </mat-form-field>
+            <button (click)="addNewRelation()" mat-mini-fab>+</button>
         </div>
-
 
 
     </section>

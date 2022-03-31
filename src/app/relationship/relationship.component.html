@@ -1,53 +1,97 @@
 <form>
-    <h1>THÔNG TIN THÂN NHÂN</h1>
-    <div class="radio-group">
-        <mat-form-field class="margin-right-40">
-            <mat-label>Thân nhân</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let option of relationship" [value]="option">
-                    {{ option }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+  <h1>THÔNG TIN THÂN NHÂN</h1>
+  <div class="radio-group" *ngFor="let obj of list_of_relationship; let i = index">
+      <h1>Thông tin cơ bản</h1>
+      <mat-form-field class="margin-right-40">
+          <mat-label>Thân nhân</mat-label>
+          <mat-select [(ngModel)]="list_of_relationship[i].relationship"
+                          (selectionChange)="selectRelation(list_of_relationship[i].relationship)">
+              <mat-option *ngFor="let option of relationships" [value]="option">
+                  {{ option }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
 
-        <mat-form-field class="margin-right-40">
-            <mat-label>Họ và tên</mat-label>
-            <input type="text" matInput />
-        </mat-form-field>
 
-        <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1" class="margin-right-40">Nam</mat-radio-button>
-            <mat-radio-button value="2">Nữ</mat-radio-button>
-        </mat-radio-group>
-        <mat-form-field class="">
-            <mat-label>Tuổi hiện tại</mat-label>
-            <input type="text" matInput />
-        </mat-form-field>
-    </div>
-    <div>
-        <label class="margin-right-10">Bệnh chính trong danh sách kể trên (Nếu Có)</label>
-        <mat-form-field class="">
-            <input type="text" matInput />
-        </mat-form-field>
-    </div>
-    <div>
-        <mat-form-field class="margin-right-40">
-            <mat-label>Tuổi lúc chuẩn đoán</mat-label>
-            <input type="text" matInput />
-        </mat-form-field>
-        <mat-form-field class="">
-            <mat-label>Tuổi lúc tử vong</mat-label>
-            <input type="text" matInput />
-        </mat-form-field>
-    </div>
-    <div class="height-80">
-        <mat-form-field class="margin-right-40 width-300">
-            <mat-label>Nguyên nhân tử vong</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let option of causeOfdeath" [value]="option">
-                    {{ option }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+
+      <mat-form-field class="margin-right-40" >
+          <mat-label>Họ và tên</mat-label>
+          <input type="text" matInput name="ten" [(ngModel)] = "list_of_relationship[i].firstName"/>
+      </mat-form-field>
+
+
+      <mat-radio-group aria-label="Select an option" [(ngModel)] = "list_of_relationship[i].sex" >
+          <mat-radio-button class="margin-right-40"  *ngFor="let sex of list_of_sex" [value]="sex">
+              {{sex}}
+          </mat-radio-button>
+      </mat-radio-group>
+
+      <mat-form-field class="margin-right-40">
+          <mat-label> Số CMND/CCCD/Passport  </mat-label>
+          <input  matInput placeholder="Số CMND/CCCD/Passport"  />
+      </mat-form-field>
+
+
+      <mat-form-field class="margin-right-40">
+          <mat-label>Tuổi hiện tại</mat-label>
+          <input class="width-100" type="text" matInput />
+      </mat-form-field>
+
+      <mat-form-field class="margin-right-10" >
+          <mat-label>Thứ tự trong gia đình</mat-label>
+          <mat-select name="selected_orderFamily" [(ngModel)]="list_of_relationship[i].orderFamily" >
+              <mat-option *ngFor="let order of orderFamily_option" [value]="order">
+                  {{ order}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <mat-form-field  *ngIf="list_of_relationship[i].orderFamily === 'Khác'">
+          <mat-label>Vd: Con tư, con năm,...</mat-label>
+          <input type="text" matInput />
+      </mat-form-field>
+
+      <mat-form-field class="margin-right-40" *ngIf="list_of_relationship[i].relationship === 'Anh/em họ' || list_of_relationship[i].relationship === 'Chị/em họ' ">
+          <mat-label>Con của</mat-label>
+          <mat-select  >
+              <mat-option *ngFor="let option of list_of_parent_nephew" [value]="option">
+                  {{ option}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+      <section>
+          <h1>Thông tin sức khỏe</h1>
+          <p>Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu cần.</p>
+          <!-- <button mat-raised-button color="success" (click)="addNewIll()" class="margin-right-10">+</button> -->
+          <div ngFor="let ill of list_of_ill; let ind = index">
+              <mat-form-field class="example-full-width margin-right-40">
+                  <mat-label>Nhóm bệnh</mat-label>
+                  <mat-select >
+                      <mat-option *ngFor="let option of illNessGroup" [value]="option">
+                          {{ option.name }}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="example-full-width margin-right-10">
+                  <mat-label>Tên Bệnh</mat-label>
+                  <mat-select >
+                      <mat-option *ngFor="let option of ill" [value]="option">
+                          {{ option }}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+              <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+              <mat-form-field class="margin-right-10 width-100">
+                  <input type="text" matInput />
+              </mat-form-field>
+          </div>
+
+      </section>
+  </div>
+  <button mat-raised-button color="success" (click)="addNewRelation()" class="margin-right-10">add</button>
+  <button mat-raised-button color="warn" (click)="removeRelation()" class="margin-right-10">remove</button>
 </form>
+

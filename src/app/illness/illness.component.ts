@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import { IllNessList } from './illness';
+import { illness } from './illness';
 
 @Component({
   selector: 'app-illness',
@@ -14,14 +13,28 @@ export class IllnessComponent implements OnInit {
   constructor() { 
     this.selectedValue = '';
   }
-  illNessGroup: IllNessList[] = [{'id': 1, 'name':'Nhóm bệnh ung thư'},{'id': 2,'name':'Nhóm bệnh huyết học'} ,{'id': 3, 'name':'Nhóm bệnh tim mạch'} ,{'id': 4, 'name':'Nhóm bệnh nội thần kinh/tâm thần'}];
+  illNessGroup: any[] = ['Nhóm bệnh ung thư','Nhóm bệnh huyết học' ,'Nhóm bệnh tim mạch','Nhóm bệnh nội thần kinh/tâm thần','Khác'];
   ill: string [] = ['Ung thư đại tràng','Parkinson','Rối loạn tăng động giảm chú ý','Động kinh','Rối loạn nhịp'];
   filteredOptions!: Observable<any[]>;
-  illNessList!: Observable<any[]>;
-
+  
+  index_of_relationship = 0
+  list_of_parent_nephew: any[] = []
+  illNessNew = new illness("","","");
+  listOfIllNess  = [{
+    illGroup:"",
+    illName: "",
+    illAge: ""
+  }];
+  
   ngOnInit() {
     
   }
 
+  addNewRelation() {
+    this.index_of_relationship += 1;
+    this.illNessNew = new illness("","","");
+    this.listOfIllNess.push(this.illNessNew)
+     
+  }
   
 }
