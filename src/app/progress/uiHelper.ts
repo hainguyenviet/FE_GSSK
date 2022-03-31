@@ -6,9 +6,9 @@ export enum UiState {
 }
 
 export enum Status {
-  PENDING = 'chờ xử lý',
-  IN_PROGRESS = 'đang xử lý',
-  COMPLETED = 'hoàn thành',
+  PENDING = 'Chờ',
+  IN_PROGRESS = 'Đang thực hiện',
+  COMPLETED = 'Hoàn tất',
 }
 
 export class UiHelper {
