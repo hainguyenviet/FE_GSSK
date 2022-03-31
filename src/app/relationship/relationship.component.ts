@@ -20,6 +20,7 @@ export class RelationshipComponent implements OnInit {
   orderFamily_option: any[] = ['Con cả', 'Con hai', 'Con ba', 'Khác']
   causeOfdeath: any[] = ['Tai nạn','Ung thư','Đái tháo đường','Bệnh tim mạch','Bệnh hô hấp','Nhiễm trùng','Đột quỵ','Đột tử trẻ sơ sinh (Sudant infant death syndrome – SIDS)','không có','khác']
   index_of_relationship = 0
+  index_of_ill = 0
   list_of_parent_nephew: any[] = []
   relation = new relationship(1,"","",2,"","","");
   list_of_relationship  = [{id: 1,
@@ -28,8 +29,11 @@ export class RelationshipComponent implements OnInit {
     idCard: 1,
     relationship: "",
     orderFamily: "",
-    sex: ""}];
+    sex: ""},];
   selected_sex = ''
+  illNessGroup: IllNessList[] = [{'id': 1, 'name':'Nhóm bệnh ung thư'},{'id': 2,'name':'Nhóm bệnh huyết học'} ,{'id': 3, 'name':'Nhóm bệnh tim mạch'} ,{'id': 4, 'name':'Nhóm bệnh nội thần kinh/tâm thần'}];
+  ill: string [] = ['Ung thư đại tràng','Parkinson','Rối loạn tăng động giảm chú ý','Động kinh','Rối loạn nhịp'];
+  list_of_ill: string[] = [""]
   constructor() { 
   }
 
@@ -38,7 +42,7 @@ export class RelationshipComponent implements OnInit {
 
   addNewRelation() {
     this.index_of_relationship += 1;
-    this.relation = new relationship(1,"","",123,"test","","");
+    this.relation = new relationship(2,"","",2,"","","");
     this.list_of_relationship.push(this.relation)
     if (this.list_of_relationship[this.index_of_relationship-1].relationship == 'Cậu' ||
         this.list_of_relationship[this.index_of_relationship-1].relationship == 'Cô'  ||
@@ -53,7 +57,9 @@ export class RelationshipComponent implements OnInit {
       this.list_of_parent_nephew.push(this.list_of_relationship[this.index_of_relationship-1].firstName);
     } 
   }
-
+  // addNewIll(){
+  //   this.index_of_ill += 1;
+  // }
 
   removeRelation() {
     if (this.list_of_relationship.length > 1)
@@ -80,5 +86,4 @@ export class RelationshipComponent implements OnInit {
       this.list_of_relationship[this.index_of_relationship].sex = 'Nam';
     }
   }
-
 }

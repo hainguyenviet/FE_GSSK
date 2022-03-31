@@ -1,3 +1,4 @@
+import { IllNessList } from "../illness/illness";
 export class relationship {
     id: number;
     firstName: string;
@@ -6,7 +7,7 @@ export class relationship {
     relationship: string
     orderFamily: string
     sex: string
-
+    
     constructor(
         id: number,
         firstName: string,
