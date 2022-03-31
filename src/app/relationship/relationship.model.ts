@@ -1,4 +1,4 @@
-import { IllNessList } from "../illness/illness";
+import { illness } from "../illness/illness";
 export class relationship {
     id: number;
     firstName: string;

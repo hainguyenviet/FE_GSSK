@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { relationship } from './relationship.model';
-import { IllNessList } from '../illness/illness';
+import { illness } from '../illness/illness';
 import { IllnessComponent } from '../illness/illness.component';
 @Component({
   selector: 'app-relationship',
