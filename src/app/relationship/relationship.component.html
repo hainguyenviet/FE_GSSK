@@ -59,35 +59,59 @@
         </mat-select>
     </mat-form-field>
 
-    <section>
+
+    <section  [formGroup]="addmoreIllRelative">
         <h1>Thông tin sức khỏe</h1>
         <p>Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu cần.</p>
-        <!-- <button mat-raised-button color="success" (click)="addNewIll()" class="margin-right-10">+</button> -->
-        <div ngFor="let ill of list_of_ill; let ind = index">
-            <mat-form-field class="example-full-width margin-right-40">
-                <mat-label>Nhóm bệnh</mat-label>
-                <mat-select >
-                    <mat-option *ngFor="let option of illNessGroup" [value]="option">
-                        {{ option.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div formArrayName="itemRowIllRelatives">
 
-            <mat-form-field class="example-full-width margin-right-10">
-                <mat-label>Tên Bệnh</mat-label>
-                <mat-select >
-                    <mat-option *ngFor="let option of ill" [value]="option">
-                        {{ option }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div *ngFor="let itemrow of itemRowIllRelatives.controls; let i=index"  [formGroupName]="i">
+                <mat-form-field class="example-full-width margin-right-40">
+                    <mat-label>Nhóm bệnh</mat-label>
+                    <mat-select formControlName="illGroup" >
+                        <mat-option *ngFor="let option of illNessGroup" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="example-full-width margin-right-10" *ngIf="itemRowIllRelatives.controls[i].value.illGroup !== 'Khác'">
+                    <mat-label>Tên Bệnh</mat-label>
+                    <mat-select formControlName="illName" >
+                        <mat-option *ngFor="let option of ill" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
-            <mat-form-field class="margin-right-10 width-100">
-                <input type="text" matInput />
-            </mat-form-field>
+                <mat-form-field  *ngIf="itemRowIllRelatives.controls[i].value.illGroup === 'Khác'">
+                    <mat-label>Tên Bệnh</mat-label>
+                    <input formControlName="illName" type="text" matInput />
+                </mat-form-field>
+    
+                <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+                <mat-form-field class="margin-right-10 width-100">
+                    <input type="text" matInput formControlName="illAge" />
+                </mat-form-field>
+                <button (click)="addNewRowIllRelative()" mat-mini-fab>+</button>
+                    <button *ngIf="itemRowIllRelatives.controls.length > 1" (click)="deleteRowIllRelative(i)" mat-mini-fab>-</button>
+                <div>
+                    <mat-label class="margin-right-40"> Đã Qua Đời </mat-label>
+                    <mat-checkbox class=" margin-right-40" formControlName="dead" ></mat-checkbox>
+                    
+                    <mat-form-field  *ngIf="itemRowIllRelatives.controls[i].value.dead">
+                        <mat-label>Tuổi Qua Đời</mat-label>
+                        <input formControlName="deadAge" type="text" matInput />
+                    </mat-form-field>
+                    
+                    
+                </div>
+
+            </div>
+
         </div>
-        
+
+
     </section>
 </div>
 <button mat-raised-button color="success" (click)="addNewRelation()" class="margin-right-10">Thêm</button>

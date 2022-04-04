@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import { illness } from './illness';
 
@@ -10,31 +10,41 @@ import { illness } from './illness';
 })
 export class IllnessComponent implements OnInit {
   selectedValue: string;
-  constructor() { 
+  constructor(private _fb: FormBuilder) { 
     this.selectedValue = '';
   }
   illNessGroup: any[] = ['Nhóm bệnh ung thư','Nhóm bệnh huyết học' ,'Nhóm bệnh tim mạch','Nhóm bệnh nội thần kinh/tâm thần','Khác'];
   ill: string [] = ['Ung thư đại tràng','Parkinson','Rối loạn tăng động giảm chú ý','Động kinh','Rối loạn nhịp'];
   filteredOptions!: Observable<any[]>;
-  
-  index_of_relationship = 0
-  list_of_parent_nephew: any[] = []
-  illNessNew = new illness("","","");
-  listOfIllNess  = [{
-    illGroup:"",
-    illName: "",
-    illAge: ""
-  }];
-  
+
+  public addmore !: FormGroup;
+
   ngOnInit() {
-    
+  	this.addmore = this._fb.group({
+      itemRows: this._fb.array([this.initItemRows()])
+    });
+  }
+  get itemRows() {
+    return this.addmore.controls["itemRows"] as FormArray;
   }
 
-  addNewRelation() {
-    this.index_of_relationship += 1;
-    this.illNessNew = new illness("","","");
-    this.listOfIllNess.push(this.illNessNew)
-     
+  initItemRows() {
+    return this._fb.group({
+      illGroup:[''],
+      illName:[''],
+      illAge:[''],
+    });
+  }
+  addNewRow() {
+    this.itemRows.push(this.initItemRows());
+    //console.log(this.itemRows)
+  }
+
+  deleteRow(index: number) {
+    this.itemRows.removeAt(index);
   }
   
+  
+  
+
 }

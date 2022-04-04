@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { relationship } from './relationship.model';
-import { illness } from '../illness/illness';
-import { IllnessComponent } from '../illness/illness.component';
+
 @Component({
   selector: 'app-relationship',
   templateUrl: './relationship.component.html',
@@ -10,12 +9,19 @@ import { IllnessComponent } from '../illness/illness.component';
 })
 export class RelationshipComponent implements OnInit {
 
- 
+  selectedValue: string;
+  public addmoreIllRelative !: FormGroup;
+
   relationships: any[] = ['Cha', 'Mẹ', 'Anh ruột', 'Em ruột', 'Chị ruột',
   'Cậu','Dì', 'Cô', 'Chú',
   'Ông ngoại','Bà ngoại', 'Ông nội', 'Bà nội',
     'Con ruột' 
   ]
+
+
+  illNessGroup: any[] = ['Nhóm bệnh ung thư','Nhóm bệnh huyết học' ,'Nhóm bệnh tim mạch','Nhóm bệnh nội thần kinh/tâm thần','Khác'];
+  ill: string [] = ['Ung thư đại tràng','Parkinson','Rối loạn tăng động giảm chú ý','Động kinh','Rối loạn nhịp'];
+
   list_of_sex: string[] = ['Nam', 'Nữ']
   orderFamily_option: any[] = ['Con cả', 'Con hai', 'Con ba', 'Khác']
   causeOfdeath: any[] = ['Tai nạn','Ung thư','Đái tháo đường','Bệnh tim mạch','Bệnh hô hấp','Nhiễm trùng','Đột quỵ','Đột tử trẻ sơ sinh (Sudant infant death syndrome – SIDS)','không có','khác']
@@ -31,13 +37,16 @@ export class RelationshipComponent implements OnInit {
     orderFamily: "",
     sex: ""},];
   selected_sex = ''
-  illNessGroup: any[] = ['Nhóm bệnh ung thư','Nhóm bệnh huyết học' ,'Nhóm bệnh tim mạch','Nhóm bệnh nội thần kinh/tâm thần','Khác'];
-  ill: string [] = ['Ung thư đại tràng','Parkinson','Rối loạn tăng động giảm chú ý','Động kinh','Rối loạn nhịp'];
-  list_of_ill: string[] = [""]
-  constructor() { 
+
+  
+  constructor(private _fb: FormBuilder) { 
+    this.selectedValue = '';
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+  	this.addmoreIllRelative = this._fb.group({
+      itemRowIllRelatives: this._fb.array([this.initItemRowsIllRelative()])
+    });
   }
 
   addNewRelation() {
@@ -85,5 +94,29 @@ export class RelationshipComponent implements OnInit {
     {
       this.list_of_relationship[this.index_of_relationship].sex = 'Nam';
     }
+  }
+
+
+  
+  get itemRowIllRelatives() {
+    return this.addmoreIllRelative.controls["itemRowIllRelatives"] as FormArray;
+  }
+
+  initItemRowsIllRelative() {
+    return this._fb.group({
+      illGroup:[''],
+      illName:[''],
+      illAge:[''],
+      dead:[''],
+      deadAge:['',Validators.required],
+    });
+  }
+  addNewRowIllRelative() {
+    this.itemRowIllRelatives.push(this.initItemRowsIllRelative());
+    console.log(this.itemRowIllRelatives)
+  }
+
+  deleteRowIllRelative(index: number) {
+    this.itemRowIllRelatives.removeAt(index);
   }
 }
