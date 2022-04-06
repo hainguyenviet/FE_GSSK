@@ -1,17 +1,17 @@
-<form [formGroup]="person" class="person-form">
+<form #personalInfoForm="ngForm" [formGroup]="updatePerson" class="person-form" (ngSubmit)="getPersonalInfoData(personalInfoForm.value)">
     <h1>THÔNG TIN CÁ NHÂN</h1>
     <mat-form-field class="margin-right-40">
         <mat-label>Họ</mat-label>
-        <input formControlName="ho" matInput placeholder="Họ" value="" />
+        <input formControlName="lastName" matInput placeholder="Họ" />
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>Tên</mat-label>
-        <input matInput formControlName="ten" placeholder="Tên" />
+        <input matInput formControlName="firstName" placeholder="Tên" />
     </mat-form-field>
     <br />
     <div class="radio-group">
-        <mat-radio-group aria-label="Select an option" formControlName="gioitinh">
+        <mat-radio-group aria-label="Select an option" formControlName="gender">
             <mat-label class="margin-right-40">Giới tính</mat-label>
             <mat-radio-button value="1" class="margin-right-40">Nam</mat-radio-button>
             <mat-radio-button value="2">Nữ</mat-radio-button>
@@ -19,24 +19,26 @@
     </div>
     <mat-form-field class="margin-right-40">
         <mat-label>Ngày sinh</mat-label>
-        <input matInput [matDatepicker]="picker" />
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="margin-right-40">
         <mat-label> Số điện thoại </mat-label>
-        <input matInput placeholder="Số điện thoại" />
+        <input matInput placeholder="Số điện thoại" formControlName="phoneNumber" />
     </mat-form-field>
     <br />
 
     <mat-form-field class="margin-right-40">
         <mat-label> Số CMND/CCCD/Passport </mat-label>
-        <input matInput placeholder="Số CMND/CCCD/Passport" />
+        <input matInput placeholder="Số CMND/CCCD/Passport" formControlName="idCard" />
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" />
     </mat-form-field>
+
+    <button class="mb-3 mt-5 btn-success" mat-raised-button [disabled]="personalInfoForm.invalid">Save</button>
 </form>

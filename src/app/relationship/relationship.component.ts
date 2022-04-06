@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators} from '@angular/forms';
 import { relationship } from './relationship.model';
 
 @Component({

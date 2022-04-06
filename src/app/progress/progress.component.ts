@@ -19,10 +19,10 @@ import { Status, UiHelper } from './uiHelper';
 })
 export class ProgressComponent
   extends UiHelper
-  
   implements OnInit, AfterContentInit {
   itemLength: number = 0;
-  
+  Status: any;
+
   @Input() public set selectedIndex(value: number) {
     this.activeIndex = value || 0;
   }
@@ -33,7 +33,7 @@ export class ProgressComponent
   }>();
 
   @ContentChildren(ProgressStepComponent)
-  public steps !: QueryList<ProgressStepComponent>;
+  public steps!: QueryList<ProgressStepComponent>;
 
   constructor(protected progressHelper: ProgressHelperService) {
     super(progressHelper);
