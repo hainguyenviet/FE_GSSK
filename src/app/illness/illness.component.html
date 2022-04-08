@@ -12,11 +12,11 @@
             <mat-checkbox>Không</mat-checkbox>
         </div>
         <div>
-            <label class="margin-right-10">chiều cao</label>
+            <label class="margin-right-10">Chiều cao:</label>
             <mat-form-field class="margin-right-10">
                 <input matInput />
             </mat-form-field>
-            <label class="margin-right-10">cân nặng</label>
+            <label class="margin-right-10">Cân nặng:</label>
             <mat-form-field>
                 <input matInput />
             </mat-form-field>
@@ -83,34 +83,44 @@
             </mat-form-field>
         </div>
     </section>
-    <section>
+    <section  [formGroup]="addmore">
         <h1>Thông tin sức khỏe</h1>
         <p>Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu cần.</p>
-        <div>
-            <mat-form-field class="example-full-width margin-right-40">
-                <mat-label>Nhóm bệnh</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let option of illNessGroup" [value]="option">
-                        {{ option.name }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <div formArrayName="itemRows">
 
-            <mat-form-field class="example-full-width margin-right-10">
-                <mat-label>Tên Bệnh</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let option of ill" [value]="option">
-                        {{ option }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div *ngFor="let itemrow of itemRows.controls; let i=index"  [formGroupName]="i">
+                <mat-form-field class="example-full-width margin-right-40">
+                    <mat-label>Nhóm bệnh</mat-label>
+                    <mat-select formControlName="illGroup" >
+                        <mat-option *ngFor="let option of illNessGroup" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="example-full-width margin-right-10" *ngIf="itemRows.controls[i].value.illGroup !== 'Khác'">
+                    <mat-label>Tên Bệnh</mat-label>
+                    <mat-select formControlName="illName" >
+                        <mat-option *ngFor="let option of ill" [value]="option">
+                            {{ option }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
-            <mat-form-field class="margin-right-10 width-100">
-                <input type="text" matInput />
-            </mat-form-field>
+                <mat-form-field  *ngIf="itemRows.controls[i].value.illGroup === 'Khác'">
+                    <mat-label>Tên Bệnh</mat-label>
+                    <input formControlName="illName" type="text" matInput />
+                </mat-form-field>
+    
+                <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+                <mat-form-field class="margin-right-10 width-100">
+                    <input type="text" matInput formControlName="illAge" />
+                </mat-form-field>
+                <button (click)="addNewRow()" mat-mini-fab>+</button>
+                <button *ngIf="itemRows.controls.length > 1" (click)="deleteRow(i)" mat-mini-fab>-</button>
+            </div>
+
         </div>
-
 
 
     </section>
