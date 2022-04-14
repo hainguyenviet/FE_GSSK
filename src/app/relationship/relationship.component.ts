@@ -73,10 +73,10 @@ export class RelationshipComponent implements OnInit {
   removeRelation(relativeIndex: number) {
     this.relatives().removeAt(relativeIndex);
   }
-  selectRelation(value: string) {
+  selectRelation(value: string, relativeIndex: number) {
     if (value == 'Mẹ' || 'Cô' || 'Dì' || 'Bà nội' || 'Bà ngoại' || 'Chị ruột' || 'Chị/em họ')
     {
-      this.relatives().value[this.index_of_relationship].sex = 'Nữ'
+      this.relatives().value[relativeIndex].sex = 'Nữ'
     }
     if (value == 'Cha' || 
         value == 'Cậu' || 
@@ -86,7 +86,7 @@ export class RelationshipComponent implements OnInit {
         value == 'Ông ngoại' ||
         value == 'Anh/em họ')
     {
-      this.relatives().value[this.index_of_relationship].sex = 'Nam'
+      this.relatives().value[relativeIndex].sex = 'Nam'
     }
   }
   illNessList(empIndex: number): FormArray {

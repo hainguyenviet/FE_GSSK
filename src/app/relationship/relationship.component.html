@@ -12,7 +12,7 @@
         <mat-form-field class="margin-right-40">
           <mat-label>Thân nhân</mat-label>
           <mat-select formControlName="relation"
-            (selectionChange)="selectRelation(relatives().controls[relativeIndex].value.relation)">
+            (selectionChange)="selectRelation(relatives().controls[relativeIndex].value.relation, relativeIndex)">
             <mat-option *ngFor="let option of relationships" [value]="option">
               {{ option }}
             </mat-option>
