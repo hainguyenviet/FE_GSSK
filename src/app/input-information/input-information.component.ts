@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressComponent } from '../progress/progress.component';
-import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +8,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 })
 export class InputInformationComponent implements OnInit {
  
-  constructor(private dialog: MatDialog) { }
+  constructor() { }
 
   ngOnInit(): void {
    
