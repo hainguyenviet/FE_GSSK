@@ -24,6 +24,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { RelationshipComponent } from './relationship/relationship.component';
 import { GenogramComponent } from './genogram/genogram.component';
 import { HomeComponent } from './home/home.component';
+import { DisclaimerComponent } from './disclaimer/disclaimer.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { InputInformationComponent } from './input-information/input-information.component';
+import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,9 @@ import { HomeComponent } from './home/home.component';
     RelationshipComponent,
     GenogramComponent,
     HomeComponent,
+    DisclaimerComponent,
+    InputInformationComponent,
+    ThankyoupageComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,9 +60,11 @@ import { HomeComponent } from './home/home.component';
     MatAutocompleteModule,
     MatSelectModule,
     HttpClientModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents:[DisclaimerComponent]
 })
 export class AppModule {}

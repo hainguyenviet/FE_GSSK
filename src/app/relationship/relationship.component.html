@@ -92,9 +92,7 @@
                     <input type="text" matInput formControlName="illAge" />
                 </mat-form-field>
                 <button (click)="addNewRowIllRelative()" mat-mini-fab>+</button>
-                <button *ngIf="itemRowIllRelatives.controls.length > 1" (click)="deleteRowIllRelative(i)" mat-mini-fab>
-          -
-        </button>
+                <button *ngIf="itemRowIllRelatives.controls.length > 1" (click)="deleteRowIllRelative(i)" mat-mini-fab>-</button>
                 <div>
                     <mat-label class="margin-right-40"> Đã Qua Đời </mat-label>
                     <mat-checkbox class="margin-right-40" formControlName="dead"></mat-checkbox>
@@ -103,6 +101,8 @@
                         <mat-label>Tuổi Qua Đời</mat-label>
                         <input formControlName="deadAge" type="text" matInput />
                     </mat-form-field>
+
+                    
                 </div>
             </div>
         </div>

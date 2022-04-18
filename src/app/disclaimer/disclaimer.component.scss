@@ -1,0 +1,47 @@
+
+.margin-top-10{
+    margin-top: 10px;
+    
+}
+
+.margin-bottom-30{
+    margin-bottom: 30px;
+}
+.margin-right-10{
+    margin-right: 10px;
+}
+
+label input{
+    margin-top: 10px;
+    top: -2px;
+}
+.button-dis{
+    display: flex;
+    justify-content: space-between;
+}
+.button-disclaimer{
+    width: 200px;
+
+}
+
+
+.close {
+    float: right;
+    background: rgb(225, 224, 224);
+    top: -10px;
+    right: -10px;
+    border: none;
+    color: rgb(0, 0, 0);
+    width: auto;
+    height: 20px;
+    margin-top: -72px;
+    margin-right: -24px;
+    border-radius: 3px;
+  }
+
+.close:hover{
+    background-color:#F44335 ;
+    color:#fff;
+}
+  
+

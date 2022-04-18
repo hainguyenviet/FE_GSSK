@@ -29,13 +29,16 @@ export class RelationshipComponent implements OnInit {
   index_of_ill = 0
   list_of_parent_nephew: any[] = []
   relation = new relationship(1,"","",2,"","","");
-  list_of_relationship  = [{id: 1,
+  list_of_relationship  = [{
+    id: 1,
     firstName: "",
     lastName: "",
     idCard: 1,
     relationship: "",
     orderFamily: "",
-    sex: ""},];
+    sex: ""
+  },];
+
   selected_sex = ''
 
   
