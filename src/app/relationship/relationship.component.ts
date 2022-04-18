@@ -30,10 +30,9 @@ export class RelationshipComponent implements OnInit {
   list_of_parent_nephew: any[] = []
 
 
-  selectRelation(value: string){
   
 
-  ngOnInit(){
+  ngOnInit() {
     this.relatives_formGroup = this.fb.group({
       relatives: this.fb.array([this.newRelative()])
     });
@@ -114,7 +113,3 @@ export class RelationshipComponent implements OnInit {
     this.illNessList(empIndex).removeAt(illNessIndex);
   }
 }
-  function ngOnInit() {
-    throw new Error('Function not implemented.');
-  }
-
