@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { RelativeService } from '../server_service/Relative/relative.service';
 import { relationship } from './relationship.model';
 
 @Component({
@@ -12,7 +14,7 @@ export class RelationshipComponent implements OnInit {
   public relatives_formGroup !: FormGroup;
 
   constructor(private fb: FormBuilder) {
-   
+
   }
 
   relationships: any[] = ['Cha', 'Mẹ', 'Anh ruột', 'Em ruột', 'Chị ruột',
@@ -28,9 +30,8 @@ export class RelationshipComponent implements OnInit {
   causeOfdeath: any[] = ['Tai nạn', 'Ung thư', 'Đái tháo đường', 'Bệnh tim mạch', 'Bệnh hô hấp', 'Nhiễm trùng', 'Đột quỵ', 'Đột tử trẻ sơ sinh (Sudant infant death syndrome – SIDS)', 'không có', 'khác']
   index_of_relationship = 0
   list_of_parent_nephew: any[] = []
-
-
-  
+  list_of_relatives: relationship[] = []
+  relativeModel: any
 
   ngOnInit() {
     this.relatives_formGroup = this.fb.group({
@@ -44,65 +45,82 @@ export class RelationshipComponent implements OnInit {
 
   newRelative(): FormGroup {
     return this.fb.group({
-            name:[''],
-            sex:'',
-            idCard:'',
-            relation:'',
-            age:'',
-            orderFamily:[''],
-            illNessRelative: this.fb.array([this.newIllNess()])
-          });
+      name: [''],
+      sex: [''],
+      idCard: [''],
+      relation: [''],
+      age: [''],
+      orderFamily: [''],
+      illNessRelative: this.fb.array([this.newIllNess()])
+    });
+
   }
 
   addNewRelation() {
     this.index_of_relationship += 1;
     this.relatives().push(this.newRelative());
-    if (this.relatives().value[this.index_of_relationship - 1].relation == 'Cậu' ||
-            this.relatives().value[this.index_of_relationship - 1].relation == 'Cô'  ||
-            this.relatives().value[this.index_of_relationship - 1].relation == 'Dì'  ||
-            this.relatives().value[this.index_of_relationship - 1].relation == 'Chú') {
-          if (this.relationships.indexOf('Anh/em họ') == -1)  // if not exist anh chị em họ then add them to relationship
-          {   
-              this.relationships.push('Anh/em họ');    
-              this.relationships.push('Chị/em họ');
-          }
-          this.list_of_parent_nephew.push(this.relatives().value[this.index_of_relationship - 1].name)
-        }
+    this.addCousin()
+    this.relativeModel = new relationship(this.index_of_relationship,
+      this.relatives().value[this.index_of_relationship - 1].name,
+      this.relatives().value[this.index_of_relationship - 1].idCard,
+      this.relatives().value[this.index_of_relationship - 1].relation,
+      this.relatives().value[this.index_of_relationship - 1].orderFamily,
+      this.relatives().value[this.index_of_relationship - 1].sex,
+      this.relatives().value[this.index_of_relationship - 1].age,
+      this.relatives().value[this.index_of_relationship - 1].illNessRelative)
+    this.list_of_relatives.push(this.relativeModel)
   }
+
+  addCousin() {
+    if (this.relatives().value[this.index_of_relationship - 1].relation == 'Cậu' ||
+      this.relatives().value[this.index_of_relationship - 1].relation == 'Cô' ||
+      this.relatives().value[this.index_of_relationship - 1].relation == 'Dì' ||
+      this.relatives().value[this.index_of_relationship - 1].relation == 'Chú') {
+      if (this.relationships.indexOf('Anh/em họ') == -1)  // if not exist anh chị em họ then add them to relationship
+      {
+        this.relationships.push('Anh/em họ');
+        this.relationships.push('Chị/em họ');
+      }
+      this.list_of_parent_nephew.push(this.relatives().value[this.index_of_relationship - 1].name)
+    }
+  }
+
+
 
   removeRelation(relativeIndex: number) {
     this.relatives().removeAt(relativeIndex);
+    this.list_of_relatives.splice(relativeIndex, 1)
+    this.index_of_relationship = this.list_of_relatives.length
   }
   selectRelation(value: string, relativeIndex: number) {
-    if (value == 'Mẹ' || 'Cô' || 'Dì' || 'Bà nội' || 'Bà ngoại' || 'Chị ruột' || 'Chị/em họ')
-    {
+    if (value == 'Mẹ' || 'Cô' || 'Dì' || 'Bà nội' || 'Bà ngoại' || 'Chị ruột' || 'Chị/em họ') {
       this.relatives().value[relativeIndex].sex = 'Nữ'
     }
-    if (value == 'Cha' || 
-        value == 'Cậu' || 
-        value == 'Chú'|| 
-        value == 'Anh ruột'||
-        value == 'Ông nội' ||
-        value == 'Ông ngoại' ||
-        value == 'Anh/em họ')
-    {
+    if (value == 'Cha' ||
+      value == 'Cậu' ||
+      value == 'Chú' ||
+      value == 'Anh ruột' ||
+      value == 'Ông nội' ||
+      value == 'Ông ngoại' ||
+      value == 'Anh/em họ') {
       this.relatives().value[relativeIndex].sex = 'Nam'
     }
+
   }
-  illNessList(empIndex: number): FormArray {
+  illNessList(relativeIndex: number): FormArray {
     return this.relatives()
-      .at(empIndex)
+      .at(relativeIndex)
       .get('illNessRelative') as FormArray;
   }
 
   newIllNess(): FormGroup {
     return this.fb.group({
-            illGroup:[''],
-            illName:[''],
-            illAge:[''],
-            dead:[''],
-            deadAge:['',Validators.required],
-          });
+      illGroup: [''],
+      illName: [''],
+      illAge: [''],
+      dead: [''],
+      deadAge: ['', Validators.required],
+    });
   }
 
   addNewRowIllRelative(relativeIndex: number) {

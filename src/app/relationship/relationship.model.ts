@@ -1,30 +1,33 @@
 import { illness } from "../illness/illness";
 export class relationship {
     id: number;
-    firstName: string;
-    lastName: string;
+    name: string;
     idCard: number;
+    age: number;
     relationship: string
     orderFamily: string
-    sex: string
+    gender: string
+    illnessName: illness[];
     
     constructor(
         id: number,
-        firstName: string,
-        lastName: string,
+        name: string,
         idCard: number,
         relationship: string,
         orderFamily: string,
-        sex: string
+        gender: string,
+        age: number,
+        illnessName: illness[],
+
       ) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.idCard = idCard;
         this.relationship = relationship;
         this.orderFamily = orderFamily;
-        this.sex = sex
-
+        this.gender = gender
+        this.age = age
+        this.illnessName = illnessName
       }
   }
   
