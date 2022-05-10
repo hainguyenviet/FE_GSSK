@@ -11,669 +11,189 @@ const $ = go.GraphObject.make;
 })
 export class GenogramComponent implements OnInit {
   constructor() {}
-  myDiagram: any;
+  diagram: any;
 
   ngOnInit(): void {
-    this.myDiagram = $(go.Diagram, 'myDiagramDiv', {
-      initialAutoScale: go.Diagram.Uniform,
-      'undoManager.isEnabled': true,
-      // when a node is selected, draw a big yellow circle behind it
-      nodeSelectionAdornmentTemplate: $(
-        go.Adornment,
-        'Auto',
-        { layerName: 'Grid' }, // the predefined layer that is behind everything else
-        $(go.Shape, 'Circle', { fill: '#c1cee3', stroke: null }),
-        $(go.Placeholder, { margin: 2 })
-      ),
-      // use a custom layout, defined below
-      layout: $(GenogramLayout, {
-        direction: 90,
-        layerSpacing: 30,
-        columnSpacing: 10,
+    this.diagram = $(go.Diagram, 'myDiagramDiv', {
+      layout: $(go.TreeLayout, {
+        isOngoing: true,
+        treeStyle: go.TreeLayout.StyleLastParents,
+        arrangement: go.TreeLayout.ArrangementHorizontal,
+        // properties for most of the tree:
+        angle: 90,
+        layerSpacing: 35,
+        // properties for the "last parents":
+        alternateAngle: 90,
+        alternateLayerSpacing: 35,
+        alternateAlignment: go.TreeLayout.AlignmentBus,
+        alternateNodeSpacing: 20,
       }),
+      'undoManager.isEnabled': true,
     });
-    function attrFill(a: any) {
-      switch (a) {
-        case 'A':
-          return '#00af54'; // green
-        case 'B':
-          return '#f27935'; // orange
-        case 'C':
-          return '#d4071c'; // red
-        case 'D':
-          return '#70bdc2'; // cyan
-        case 'E':
-          return '#fcf384'; // gold
-        case 'F':
-          return '#e69aaf'; // pink
-        case 'G':
-          return '#08488f'; // blue
-        case 'H':
-          return '#866310'; // brown
-        case 'I':
-          return '#9270c2'; // purple
-        case 'J':
-          return '#a3cf62'; // chartreuse
-        case 'K':
-          return '#91a4c2'; // lightgray bluish
-        case 'L':
-          return '#af70c2'; // magenta
-        case 'S':
-          return '#d4071c'; // red
-        default:
-          return 'transparent';
-      }
-    }
 
-    // determine the geometry for each attribute shape in a male;
-    // except for the slash these are all squares at each of the four corners of the overall square
-    const tlsq = go.Geometry.parse('F M1 1 l19 0 0 19 -19 0z');
-    const trsq = go.Geometry.parse('F M20 1 l19 0 0 19 -19 0z');
-    const brsq = go.Geometry.parse('F M20 20 l19 0 0 19 -19 0z');
-    const blsq = go.Geometry.parse('F M1 20 l19 0 0 19 -19 0z');
-    const slash = go.Geometry.parse('F M38 0 L40 0 40 2 2 40 0 40 0 38z');
-    function maleGeometry(a: any) {
-      switch (a) {
-        case 'A':
-          return tlsq;
-        case 'B':
-          return tlsq;
-        case 'C':
-          return tlsq;
-        case 'D':
-          return trsq;
-        case 'E':
-          return trsq;
-        case 'F':
-          return trsq;
-        case 'G':
-          return brsq;
-        case 'H':
-          return brsq;
-        case 'I':
-          return brsq;
-        case 'J':
-          return blsq;
-        case 'K':
-          return blsq;
-        case 'L':
-          return blsq;
-        case 'S':
-          return slash;
-        default:
-          return tlsq;
-      }
-    }
-
-    // determine the geometry for each attribute shape in a female;
-    // except for the slash these are all pie shapes at each of the four quadrants of the overall circle
-    const tlarc = go.Geometry.parse('F M20 20 B 180 90 20 20 19 19 z');
-    const trarc = go.Geometry.parse('F M20 20 B 270 90 20 20 19 19 z');
-    const brarc = go.Geometry.parse('F M20 20 B 0 90 20 20 19 19 z');
-    const blarc = go.Geometry.parse('F M20 20 B 90 90 20 20 19 19 z');
-    function femaleGeometry(a: any) {
-      switch (a) {
-        case 'A':
-          return tlarc;
-        case 'B':
-          return tlarc;
-        case 'C':
-          return tlarc;
-        case 'D':
-          return trarc;
-        case 'E':
-          return trarc;
-        case 'F':
-          return trarc;
-        case 'G':
-          return brarc;
-        case 'H':
-          return brarc;
-        case 'I':
-          return brarc;
-        case 'J':
-          return blarc;
-        case 'K':
-          return blarc;
-        case 'L':
-          return blarc;
-        case 'S':
-          return slash;
-        default:
-          return tlarc;
-      }
-    }
-    this.myDiagram.nodeTemplateMap.add(
-      'M', // male
+    // define the Node template
+    this.diagram.nodeTemplate = $(
+      go.Node,
+      'Auto',
+      // for sorting, have the Node.text be the data.name
+      new go.Binding('text', 'name'),
+      // bind the Part.layerName to control the Node's layer depending on whether it isSelected
+      new go.Binding('layerName', 'isSelected', function (sel) {
+        return sel ? 'Foreground' : '';
+      }).ofObject(),
+      // define the node's outer shape
       $(
-        go.Node,
-        'Vertical',
+        go.Shape,
+        'Rectangle',
         {
-          locationSpot: go.Spot.Center,
-          locationObjectName: 'ICON',
-          selectionObjectName: 'ICON',
+          name: 'SHAPE',
+          fill: 'lightblue',
+          stroke: null,
+          // set the port properties:
+          portId: '',
+          fromLinkable: true,
+          toLinkable: true,
+          cursor: 'pointer',
         },
+        new go.Binding('fill', '', function (node) {
+          // modify the fill based on the tree depth level
+          const levelColors = [
+            '#AC193D',
+            '#2672EC',
+            '#8C0095',
+            '#5133AB',
+            '#008299',
+            '#D24726',
+            '#008A00',
+            '#094AB2',
+          ];
+          let color = node.findObject('SHAPE').fill;
+          const dia: go.Diagram = node.diagram;
+          if (dia && dia.layout.network) {
+            dia.layout.network.vertexes.each(function (v) {
+              if (v.node && v.node.key === node.data.key) {
+                const level: number = v.edgesCount % levelColors.length;
+                color = levelColors[level];
+              }
+            });
+          }
+          return color;
+        }).ofObject()
+      ),
+      $(
+        go.Panel,
+        'Horizontal',
+        $(
+          go.Picture,
+          {
+            name: 'Picture',
+            desiredSize: new go.Size(39, 50),
+            margin: new go.Margin(6, 8, 6, 10),
+          },
+          new go.Binding('source', 'key', function (key) {
+            if (key < 0 || key > 16) return ''; // There are only 16 images on the server
+            return 'assets/HS' + key + '.png';
+          })
+        ),
+        // define the panel where the text will appear
         $(
           go.Panel,
-          { name: 'ICON' },
-          $(go.Shape, 'Square', {
-            width: 40,
-            height: 40,
-            strokeWidth: 2,
-            fill: 'white',
-            stroke: '#919191',
-            portId: '',
-          }),
+          'Table',
+          {
+            maxSize: new go.Size(150, 999),
+            margin: new go.Margin(6, 10, 0, 3),
+            defaultAlignment: go.Spot.Left,
+          },
+          $(go.RowColumnDefinition, { column: 2, width: 4 }),
           $(
-            go.Panel,
+            go.TextBlock,
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' }, // the name
             {
-              // for each attribute show a Shape at a particular place in the overall square
-              itemTemplate: $(
-                go.Panel,
-                $(
-                  go.Shape,
-                  { stroke: null, strokeWidth: 0 },
-                  new go.Binding('fill', '', attrFill),
-                  new go.Binding('geometry', '', maleGeometry)
-                )
-              ),
-              margin: 1,
+              row: 0,
+              column: 0,
+              columnSpan: 5,
+              font: '12pt Segoe UI,sans-serif',
+              editable: true,
+              isMultiline: false,
+              minSize: new go.Size(10, 16),
             },
-            new go.Binding('itemArray', 'a')
-          )
-        ),
-        $(
-          go.TextBlock,
-          { textAlign: 'center', maxSize: new go.Size(80, NaN) },
-          new go.Binding('text', 'n')
-        )
-      )
-    );
-
-    this.myDiagram.nodeTemplateMap.add(
-      'F', // female
-      $(
-        go.Node,
-        'Vertical',
-        {
-          locationSpot: go.Spot.Center,
-          locationObjectName: 'ICON',
-          selectionObjectName: 'ICON',
-        },
-        $(
-          go.Panel,
-          { name: 'ICON' },
-          $(go.Shape, 'Circle', {
-            width: 40,
-            height: 40,
-            strokeWidth: 2,
-            fill: 'white',
-            stroke: '#a1a1a1',
-            portId: '',
-          }),
+            new go.Binding('text', 'name').makeTwoWay()
+          ),
           $(
-            go.Panel,
+            go.TextBlock,
+            'Title: ',
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' },
+            { row: 1, column: 0 }
+          ),
+          $(
+            go.TextBlock,
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' },
             {
-              // for each attribute show a Shape at a particular place in the overall circle
-              itemTemplate: $(
-                go.Panel,
-                $(
-                  go.Shape,
-                  { stroke: null, strokeWidth: 0 },
-                  new go.Binding('fill', '', attrFill),
-                  new go.Binding('geometry', '', femaleGeometry)
-                )
-              ),
-              margin: 1,
+              row: 1,
+              column: 1,
+              columnSpan: 4,
+              editable: true,
+              isMultiline: false,
+              minSize: new go.Size(10, 14),
+              margin: new go.Margin(0, 0, 0, 3),
             },
-            new go.Binding('itemArray', 'a')
+            new go.Binding('text', 'title').makeTwoWay()
+          ),
+          $(
+            go.TextBlock,
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' },
+            { row: 2, column: 0 },
+            new go.Binding('text', 'key', function (v) {
+              return 'ID: ' + v;
+            })
+          ),
+          $(
+            go.TextBlock,
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' },
+            { name: 'boss', row: 2, column: 3 }, // we include a name so we can access this TextBlock when deleting Nodes/Links
+            new go.Binding('text', 'parent', function (v) {
+              return 'Boss: ' + v;
+            })
+          ),
+          $(
+            go.TextBlock,
+            { font: '9pt  Segoe UI,sans-serif', stroke: 'white' }, // the comments
+            {
+              row: 3,
+              column: 0,
+              columnSpan: 5,
+              font: 'italic 9pt sans-serif',
+              wrap: go.TextBlock.WrapFit,
+              editable: true, // by default newlines are allowed
+              minSize: new go.Size(10, 14),
+            },
+            new go.Binding('text', 'comments').makeTwoWay()
           )
-        ),
-        $(
-          go.TextBlock,
-          { textAlign: 'center', maxSize: new go.Size(80, NaN) },
-          new go.Binding('text', 'n')
-        )
-      )
-    );
-
-    // the representation of each label node -- nothing shows on a Marriage Link
-    this.myDiagram.nodeTemplateMap.add(
-      'LinkLabel',
-      $(go.Node, {
-        selectable: false,
-        width: 1,
-        height: 1,
-        fromEndSegmentLength: 20,
-      })
-    );
-
-    this.myDiagram.linkTemplate = $(
-      // for parent-child relationships
-      go.Link,
-      {
-        routing: go.Link.Orthogonal,
-        corner: 5,
-        layerName: 'Background',
-        selectable: false,
-        fromSpot: go.Spot.Bottom,
-        toSpot: go.Spot.Top,
-      },
-      $(go.Shape, { stroke: '#424242', strokeWidth: 2 })
-    );
-
-    this.myDiagram.linkTemplateMap.add(
-      'Marriage', // for marriage relationships
-      $(
-        go.Link,
-        { selectable: false },
-        $(go.Shape, { strokeWidth: 2.5, stroke: '#5d8cc1' /* blue */ })
-      )
-    );
-    this.setupDiagram(
-      this.myDiagram,
-      [
-        {
-          key: 0,
-          n: 'Aaron',
-          s: 'M',
-          m: -10,
-          f: -11,
-          ux: 1,
-          a: ['C', 'F', 'K'],
-        },
-        { key: 1, n: 'Alice', s: 'F', m: -12, f: -13, a: ['B', 'H', 'K'] },
-        { key: 2, n: 'Bob', s: 'M', m: 1, f: 0, ux: 3, a: ['C', 'H', 'L'] },
-        { key: 3, n: 'Barbara', s: 'F', a: ['C'] },
-        { key: 4, n: 'Bill', s: 'M', m: 1, f: 0, ux: 5, a: ['E', 'H'] },
-        { key: 5, n: 'Brooke', s: 'F', a: ['B', 'H', 'L'] },
-        { key: 6, n: 'Claire', s: 'F', m: 1, f: 0, a: ['C'] },
-        { key: 7, n: 'Carol', s: 'F', m: 1, f: 0, a: ['C', 'I'] },
-        { key: 8, n: 'Chloe', s: 'F', m: 1, f: 0, vir: 9, a: ['E'] },
-      ],
-      4
-    );
+        ) // end Table Panel
+      ) // end Horizontal Panel
+    ); // end Node
+    this.diagram.model = this.model;
   }
-  setupDiagram(diagram: any, array: any, focusId: any) {
-    diagram.model = new go.GraphLinksModel({
-      // declare support for link label nodes
-      linkLabelKeysProperty: 'labelKeys',
-      // this property determines which template is used
-      nodeCategoryProperty: 's',
-      // if a node data object is copied, copy its data.a Array
-      copiesArrays: true,
-      // create all of the nodes for people
-      nodeDataArray: array,
-    });
-    this.setupMarriages(diagram);
-    this.setupParents(diagram);
-
-    const node = diagram.findNodeForKey(focusId);
-    if (node !== null) {
-      diagram.select(node);
-      // remove any spouse for the person under focus:
-      //node.linksConnected.each(l => {
-      //  if (!l.isLabeledLink) return;
-      //  l.opacity = 0;
-      //  const spouse = l.getOtherNode(node);
-      //  spouse.opacity = 0;
-      //  spouse.pickable = false;
-      //});
-    }
-  }
-
-  findMarriage(diagram: any, a: any, b: any) {
-    // A and B are node keys
-    const nodeA = diagram.findNodeForKey(a);
-    const nodeB = diagram.findNodeForKey(b);
-    if (nodeA !== null && nodeB !== null) {
-      const it = nodeA.findLinksBetween(nodeB); // in either direction
-      while (it.next()) {
-        const link = it.value;
-        // Link.data.category === "Marriage" means it's a marriage relationship
-        if (link.data !== null && link.data.category === 'Marriage')
-          return link;
-      }
-    }
-    return null;
-  }
-
-  setupMarriages(diagram: any) {
-    const model = diagram.model;
-    const nodeDataArray = model.nodeDataArray;
-    for (let i = 0; i < nodeDataArray.length; i++) {
-      const data = nodeDataArray[i];
-      const key = data.key;
-      let uxs = data.ux;
-      if (uxs !== undefined) {
-        if (typeof uxs === 'number') uxs = [uxs];
-        for (let j = 0; j < uxs.length; j++) {
-          const wife = uxs[j];
-          const wdata = model.findNodeDataForKey(wife);
-          if (key === wife || !wdata || wdata.s !== 'F') {
-            console.log(
-              'cannot create Marriage relationship with self or unknown person ' +
-                wife
-            );
-            continue;
-          }
-          const link = this.findMarriage(diagram, key, wife);
-          if (link === null) {
-            // add a label node for the marriage link
-            const mlab = { s: 'LinkLabel' };
-            model.addNodeData(mlab);
-            // add the marriage link itself, also referring to the label node
-            const mdata = {
-              from: key,
-              to: wife,
-              labelKeys: mlab.s,
-              category: 'Marriage',
-            };
-            model.addLinkData(mdata);
-          }
-        }
-      }
-    }
-  }
-
-  setupParents(diagram: any) {
-    const model = diagram.model;
-    const nodeDataArray = model.nodeDataArray;
-    for (let i = 0; i < nodeDataArray.length; i++) {
-      const data = nodeDataArray[i];
-      const key = data.key;
-      const mother = data.m;
-      const father = data.f;
-      if (mother !== undefined && father !== undefined) {
-        const link = this.findMarriage(diagram, mother, father);
-        if (link === null) {
-          // or warn no known mother or no known father or no known marriage between them
-          console.log('unknown marriage: ' + mother + ' & ' + father);
-          continue;
-        }
-        const mdata = link.data;
-        if (mdata.labelKeys === undefined || mdata.labelKeys[0] === undefined)
-          continue;
-        const mlabkey = mdata.labelKeys[0];
-        const cdata = { from: mlabkey, to: key };
-        this.myDiagram.model.addLinkData(cdata);
-      }
-    }
-  }
-}
-class GenogramLayout extends go.LayeredDigraphLayout {
-  spouseSpacing: number;
-  constructor() {
-    super();
-    this.initializeOption = go.LayeredDigraphLayout.InitDepthFirstIn;
-    this.spouseSpacing = 30; // minimum space between spouses
-  }
-  makeNetwork(coll: any) {
-    // generate LayoutEdges for each parent-child Link
-    const net = this.createNetwork();
-    if (coll instanceof go.Diagram) {
-      this.add(net, coll.nodes, true);
-      this.add(net, coll.links, true);
-    } else if (coll instanceof go.Group) {
-      this.add(net, coll.memberParts, false);
-    } else if (coll.iterator) {
-      this.add(net, coll.iterator, false);
-    }
-    return net;
-  }
-
-  // internal method for creating LayeredDigraphNetwork where husband/wife pairs are represented
-  // by a single LayeredDigraphVertex corresponding to the label Node on the marriage Link
-  link: any = new go.Link();
-  add(net: any, coll: any, nonmemberonly: any) {
-    const multiSpousePeople = new go.Set();
-
-    // consider all Nodes in the given collection
-    var it = coll.iterator;
-    while (it.next()) {
-      const node = it.value;
-      if (!(node instanceof go.Node)) continue;
-      if (!node.isLayoutPositioned || !node.isVisible()) continue;
-      if (nonmemberonly && node.containingGroup !== null) continue;
-      // if it's an unmarried Node, or if it's a Link Label Node, create a LayoutVertex for it
-      if (node.isLinkLabel) {
-        // get marriage Link
-        this.link = node.labeledLink;
-        const spouseA = this.link.fromNode;
-        const spouseB = this.link.toNode;
-        // create vertex representing both husband and wife
-        const vertex = net.addNode(node);
-        // now define the vertex size to be big enough to hold both spouses
-        vertex.width =
-          spouseA.actualBounds.width +
-          this.spouseSpacing +
-          spouseB.actualBounds.width;
-        vertex.height = Math.max(
-          spouseA.actualBounds.height,
-          spouseB.actualBounds.height
-        );
-        vertex.focus = new go.Point(
-          spouseA.actualBounds.width + this.spouseSpacing / 2,
-          vertex.height / 2
-        );
-      } else {
-        // don't add a vertex for any married person!
-        // instead, code above adds label node for marriage link
-        // assume a marriage Link has a label Node
-        let marriages = 0;
-        node.linksConnected.each((l) => {
-          if (l.isLabeledLink) marriages++;
-        });
-        if (marriages === 0) {
-          net.addNode(node);
-        } else if (marriages > 1) {
-          multiSpousePeople.add(node);
-        }
-      }
-    }
-    // now do all Links
-    it.reset();
-    while (it.next()) {
-      const link = it.value;
-      if (!(link instanceof go.Link)) continue;
-      if (!link.isLayoutPositioned || !link.isVisible()) continue;
-      if (nonmemberonly && link.containingGroup !== null) continue;
-      // if it's a parent-child link, add a LayoutEdge for it
-      if (!link.isLabeledLink) {
-        const parent = net.findVertex(link.fromNode); // should be a label node
-        const child = net.findVertex(link.toNode);
-        if (child !== null) {
-          // an unmarried child
-          net.linkVertexes(parent, child, link);
-        } else {
-          // a married child
-          this.link.toNode.linksConnected.each((l: go.Link) => {
-            if (!l.isLabeledLink) return; // if it has no label node, it's a parent-child link
-            // found the Marriage Link, now get its label Node
-            const mlab = l.labelNodes.first();
-            // parent-child link should connect with the label node,
-            // so the LayoutEdge should connect with the LayoutVertex representing the label node
-            const mlabvert = net.findVertex(mlab);
-            if (mlabvert !== null) {
-              net.linkVertexes(parent, mlabvert, link);
-            }
-          });
-        }
-      }
-    }
-
-    while (multiSpousePeople.count > 0) {
-      // find all collections of people that are indirectly married to each other
-      const node = multiSpousePeople.first();
-      const cohort = new go.Set();
-      this.extendCohort(cohort, node);
-      // then encourage them all to be the same generation by connecting them all with a common vertex
-      const dummyvert = net.createVertex();
-      net.addVertex(dummyvert);
-      const marriages = new go.Set();
-      cohort.each((n: any) => {
-        n.linksConnected.each((l: go.Link) => {
-          marriages.add(l);
-        });
-      });
-      marriages.each(() => {
-        // find the vertex for the marriage link (i.e. for the label node)
-        const mlab = this.link.labelNodes.first();
-        const v = net.findVertex(mlab);
-        if (v !== null) {
-          net.linkVertexes(dummyvert, v, null);
-        }
-      });
-      // done with these people, now see if there are any other multiple-married people
-      multiSpousePeople.removeAll(cohort);
-    }
-  }
-
-  // collect all of the people indirectly married with a person
-
-  extendCohort(coll: any, node: any) {
-    if (coll.has(node)) return;
-    coll.add(node);
-    node.linksConnected.each((l: go.Link) => {
-      if (l.isLabeledLink) {
-        // if it's a marriage link, continue with both spouses
-        this.extendCohort(coll, l.fromNode);
-        this.extendCohort(coll, l.toNode);
-      }
-    });
-  }
-  private _network: any = new go.LayeredDigraphLayout();
-  public get network(): any {
-    return this._network;
-  }
-  public set network(value: any) {
-    this._network = value;
-  }
-  assignLayers() {
-    super.assignLayers();
-    const horiz = this.direction == 0.0 || this.direction == 180.0;
-    // for every vertex, record the maximum vertex width or height for the vertex's layer
-    const maxsizes: any = [];
-    this.network.vertexes.each((v: any) => {
-      const lay = v.layer;
-      let max = maxsizes[lay];
-      if (max === undefined) max = 0;
-      const sz = horiz ? v.width : v.height;
-      if (sz > max) maxsizes[lay] = sz;
-    });
-    // now make sure every vertex has the maximum width or height according to which layer it is in,
-    // and aligned on the left (if horizontal) or the top (if vertical)
-    this.network.vertexes.each((v: go.LayeredDigraphVertex) => {
-      const lay = v.layer;
-      const max = maxsizes[lay];
-      if (horiz) {
-        v.focus = new go.Point(0, v.height / 2);
-        v.width = max;
-      } else {
-        v.focus = new go.Point(v.width / 2, 0);
-        v.height = max;
-      }
-    });
-    // from now on, the LayeredDigraphLayout will think that the Node is bigger than it really is
-    // (other than the ones that are the widest or tallest in their respective layer).
-  }
-  private _diagram: any = new go.Diagram();
-  public get diagram(): any {
-    return this._diagram;
-  }
-  public set diagram(value: any) {
-    this._diagram = value;
-  }
-  commitNodes() {
-    super.commitNodes();
-    // position regular nodes
-    this.network.vertexes.each((v: any) => {
-      if (v.node !== null && !v.node.isLinkLabel) {
-        v.node.position = new go.Point(v.x, v.y);
-      }
-    });
-    // position the spouses of each marriage vertex
-    this.network.vertexes.each((v: any) => {
-      if (v.node === null) return;
-      if (!v.node.isLinkLabel) return;
-      const labnode = v.node;
-      const lablink = labnode.labeledLink;
-      // In case the spouses are not actually moved, we need to have the marriage link
-      // position the label node, because LayoutVertex.commit() was called above on these vertexes.
-      // Alternatively we could override LayoutVetex.commit to be a no-op for label node vertexes.
-      lablink.invalidateRoute();
-      let spouseA = lablink.fromNode;
-      let spouseB = lablink.toNode;
-      // prefer fathers on the left, mothers on the right
-      if (spouseA.data.s === 'F') {
-        // sex is female
-        const temp = spouseA;
-        spouseA = spouseB;
-        spouseB = temp;
-      }
-      // see if the parents are on the desired sides, to avoid a link crossing
-      const aParentsNode = this.findParentsMarriageLabelNode(spouseA);
-      const bParentsNode = this.findParentsMarriageLabelNode(spouseB);
-      if (
-        aParentsNode !== null &&
-        bParentsNode !== null &&
-        aParentsNode.position.x > bParentsNode.position.x
-      ) {
-        // swap the spouses
-        const temp = spouseA;
-        spouseA = spouseB;
-        spouseB = temp;
-      }
-      spouseA.position = new go.Point(v.x, v.y);
-      spouseB.position = new go.Point(
-        v.x + spouseA.actualBounds.width + this.spouseSpacing,
-        v.y
-      );
-      if (spouseA.opacity === 0) {
-        const pos = new go.Point(
-          v.centerX - spouseA.actualBounds.width / 2,
-          v.y
-        );
-        spouseA.position = pos;
-        spouseB.position = pos;
-      } else if (spouseB.opacity === 0) {
-        const pos = new go.Point(
-          v.centerX - spouseB.actualBounds.width / 2,
-          v.y
-        );
-        spouseA.position = pos;
-        spouseB.position = pos;
-      }
-    });
-    // position only-child nodes to be under the marriage label node
-    this.network.vertexes.each((v: go.LayeredDigraphVertex) => {
-      if (v.node === null || v.node.linksConnected.count > 1) return;
-      const mnode = this.findParentsMarriageLabelNode(v.node);
-      if (mnode !== null && mnode.linksConnected.count === 1) {
-        // if only one child
-        const mvert = this.network.findVertex(mnode);
-        const newbnds = v.node.actualBounds.copy();
-        newbnds.x = mvert.centerX - v.node.actualBounds.width / 2;
-        // see if there's any empty space at the horizontal mid-point in that layer
-        const overlaps = this.diagram.findObjectsIn(
-          newbnds,
-          (x: any) => x.part,
-          (p: any) => p !== v.node,
-          true
-        );
-        if (overlaps.count === 0) {
-          v.node.move(newbnds.position);
-        }
-      }
-    });
-  }
-
-  findParentsMarriageLabelNode(node: any) {
-    const it = node.findNodesInto();
-    while (it.next()) {
-      const n = it.value;
-      if (n.isLinkLabel) return n;
-    }
-    return null;
+  model: go.TreeModel = new go.TreeModel([
+    { key: 1, name: 'Stella Payne Diaz', title: 'CEO' },
+    { key: 2, name: 'Luke Warm', title: 'VP Marketing/Sales', parent: 1 },
+    { key: 3, name: 'Meg Meehan Hoffa', title: 'Sales', parent: 2 },
+    { key: 4, name: 'Peggy Flaming', title: 'VP Engineering', parent: 1 },
+    { key: 5, name: 'Saul Wellingood', title: 'Manufacturing', parent: 4 },
+    { key: 6, name: 'Al Ligori', title: 'Marketing', parent: 2 },
+    { key: 7, name: 'Dot Stubadd', title: 'Sales Rep', parent: 3 },
+    { key: 8, name: 'Les Ismore', title: 'Project Mgr', parent: 5 },
+    { key: 9, name: 'April Lynn Parris', title: 'Events Mgr', parent: 6 },
+    { key: 10, name: 'Xavier Breath', title: 'Engineering', parent: 4 },
+    { key: 11, name: 'Anita Hammer', title: 'Process', parent: 5 },
+    { key: 12, name: 'Billy Aiken', title: 'Software', parent: 10 },
+    { key: 13, name: 'Stan Wellback', title: 'Testing', parent: 10 },
+    { key: 14, name: 'Marge Innovera', title: 'Hardware', parent: 10 },
+    { key: 15, name: 'Evan Elpus', title: 'Quality', parent: 5 },
+    { key: 16, name: 'Lotta B. Essen', title: 'Sales Rep', parent: 3 },
+  ]);
+  selectedNode = null;
+  public setSelectedNode(node: any) {
+    this.selectedNode = node;
   }
 }
