@@ -9,8 +9,8 @@
         <label class="margin-top-10 margin-bottom-30 center "><input type="checkbox" formControlName="check2"> Tôi đồng ý khai báo thông tin.</label>
     </div>
     <div class="button-dis">
-        <button class="button-disclaimer margin-right-10" color="warn" mat-stroked-button (click)="confirm()" [routerLink]="['./thankyou']">Không</button>
-        <button class="button-disclaimer" mat-flat-button color="warn" (click)="confirm()" [routerLink]="['./input-information']" [disabled]="formGroup.invalid">Xác Nhận</button>
+        <button class="button-disclaimer margin-right-10" color="primary" mat-stroked-button (click)="confirm()" [routerLink]="['./thankyou']">Không</button>
+        <button class="button-disclaimer" mat-flat-button color="primary" (click)="confirm()" [routerLink]="['./input-information']" [disabled]="formGroup.invalid">Xác Nhận</button>
     </div>
 </form>
     
