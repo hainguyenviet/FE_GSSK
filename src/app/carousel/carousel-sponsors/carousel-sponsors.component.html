@@ -1,0 +1,42 @@
+<div *ngIf="sponsors && sponsors.length >0"  class="carousel-container" >
+    <div *ngFor="let image of sponsors; let i=index" class="carousel">
+        <img  
+        src="https://res.cloudinary.com/mp-cloud/image/upload/v1652377582/Rectangle_8467_1_b8fqtk.png" [alt]="image.imageAlt"
+        [ngClass]="{'image-active': selectedIndex===i}"
+        >
+        <img  
+        src="https://res.cloudinary.com/mp-cloud/image/upload/v1652425602/Frame_2_xhkbio.png" [alt]="image.imageAlt"
+        [ngClass]="{'image-active': selectedIndex===i}"
+        >
+
+        <img  
+        src="https://res.cloudinary.com/mp-cloud/image/upload/v1652425602/Frame_4_jxc9bt.png" [alt]="image.imageAlt"
+        [ngClass]="{'image-active': selectedIndex===i}"
+        >
+
+        <img  
+        src="https://res.cloudinary.com/mp-cloud/image/upload/v1652425602/Frame_2_xhkbio.png" [alt]="image.imageAlt"
+        [ngClass]="{'image-active': selectedIndex===i}"
+        >
+
+        <img  
+        src="https://res.cloudinary.com/mp-cloud/image/upload/v1652377582/Rectangle_8467_1_b8fqtk.png" [alt]="image.imageAlt"
+        [ngClass]="{'image-active': selectedIndex===i}"
+        >
+        
+        
+
+        
+    </div>
+
+    <button *ngIf="controls" class="btn-carousel btn-prev">
+        <i class="fas fa-arrow-circle-left icon-carousel icon-prev" aria-hidden="true"
+        (click)="onPrevClick()"></i>
+    </button>
+    
+    <button *ngIf="controls" class="btn-carousel btn-next">
+        <i class="fas fa-arrow-circle-right icon-carousel icon-next" aria-hidden="true"
+        (click)="onNextClick()"></i>
+    </button>
+
+</div>

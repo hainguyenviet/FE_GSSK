@@ -1,3 +1,5 @@
+
+import { CarouselModule } from './carousel/carousel.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,12 +24,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
 import { RelationshipComponent } from './relationship/relationship.component';
+import {MatIconModule} from '@angular/material/icon';
 import { GenogramComponent } from './genogram/genogram.component';
 import { HomeComponent } from './home/home.component';
 import { DisclaimerComponent } from './disclaimer/disclaimer.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { InputInformationComponent } from './input-information/input-information.component';
 import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { CarouselActionModule } from './carousel/carousel-action/carousel-action.module';
+import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-sponsors.module'
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +69,11 @@ import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
     MatSelectModule,
     HttpClientModule,
     MatDialogModule,
+    MatIconModule,
+    FontAwesomeModule,
+    CarouselModule,
+    CarouselActionModule,
+    CarouselSponsorsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

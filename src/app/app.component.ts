@@ -14,6 +14,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     comment: new FormControl('', Validators.required),
   }
   );
+
+ 
   
 
   ngOnInit() {}

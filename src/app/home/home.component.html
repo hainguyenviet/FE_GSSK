@@ -1,6 +1,166 @@
 <body>
+    <div id="header">
+    	
+        <div id="header_menu">
+        	<ul>
+                <li> <a href="#"><mat-icon>home</mat-icon></a></li>
+                <li><a href="#" class="current">Về Chúng Tôi</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Tài Nguyên</a></li>
+                <li><a href="#">Liên Hệ</a></li>
+            </ul>
+            <div class="cleaner"></div>
+            <div id="search">
+                <mat-icon class="search_icon">search</mat-icon>
+                <span style="padding-right:7px; font-size: 1.2rem; color: #ffff;"> |</span>
+                <input class="input_search" type="text"  placeholder="Tìm Kiếm..." />
+               
+            </div>
+        </div> 
 
-    <H1>Trang Chủ</H1>
-    <button (click)="disclaimer()">GSSK</button>
+    </div> <!-- end of header -->
+
+    <div id="nav_menu">
+    	
+        <div id="menu">
+            <div id="title" >
+                <div>Gia Sử Sức Khoẻ</div>
+                <hr>
+                <span>GSSK- Quá Khứ Dự Báo Tương Lai </span>
+            </div>
+        	<ul>
+                <li><a href="#" class="current">Gia Sử Sức Khoẻ</a></li>
+                <li><a href="#">Bệnh Di Truyền</a></li>
+                <li><a href="#">Tư Vấn Di Truyền</a></li>
+                <li><a href="#">Xét Nghiệm Di truyền</a></li>
+            </ul>
+            <div class="cleaner"></div>
+            <div id="logo"  >
+             <img  (click)="disclaimer()"src="https://suckhoeditruyen.vn/wp-content/uploads/2017/01/MGI_2017101102-e1484030626154.png" alt="logo" style="width: 100px;" >
+            </div>
+            <img  src="https://res.cloudinary.com/mp-cloud/image/upload/v1652377582/Rectangle_8467_1_b8fqtk.png" alt="logo-GSSK" style="height: 54px; width: 60px;">
+        </div>
+            
+    </div>  <!-- end of menu -->
+
+    <app-carousel [images]="images" 
+              [autoSlide]="true"  
+    ></app-carousel>
+
+    <hr class="style-seven">
+    <div class="menu-section">
+        <div class="btn-menu-section">
+            <div class="btn-section">
+                <button>
+                    Cơ bản
+                </button>
+                <button>
+                    Công Cụ
+                </button>
+                <button>
+                    Tư Vấn Di Truyền
+                </button>
+                <button>
+                    Hỏi Đáp
+                </button>
+            </div>
+            <div class="des-section">
+                <div>
+    
+                    <h2>
+                        GSSK/Cây gia hệ
+                    </h2>
+                    <hr>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore.<br>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore.<br>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore.<br>
+                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <img src="https://res.cloudinary.com/mp-cloud/image/upload/v1652376594/Rectangle_8474_rrhuoa.png" alt="anh">
+    </div> 
+    <h6 class="title-action">CÁC HOẠT ĐỘNG CỦA CHÚNG TÔI</h6>
+    <app-carousel-action [actions]="images" 
+              [autoSlide]="true"  
+    ></app-carousel-action>
+    
+
+    <div class="location">
+        <h4>TÌM TƯ VẤN DI TRUYỀN Ở ĐÂU?</h4>
+        <div class="location-map">
+            <img src="https://res.cloudinary.com/mp-cloud/image/upload/v1652376594/Group_nfb8e7.png" alt="map-vietnam">
+            <div class="list-location">
+                <i class="fa-solid fa-location-dot"></i>
+                <div style="width: 200px;">Vui Lòng Chọn Khu Vực:</div>
+                <div>
+                    <mat-form-field class="option-location margin-right-40">
+                        <mat-select>
+                            <mat-option *ngFor="let option of locationMap" [value]="option">
+                                {{ option }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="list-location-next">
+                        <ul>
+                            <li>Viện Di truyền Y học <i class="fas fa-angle-right" ></i> <hr></li>
+                            <li>Công ty Cổ phần Giải pháp Gene <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Bệnh viện Từ Dũ <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Bệnh viện Đại học y dược <i class="fas fa-angle-right" ></i> <hr></li>
+                            <li>Bệnh viện Hùng Vương <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Đại học y dược <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Khoa Thương <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Iso Lab <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Bệnh viện DNA <i class="fas fa-angle-right" ></i><hr></li>
+                        </ul>
+                        <ul>
+                            <li>Bệnh viện Tâm Anh HCM <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Nam khoa <i class="fas fa-angle-right" ></i><hr></li>
+                            <li>Bệnh viện Sản nhi An Giang <i class="fas fa-angle-right" ></i><hr></li>
+                        </ul>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+    <div class="sponsors" >
+        <button>Đơn Vị Ảnh Hưởng</button>
+        <button>Đơn vị Tài Trợ</button>
+    </div>
+    <app-carousel-sponsors [sponsors]="images"
+                [autoSlide]="true" 
+                
+    > 
+    </app-carousel-sponsors>
+
+    <div id="footer_layout" style="margin-top: 100px;">
+    	
+        <div id="footer">
+            <div id="footer_des" >
+                <div>© 2020 Bản quyền thuộc Viện Di truyền Y học - Gene Solutions</div>
+                <span>186 - 188 Nguyễn Duy Dương, Phường 3, Quận 10, TP.HCM</span>
+                <span>Điện thoại: 028 6660 8050 - 028 7101 8688</span>
+                <span>Email: gssk@suckhoeditruyen.vn </span>
+            </div>
+        	<ul class="list_icon">
+                <li><a href="#" class="current">Chính sách quyền riêng tư</a></li>
+                <li><a href="#">Giải pháp Gen cho người Việt - Gene Solutions</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+            <div class="cleaner"></div>
+            <div id="social">
+                <mat-icon style="color: #ffff;">facebook</mat-icon>
+               
+            </div>
+        </div>
+            
+    </div>  <!-- end of menu -->
+
+    
     
 </body>
