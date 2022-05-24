@@ -38,6 +38,7 @@ export class IllnessComponent implements OnInit {
     this.addmore = this._fb.group({
       itemRows: this._fb.array([this.initItemRows()]),
     });
+    console.log(this.addmore.value)
   }
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
@@ -52,7 +53,7 @@ export class IllnessComponent implements OnInit {
   }
   addNewRow() {
     this.itemRows.push(this.initItemRows());
-    //console.log(this.itemRows)
+    
   }
 
   deleteRow(index: number) {

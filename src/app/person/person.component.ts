@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PersonService } from '../server_service/Person/person.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-person',
@@ -20,15 +21,22 @@ export class PersonComponent implements OnInit {
   person: any;
   constructor(private personService: PersonService) {}
   personList: any;
-  ngOnInit(): void {
+  ngOnInit(){
+    this.getAllPerson();
+    console.log(this.updatePerson.value)
+  }
+  
+  public getAllPerson(): void {
     this.personService.getAllPerson().subscribe((res: any) => {
       this.personList = res;
       // show list person
-      console.log(this.personList);
-    });
+      console.log(this.personList)},
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+      )
   }
-
-  getPersonalInfoData(data: any) {
+  public postPerson(data: any) {
     //COMMENT: the data here is the personal information that needs to be saved
     /*  console.warn(data); */
     this.personService.savePersonalInformation(data).subscribe((result) => {
@@ -36,6 +44,7 @@ export class PersonComponent implements OnInit {
       /* console.log(result.id) */
       sessionStorage.setItem('id', result.id.toString());
     });
+
 
     /*  console.log(data)
     this.personService.getAllPerson().subscribe(data =>{  
