@@ -11,8 +11,8 @@ const $ = go.GraphObject.make;
 export class GenogramComponent implements OnInit {
   constructor() { }
   dataFamily = [
-    { key: 0, n: "Aaron", s: "M", m: -10, f: -11, ux: 1, a: ["C", "F", "K"] },
-    { key: 1, n: "Alice", s: "F", m: -12, f: -13, a: ["B", "H", "K"] },
+    { key: 0, n: "Aaron", s: "M", m: -10, f: -11, ux: 1, a: ["ME", "1DISEASE", "DEAD"] },
+    { key: 1, n: "Alice", s: "F", m: -12, f: -13, a: ["NDISEASE", "FDISEASE"] },
     { key: 2, n: "Bob", s: "M", m: 1, f: 0, ux: 3, a: ["C", "H", "L"] },
     { key: 3, n: "Barbara", s: "F", a: ["C"] },
     { key: 4, n: "Bill", s: "M", m: 1, f: 0, ux: 5, a: ["E", "H"] },
@@ -169,68 +169,48 @@ export class GenogramComponent implements OnInit {
 
   attrFill(a: string) {
     switch (a) {
-      case "A": return "#00af54"; // green
-      case "B": return "#f27935"; // orange
-      case "C": return "#d4071c"; // red
-      case "D": return "#70bdc2"; // cyan
-      case "E": return "#fcf384"; // gold
-      case "F": return "#e69aaf"; // pink
-      case "G": return "#08488f"; // blue
-      case "H": return "#866310"; // brown
-      case "I": return "#9270c2"; // purple
-      case "J": return "#a3cf62"; // chartreuse
-      case "K": return "#91a4c2"; // lightgray bluish
-      case "L": return "#af70c2"; // magenta
-      case "S": return "#d4071c"; // red
+      case "DEAD": return "#d4071c"; // red
+      case "1DISEASE": return "#000000"; // black
+      case "NDISEASE": return "#000000";
+      case "FDISEASE": return "#808080"; //gray
+      case "ME": return "#000000"
       default: return "transparent";
     }
   }
 
   maleGeometry(a: string) {
-    const tlsq = go.Geometry.parse("F M1 1 l19 0 0 19 -19 0z");
-    const trsq = go.Geometry.parse("F M20 1 l19 0 0 19 -19 0z");
-    const brsq = go.Geometry.parse("F M20 20 l19 0 0 19 -19 0z");
-    const blsq = go.Geometry.parse("F M1 20 l19 0 0 19 -19 0z");
-    const slash = go.Geometry.parse("F M38 0 L40 0 40 2 2 40 0 40 0 38z");
+    const arrow = go.Geometry.parse("F M71 59 L 59 47 54 50 44 30 67 39 63 43 75 55")
+    const halfRightSquare = "F M20 1 l19 0 0 19 -19 0z F M20 20 l19 0 0 19 -19 0z";
+    const halfLeftSquare = "F M5 0 L6 0 6 1 1 6 0 6 0 5 F M15 0 L16 0 16 1 1 16 0 16 0 15 F M20 5 L21 5 21 6 1 25 0 25 0 24 F M20 15 L21 15 21 16 1 35 0 35 0 34 F M20 25 L21 25 21 26 5 40 4 40 4 39 F M20 34 L21 34 21 35 14 40 13 40 13 39";
+    const fullSquare = go.Geometry.parse("F M1 1 L 1 40 L 40 40 L 40 1 z");
+    const halfSquare = go.Geometry.parse(halfLeftSquare + halfRightSquare)
+    const slash = go.Geometry.parse("F M38 0 L40 0 40 2 2 40 0 40 0 38");
     switch (a) {
-      case "A": return tlsq;
-      case "B": return tlsq;
-      case "C": return tlsq;
-      case "D": return trsq;
-      case "E": return trsq;
-      case "F": return trsq;
-      case "G": return brsq;
-      case "H": return brsq;
-      case "I": return brsq;
-      case "J": return blsq;
-      case "K": return blsq;
-      case "L": return blsq;
-      case "S": return slash;
-      default: return tlsq;
+      case "DEAD": return slash;
+      case "1DISEASE": return fullSquare;
+      case "NDISEASE": return halfSquare;
+      case "ME": return arrow;
+      default: return fullSquare;
     }
   }
 
   femaleGeometry(a: string) {
-    const tlarc = go.Geometry.parse("F M20 20 B 180 90 20 20 19 19 z");
-    const trarc = go.Geometry.parse("F M20 20 B 270 90 20 20 19 19 z");
-    const brarc = go.Geometry.parse("F M20 20 B 0 90 20 20 19 19 z");
-    const blarc = go.Geometry.parse("F M20 20 B 90 90 20 20 19 19 z");
+    const arrow = go.Geometry.parse("F M71 59 L 59 47 54 50 44 30 67 39 63 43 75 55")
+    const fullCircle = "F M20 20 B 180 90 20 20 19 19 z " + "F M20 20 B 270 90 20 20 19 19 z " + "F M20 20 B 0 90 20 20 19 19 z " + "F M20 20 B 90 90 20 20 19 19 z ";
+    const thirdFourthCircle = "F M20 20 B 90 90 20 20 19 19 z ";
+    const fisrtFourthCircle = "F M20 5 L 20 6 7 6 7 5 " + "F M20 10 L 20 11 3 11 3 10 " + "F M20 15 L 20 16 1 16 1 15";
+    const lastFourthCircle = "F M25 20 L 26 20 26 40 25 40 " + "F M30 20 L 31 20 31 37 30 36 " + "F M35 20 L 36 20 36 33 35 32 ";
+    const secondFourthCircle = go.Geometry.parse("F M20 20 B 270 90 20 20 19 19 z")
     const slash = go.Geometry.parse("F M38 0 L40 0 40 2 2 40 0 40 0 38z");
+    const fullBlackCircle = go.Geometry.parse(fullCircle);
+    const pieceCircle = go.Geometry.parse(fisrtFourthCircle + thirdFourthCircle + lastFourthCircle);
     switch (a) {
-      case "A": return tlarc;
-      case "B": return tlarc;
-      case "C": return tlarc;
-      case "D": return trarc;
-      case "E": return trarc;
-      case "F": return trarc;
-      case "G": return brarc;
-      case "H": return brarc;
-      case "I": return brarc;
-      case "J": return blarc;
-      case "K": return blarc;
-      case "L": return blarc;
-      case "S": return slash;
-      default: return tlarc;
+      case "DEAD": return slash;
+      case "1DISEASE": return fullBlackCircle;
+      case "NDISEASE": return pieceCircle;
+      case "FDISEASE": return secondFourthCircle;
+      case "ME": return arrow;
+      default: return fullBlackCircle;
     }
   }
 

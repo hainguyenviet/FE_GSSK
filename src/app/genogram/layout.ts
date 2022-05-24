@@ -4,7 +4,7 @@ export class GenogramLayout extends go.LayeredDigraphLayout {
   constructor() {
     super();
     this.initializeOption = go.LayeredDigraphLayout.InitDepthFirstIn;
-    this.spouseSpacing = 30; // minimum space between spouses
+    this.spouseSpacing = 50; // minimum space between spouses
     
   }
 
@@ -47,7 +47,7 @@ export class GenogramLayout extends go.LayeredDigraphLayout {
 
         vertex.width = spouseA?.actualBounds.width! + this.spouseSpacing + spouseB?.actualBounds.width!;
         vertex.height = Math.max(spouseA?.actualBounds.height!, spouseB?.actualBounds.height!);
-        vertex.focus = new go.Point(spouseA?.actualBounds.width! + this.columnSpacing / 2, vertex.height / 2);
+        vertex.focus = new go.Point(spouseA?.actualBounds.width! + this.spouseSpacing / 2, vertex.height / 2);
       }
       else 
       {
@@ -137,27 +137,36 @@ export class GenogramLayout extends go.LayeredDigraphLayout {
       }
     });
   }
+protected assignLayers(): void {
+  super.assignLayers();
+  const horiz = this.direction == 0.0 || this.direction == 180.0;
+  const maxsizes: number[] = [];
+  this.network?.vertexes.each(v => {
+    const lay = v.layer;
+    let max = maxsizes[lay];
+    if (max === undefined)
+    {max = 0; }
+    const sz = (horiz ? v.width : v.height);
+    if (sz > max)
+    {maxsizes[lay] = sz;}
+  });
 
-  // protected assignLayers(): void {
-  //   super.assignLayers();
-  //   const horiz = this.direction == 0.0 || this.direction == 180.0;
-  //   const maxsizes: any[] = [];
-  //   this.network?.vertexes.each(v => {
-  //     const lay = v.layer;
-  //     const max = maxsizes[lay];
-  //     if (horiz)
-  //     {
-  //       v.focus = new go.Point(0, v.height / 2);
-  //       v.width = max;
-  //     }
-  //     else
-  //     {
-  //       v.focus = new go.Point(v.width / 2, 0);
-  //       v.height = max;
-  //     }
-  //   });
-  // }
-
+  this.network?.vertexes.each(v=> {
+    const lay = v.layer;
+    const max = maxsizes[lay];
+    if (horiz)
+    {
+      v.focus = new go.Point(0, v.height / 2);
+      v.width = max;
+    }
+    else
+    {
+      v.focus = new go.Point(v.width/ 2, 0);
+      v.height = max;
+    }
+  });
+}
+ 
   protected commitNodes(): void {
     super.commitNodes();
     this.network?.vertexes.each(v => {
@@ -199,7 +208,7 @@ export class GenogramLayout extends go.LayeredDigraphLayout {
       }
 
       spouseA.position = new go.Point(v.x, v.y);
-      spouseB.position = new go.Point(v.x + spouseA?.actualBounds.width! + this.columnSpacing, v.y);
+      spouseB.position = new go.Point(v.x + spouseA?.actualBounds.width! + this.spouseSpacing, v.y);
       if (spouseA?.opacity === 0)
       {
         const pos = new go.Point(v.centerX - spouseA?.actualBounds.width! / 2, v.y);
