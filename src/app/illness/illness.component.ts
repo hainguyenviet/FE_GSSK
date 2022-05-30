@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { HealthrecordsService } from '../server_service/HealthRecords/healthrecords.service';
-
+import { IllnessService } from '../server_service/Illness/illness.service';
 @Component({
   selector: 'app-illness',
   templateUrl: './illness.component.html',
@@ -12,7 +11,7 @@ export class IllnessComponent implements OnInit {
   selectedValue: string;
   constructor(
     private _fb: FormBuilder,
-    private healthrecordsService: HealthrecordsService
+    private apiIll: IllnessService
   ) {
     this.selectedValue = '';
   }
@@ -31,14 +30,30 @@ export class IllnessComponent implements OnInit {
     'Rối loạn nhịp',
   ];
   filteredOptions!: Observable<any[]>;
-
+  public illnessForm !: FormGroup;
   public addmore!: FormGroup;
 
   ngOnInit() {
     this.addmore = this._fb.group({
       itemRows: this._fb.array([this.initItemRows()]),
     });
-    console.log(this.addmore.value)
+    this.illnessForm = this._fb.group({
+      isTwin:['', Validators.required],
+      isAdopted: ['', Validators.required],
+      height:['', Validators.required],
+      weight: ['', Validators.required],
+      firstPeriodAge:['', Validators.required],
+      birthControl: ['', Validators.required],
+      pregnantTime: ['', Validators.required],
+      firstBornAge:['', Validators.required],
+      isSmoke: ['', Validators.required],
+      smokeTime:['', Validators.required],
+      giveUpSmokeAge:['', Validators.required],
+      wineVolume:['', Validators.required],
+      workOutVolume:['', Validators.required],
+      workOutType:['', Validators.required],
+      illGroup: this.itemRows,
+    })
   }
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
@@ -60,11 +75,8 @@ export class IllnessComponent implements OnInit {
     this.itemRows.removeAt(index);
   }
 
-  saveInforIllnessData(data: any) {
-    this.healthrecordsService.saveInformation(data).subscribe((result) => {
-      // show console value id
-      /* console.log(result.id) */
-      sessionStorage.setItem('id', result.id.toString());
-    });
+  testdata(){
+    console.log(this.illnessForm.value)
   }
+
 }

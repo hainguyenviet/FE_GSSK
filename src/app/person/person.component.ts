@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -9,47 +9,49 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./person.component.scss'],
 })
 export class PersonComponent implements OnInit {
-  updatePerson: FormGroup = new FormGroup({
-    lastName: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    gender: new FormControl('', Validators.required),
-    dateOfBirth: new FormControl('', Validators.required),
-    phoneNumber: new FormControl(''),
-    idCard: new FormControl('', Validators.required),
-    email: new FormControl('', [Validators.required, Validators.email]),
-  });
+  personForm !: FormGroup 
   person: any;
-  constructor(private personService: PersonService) {}
+  constructor(private api: PersonService,private _fb: FormBuilder) {}
   personList: any;
   ngOnInit(){
+    this.personForm = this._fb.group({
+    lastName: ['', Validators.required],
+    firstName:  ['', Validators.required],
+    gender:  ['', Validators.required],
+    dateOfBirth:  ['', Validators.required],
+    phoneNumber:  ['', Validators.required],
+    idCard:  ['', Validators.required],
+    email:  ['', Validators.required],
+    }) 
+
     this.getAllPerson();
-    console.log(this.updatePerson.value)
+    //console.log(this.updatePerson.value)
   }
   
   public getAllPerson(): void {
-    this.personService.getAllPerson().subscribe((res: any) => {
+    this.api.getAllPerson().subscribe((res: any) => {
       this.personList = res;
       // show list person
-      console.log(this.personList)},
+      //console.log(this.personList)
+    },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
       )
   }
-  public postPerson(data: any) {
-    //COMMENT: the data here is the personal information that needs to be saved
-    /*  console.warn(data); */
-    this.personService.savePersonalInformation(data).subscribe((result) => {
-      // show console value id
-      /* console.log(result.id) */
-      sessionStorage.setItem('id', result.id.toString());
-    });
-
-
-    /*  console.log(data)
-    this.personService.getAllPerson().subscribe(data =>{  
-      console.log(data);
-      this.person = data;  
-    } ) */
+  postPerson() {
+    if(this.personForm.valid){
+      this.api.postPerson(this.personForm.value)
+      .subscribe({
+        next:(res)=>{
+          alert('Person added successfully')
+          this.personForm.reset();
+        },
+        error:()=>{
+          alert("Error")
+        }
+      })
+    }
   }
+
 }
