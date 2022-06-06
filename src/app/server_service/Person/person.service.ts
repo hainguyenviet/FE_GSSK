@@ -20,4 +20,12 @@ export class PersonService {
   postPerson(data: any) {
     return this.http.post<any>(`${this.baseURL}/person`, data);
   }
+
+  convertGenogram(id: string) {
+    return this.http.post(`${this.baseURL}/api/genogram/convert/` + id, null)
+  }
+
+  getGenogram(id: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/api/genogram/` + id);
+  }
 }
