@@ -78,16 +78,6 @@ export class InputInformationComponent implements OnInit {
       itemRows: this.fb.array([this.initItemRows()]),
     });
 
-    this.personForm = this.fb.group({
-      lastName: ['', Validators.required],
-      firstName: ['', Validators.required],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      idCard: ['', Validators.required],
-      email: ['', Validators.required],
-    });
-
     this.illnessForm = this.fb.group({
       isTwin:[''],
       isAdopted: [''],
@@ -105,6 +95,20 @@ export class InputInformationComponent implements OnInit {
       workOutType:[''],
       illGroup: this.itemRows,
     })
+
+    this.personForm = this.fb.group({
+      lastName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      gender: ['', Validators.required],
+      dateOfBirth: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      idCard: ['', Validators.required],
+      email: ['', Validators.required],
+      healthRecord: this.illnessForm,
+      relativeList: this.relatives
+    })
+
+    
   }
 
   get itemRows() {
@@ -127,33 +131,33 @@ export class InputInformationComponent implements OnInit {
     this.itemRows.removeAt(index);
   }
 
-  relatives(): FormArray {
-    return this.relatives_formGroup.get('relatives') as FormArray;
+  get relatives() {
+    return this.relatives_formGroup.controls['relatives'] as FormArray;
   }
 
   newRelative(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
       sex: ['', Validators.required],
-      idCard: ['', Validators.required],
+      idCard: [''],
       relation: ['', Validators.required],
       age: ['', Validators.required],
       orderFamily: ['', Validators.required],
       dead: [''],
-      deadAge: ['', Validators.required],
+      deadAge: [''],
       illNessRelative: this.fb.array([this.newIllNess()]),
     });
   }
 
   addNewRelation() {
     this.index_of_relationship += 1;
-    this.relatives().push(this.newRelative());
+    this.relatives.push(this.newRelative());
     if (
-      this.relatives().value[this.index_of_relationship - 1].relation ==
+      this.relatives.value[this.index_of_relationship - 1].relation ==
         'Cậu' ||
-      this.relatives().value[this.index_of_relationship - 1].relation == 'Cô' ||
-      this.relatives().value[this.index_of_relationship - 1].relation == 'Dì' ||
-      this.relatives().value[this.index_of_relationship - 1].relation == 'Chú'
+      this.relatives.value[this.index_of_relationship - 1].relation == 'Cô' ||
+      this.relatives.value[this.index_of_relationship - 1].relation == 'Dì' ||
+      this.relatives.value[this.index_of_relationship - 1].relation == 'Chú'
     ) {
       if (this.relationships.indexOf('Anh/em họ') == -1) {
         // if not exist anh chị em họ then add them to relationship
@@ -161,13 +165,13 @@ export class InputInformationComponent implements OnInit {
         this.relationships.push('Chị/em họ');
       }
       this.list_of_parent_nephew.push(
-        this.relatives().value[this.index_of_relationship - 1].name
+        this.relatives.value[this.index_of_relationship - 1].name
       );
     }
   }
 
   removeRelation(relativeIndex: number) {
-    this.relatives().removeAt(relativeIndex);
+    this.relatives.removeAt(relativeIndex);
   }
   selectRelation(value: string, relativeIndex: number) {
     if (
@@ -179,7 +183,7 @@ export class InputInformationComponent implements OnInit {
       'Chị ruột' ||
       'Chị/em họ'
     ) {
-      this.relatives().value[relativeIndex].sex = 'Nữ';
+      this.relatives.value[relativeIndex].sex = 'Nữ';
     }
     if (
       value == 'Cha' ||
@@ -190,11 +194,11 @@ export class InputInformationComponent implements OnInit {
       value == 'Ông ngoại' ||
       value == 'Anh/em họ'
     ) {
-      this.relatives().value[relativeIndex].sex = 'Nam';
+      this.relatives.value[relativeIndex].sex = 'Nam';
     }
   }
   illNessList(empIndex: number): FormArray {
-    return this.relatives().at(empIndex).get('illNessRelative') as FormArray;
+    return this.relatives.at(empIndex).get('illNessRelative') as FormArray;
   }
 
   newIllNess(): FormGroup {
@@ -217,22 +221,20 @@ export class InputInformationComponent implements OnInit {
 
 
   postPerson() {
-    this.inputForm = this.fb.group({
-      person: this.personForm.value,
-      healthRecord: this.illnessForm.value,
-      relativeList: this.relatives_formGroup.value,
-    })
-    if(this.inputForm.valid){
-      this.api.postPerson(this.inputForm.value)
+
+    if(this.personForm.valid){
+      this.api.postPerson(this.personForm.value)
       .subscribe({
         next:(res)=>{
           alert('Person added successfully')
-          this.inputForm.reset();
+          this.personForm.reset();
         },
         error:()=>{
           alert("Error")
         }
       })
+    }else{
+      alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết')
     }
   }
 
