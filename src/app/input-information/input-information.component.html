@@ -568,7 +568,7 @@
 
                     <mat-form-field
                     class="example-full-width margin-right-10"
-                    *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === 'Nhóm bệnh ung thư'"
+                    *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh ung thư'"
                   >
                     <mat-label>Tên Bệnh</mat-label>
                     <mat-select formControlName="illName"
@@ -586,7 +586,7 @@
 
                   <mat-form-field
               class="example-full-width margin-right-10"
-              *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === 'Nhóm bệnh huyết học'"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh huyết học'"
             >
               <mat-label>Tên Bệnh</mat-label>
               <mat-select formControlName="illName" 
@@ -604,7 +604,7 @@
 
             <mat-form-field
               class="example-full-width margin-right-10"
-              *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === 'Nhóm bệnh tim mạch'"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh tim mạch'"
             >
               <mat-label>Tên Bệnh</mat-label>
               <mat-select formControlName="illName" 
@@ -622,7 +622,7 @@
 
             <mat-form-field
               class="example-full-width margin-right-10"
-              *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === 'Nhóm bệnh nội thần kinh/tâm thần'"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh nội thần kinh/tâm thần'"
             >
               <mat-label>Tên Bệnh</mat-label>
               <mat-select formControlName="illName" 
@@ -639,7 +639,7 @@
             </mat-form-field>
 
             <mat-form-field
-            *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === 'Khác'"
+            *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Khác'"
             >
             <mat-label>Tên Bệnh</mat-label>
             <mat-select formControlName="illName" 
@@ -657,7 +657,7 @@
 
             <mat-form-field
               class="example-full-width margin-right-10"
-              *ngIf="illNessList(relativeIndex).controls[relativeIndex].value.code === ''|| illNessList(relativeIndex).controls[relativeIndex].value.code === null"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === ''|| illNessList(relativeIndex).controls[illNessIndex].value.code === null"
             >
               <mat-label>Tên Bệnh</mat-label>
               <mat-select 
@@ -669,7 +669,7 @@
             </mat-form-field>
 
             <mat-form-field class="margin-right-10 width-100 displayNone">
-              <input type="text" matInput formControlName="name" ngModel="{{ illNessList(relativeIndex).controls[relativeIndex].value.name }}" />
+              <input type="text" matInput formControlName="name" ngModel="{{ illNessList(relativeIndex).controls[illNessIndex].value.name }}" />
             </mat-form-field>
 
                     <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
