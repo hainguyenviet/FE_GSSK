@@ -1,24 +1,30 @@
-<app-progress #progress (stateChange)="onStateChange($event)" >
+<app-progress #progress (stateChange)="onStateChange($event)" id="section1">
     <app-progress-step>
-
         <app-person></app-person>
 
-        <button progressStepPrev mat-raised-button color="accent" (click)="goNext(progress)">Tiếp theo</button>
-
+        <button progressStepPrev mat-raised-button color="accent" (click)="goNext(progress)" href="#section2">
+      Tiếp theo
+    </button>
     </app-progress-step>
-    <app-progress-step class="padding-bottom-50 height">
-
+    <app-progress-step class="padding-bottom-50 height" id="section2">
         <app-illness></app-illness>
-
-        <button progressStepPrev mat-raised-button color="accent" (click)="goPrev(progress)" class="margin-right-10">Trở lại</button>
-        <button progressStepNext mat-raised-button color="primary" (click)="goNext(progress)">Tiếp theo</button>
+        <button href="#section1" progressStepPrev mat-raised-button color="accent" (click)="goPrev(progress)" class="margin-right-10">
+      Trở lại
+    </button>
+        <button progressStepNext mat-raised-button color="primary" (click)="goNext(progress)">
+      Tiếp theo
+    </button>
     </app-progress-step>
-    <app-progress-step >
-        
+    <app-progress-step>
         <app-relationship></app-relationship>
-        
-        <button progressStepNext mat-raised-button color="primary" (click)="goPrev(progress)" class="margin-right-10">Trở lại</button>
-        <button progressStepNext mat-raised-button color="basic" >Lưu</button>
-        <button progressStepNext mat-raised-button color="basic" [routerLink]="['/genogram']">Phân Tích</button>
+        <button progressStepNext mat-raised-button color="primary" (click)="goPrev(progress)" class="margin-right-10">
+      Trở lại
+    </button>
+        <!--  <button progressStepNext mat-raised-button color="basic" class="margin-right-10">
+      Lưu
+    </button> -->
+        <button progressStepNext mat-raised-button color="basic" [routerLink]="['/genogram']">
+      Phân Tích
+    </button>
     </app-progress-step>
 </app-progress>

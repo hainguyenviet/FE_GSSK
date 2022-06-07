@@ -19,6 +19,21 @@
 }
 
 .mat-raised-button.mat-success {
-  color: #f0fff3;
-  background-color: #155724;
+    color: #f0fff3;
+    background-color: #155724;
+}
+
+section {
+    margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 46.25rem) {
+    .margin-right-40 {
+        margin-right: 5px;
+    }
+    .relative {
+        mat-form-field {
+            width: 320px;
+        }
+    }
 }
