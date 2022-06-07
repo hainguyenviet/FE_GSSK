@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GenogramLayout } from './layout';
 import * as go from 'gojs';
+import { PersonService } from '../server_service/Person/person.service';
 
 const $ = go.GraphObject.make;
 @Component({
@@ -9,6 +10,7 @@ const $ = go.GraphObject.make;
   styleUrls: ['./genogram.component.scss'],
 })
 export class GenogramComponent implements OnInit {
+<<<<<<< HEAD
   constructor() {}
 
   dataFamily = [
@@ -166,6 +168,98 @@ export class GenogramComponent implements OnInit {
         )
       )
     );
+=======
+  constructor(private personService: PersonService) { }
+
+  ngOnInit(): void {
+    this.personService.getGenogram(sessionStorage.getItem('idUser')!).subscribe(
+      (data: any[]) => {
+        const myDiagram = $(go.Diagram, 'myDiagramDiv', {
+          initialAutoScale: go.Diagram.Uniform,
+          'undoManager.isEnabled': true,
+          // when a node is selected, draw a big yellow circle behind it
+          nodeSelectionAdornmentTemplate: $(
+            go.Adornment,
+            'Auto',
+            { layerName: 'Grid' }, // the predefined layer that is behind everything else
+            $(go.Shape, 'Circle', { fill: '#c1cee3', stroke: null }),
+            $(go.Placeholder, { margin: 2 })
+          ),
+          // use a custom layout, defined below
+          layout: $(GenogramLayout, {
+            direction: 90,
+            layerSpacing: 30,
+            columnSpacing: 10,
+          }),
+        });
+
+
+        myDiagram.nodeTemplateMap.add("M",  // male
+          $(go.Node, "Vertical",
+            { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+            $(go.Panel,
+              { name: "ICON" },
+              $(go.Shape, "Square",
+                { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#919191", portId: "" }),
+              $(go.Panel,
+                { // for each attribute show a Shape at a particular place in the overall square
+                  itemTemplate:
+                    $(go.Panel,
+                      $(go.Shape,
+                        { stroke: null, strokeWidth: 0 },
+                        new go.Binding("fill", "", this.attrFill),
+                        new go.Binding("geometry", "", this.maleGeometry))
+                    ),
+                  margin: 1
+                },
+                new go.Binding("itemArray", "a")
+              )
+            ),
+            $(go.TextBlock,
+              { textAlign: "center", maxSize: new go.Size(80, NaN) },
+              new go.Binding("text", "n"))
+          ));
+
+
+        myDiagram.nodeTemplateMap.add("F",  // female
+          $(go.Node, "Vertical",
+            { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+            $(go.Panel,
+              { name: "ICON" },
+              $(go.Shape, "Circle",
+                { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#a1a1a1", portId: "" }),
+              $(go.Panel,
+                { // for each attribute show a Shape at a particular place in the overall circle
+                  itemTemplate:
+                    $(go.Panel,
+                      $(go.Shape,
+                        { stroke: null, strokeWidth: 0 },
+                        new go.Binding("fill", "", this.attrFill),
+                        new go.Binding("geometry", "", this.femaleGeometry))
+                    ),
+                  margin: 1
+                },
+                new go.Binding("itemArray", "a")
+              )
+            ),
+            $(go.TextBlock,
+              { textAlign: "center", maxSize: new go.Size(80, NaN) },
+              new go.Binding("text", "n"))
+          ));
+
+        myDiagram.nodeTemplateMap.add("LinkLabel",
+          $(go.Node, { selectable: false, width: 1, height: 1, fromEndSegmentLength: 20 }));
+
+        myDiagram.linkTemplate =  // for parent-child relationships
+          $(go.Link,
+            {
+              routing: go.Link.Orthogonal, corner: 5,
+              layerName: "Background", selectable: false,
+              fromSpot: go.Spot.Bottom, toSpot: go.Spot.Top
+            },
+            $(go.Shape, { stroke: "#424242", strokeWidth: 2 })
+          );
+>>>>>>> 93bce597dd12fe8d014c44c491b75a9dafd7bfed
 
     myDiagram.nodeTemplateMap.add(
       'F', // female
@@ -224,6 +318,7 @@ export class GenogramComponent implements OnInit {
       })
     );
 
+<<<<<<< HEAD
     myDiagram.linkTemplate = $( // for parent-child relationships
       go.Link,
       {
@@ -246,6 +341,16 @@ export class GenogramComponent implements OnInit {
       )
     );
     this.setupDiagram(myDiagram, this.dataFamily, 3);
+=======
+        myDiagram.linkTemplateMap.add("Marriage",  // for marriage relationships
+          $(go.Link,
+            { selectable: false },
+            $(go.Shape, { strokeWidth: 2.5, stroke: "#5d8cc1" /* blue */ })
+          ));
+        this.setupDiagram(myDiagram, data, 3)
+      }
+    )
+>>>>>>> 93bce597dd12fe8d014c44c491b75a9dafd7bfed
   }
 
   setupDiagram(diagram: go.Diagram, array: any[], focusId: number) {
@@ -253,8 +358,13 @@ export class GenogramComponent implements OnInit {
       linkLabelKeysProperty: 'labelKeys',
       nodeCategoryProperty: 's',
       copiesArrays: true,
+<<<<<<< HEAD
       nodeDataArray: this.dataFamily,
     });
+=======
+      nodeDataArray: array
+    })
+>>>>>>> 93bce597dd12fe8d014c44c491b75a9dafd7bfed
 
     this.setupMarriages(diagram);
     this.setupParents(diagram);
