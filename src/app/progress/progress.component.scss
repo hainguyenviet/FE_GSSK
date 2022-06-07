@@ -2,13 +2,13 @@
     margin-top: 20px;
     user-select: none;
     display: grid;
-    grid-template-rows: 80px 1fr;
+    grid-template-rows: 80px 3fr;
     grid-row-gap: 100px;
     justify-content: center;
     grid-template-columns: min-content;
     .step-progress {
         margin-top: 120px;
-        padding: 15px 15px 60px 0;
+        padding: 15px 40px 60px 0;
         box-shadow: 0 15px 20px rgba(0, 0, 0, .1);
         border-radius: 15px;
         grid-row: 1 / 2;
@@ -136,5 +136,27 @@
         .check {
             stroke-dashoffset: 0;
         }
+    }
+}
+
+
+/* Mobile: width < 740px */
+
+@media only screen and (max-width: 46.1875rem) {
+    .step-progress {
+        display: none;
+    }
+    .step-content {
+        position: absolute !important;
+        left: 2%;
+    }
+}
+
+
+/* Tablet: width >= 740px and width < 1024px  */
+
+@media only screen and (min-width: 46.25rem) and (max-width: 63.9375em) {
+    .step-progress {
+        padding-right: 55px !important;
     }
 }

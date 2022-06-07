@@ -1,18 +1,27 @@
-.example-container .mat-form-field+.mat-form-field {
-    margin-left: 8px;
-}
-
-.margin-right-40 {
-    margin-right: 40px;
-}
-
-.person-form {
-    mat-form-field {
-        width: 320px;
-        margin-top: 20px;
+    .example-container .mat-form-field+.mat-form-field {
+        margin-left: 8px;
     }
-    .radio-group {
-        margin-top: 20px;
-        color: #757575;
+    
+    .margin-right-40 {
+        margin-right: 40px;
     }
-}
+    
+    .person-form {
+        mat-form-field {
+            width: 320px;
+            margin-top: 20px;
+        }
+        .radio-group {
+            margin-top: 20px;
+            color: #757575;
+        }
+    }
+    
+    @media only screen and (min-width: 46.25rem) and (max-width: 63.9375em) {
+        .person-form {
+            mat-form-field {
+                width: 300px;
+                margin-top: 20px;
+            }
+        }
+    }
