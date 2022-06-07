@@ -18,7 +18,7 @@ export class PersonService {
   }
 
   postPerson(data: any) {
-    return this.http.post<any>(`${this.baseURL}/person`, data);
+    return this.http.post<any>(`${this.baseURL}/api/person/create`, data);
   }
 
   convertGenogram(id: string) {
