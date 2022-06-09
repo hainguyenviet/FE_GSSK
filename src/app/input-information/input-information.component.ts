@@ -120,7 +120,7 @@ export class InputInformationComponent implements OnInit {
       wineVolume: null,
       workOutVolume: null,
       workOutType: null,
-      illGroup: this.itemRows,
+      illnessList: this.itemRows,
     });
 
     this.personForm = this.fb.group({
@@ -176,7 +176,7 @@ export class InputInformationComponent implements OnInit {
       isDead: [null],
       dead_age: [null],
       deathCause:[null],
-      relativeList: this.fb.array([this.newIllNess()]),
+      illnessRelative: this.fb.array([this.newIllNess()]),
     });
   }
 
@@ -288,49 +288,49 @@ export class InputInformationComponent implements OnInit {
     });
   }
 
-  selectIllNessRelative(value: string, illNessIndex: number) {
+  selectIllNessRelative(value: string,relativeIndex: number, illNessIndex: number) {
     if (value == 'Ung thư vú') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'BC1';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'BC1';
     if (value == 'Ung thư tuyến giáp') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'TC';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'TC';
     if (value == 'Ung thư máu') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'BC2';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'BC2';
     if (value == 'Ung thư tử cung') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'UC';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'UC';
     if (value == 'Ung thư dạ dày') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'SC1';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'SC1';
     if (value == 'Ung thư đại trực tràng') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'CC';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'CC';
     if (value == 'Rối loạn đông máu')
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'BCD';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'BCD';
     if (value == 'Huyết khối tĩnh mạch sâu') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'DVT';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'DVT';
     if (value == 'Thuyên tắc phổi') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'PE';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'PE';
     if (value == 'Bệnh tăng cholesterol máu gia đình') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'FH';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'FH';
     if (value == 'Nhồi máu cơ tim') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'MI';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'MI';
     if (value == 'Rối loạn nhịp') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'CA2';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'CA2';
     if (value == 'Bệnh cơ tim giãn') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'DCM';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'DCM';
     if (value == 'Đau thắt ngực')
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'AP';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'AP';
     if (value == 'Rối loạn tâm thần') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'P';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'P';
     if (value == 'Động kinh') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'E';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'E';
     if (value == 'Rối loạn tăng động giảm chú ý') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'ADHD';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'ADHD';
     if (value == 'Tự kỷ') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'A1';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'A1';
     if (value == 'Hen') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'A2';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'A2';
     if (value == 'Loãng xương') 
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'O';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'O';
     if (value == 'Đái tháo đường MODY')
-      this.illNessList(illNessIndex).value[illNessIndex].name = 'MODY';
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'MODY';
   }
 
   addNewRowIllRelative(relativeIndex: number) {
