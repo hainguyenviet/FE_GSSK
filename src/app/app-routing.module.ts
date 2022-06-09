@@ -8,7 +8,7 @@ import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 
 const routes: Routes = [
   {
-    path:'',component: HomeComponent
+    path:'',component: InputInformationComponent
   },
   {
     path:'genogram',component: GenogramComponent

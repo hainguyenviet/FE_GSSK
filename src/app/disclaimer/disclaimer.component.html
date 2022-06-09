@@ -2,15 +2,16 @@
 
     <h1 class="text-center">Tôi Xác Nhận</h1>
     <button class="close right" (click)="confirm()"> X </button>
-     <div>
-        <label class="margin-top-10"><input type="checkbox" formControlName="check1"> Tôi là công dân Việt Nam, đang sinh sống tại Việt Nam.</label>
+     <div class="disclaimer margin-bottom-30">
+        Công cụ FAME KHÔNG cho phép đơn vị/tổ chức thứ ba truy cập thông tin của bạn. 
+            Công cụ này được hỗ trợ bởi công nghệ thông tin, nhưng thông tin của bạn không được truyền sang các máy chủ khác và chỉ bạn mới có thể tải xuống. 
+            Thông tin của bạn không bao giờ có sẵn cho bất kỳ ai khác, trừ khi bạn chọn chia sẻ nó. 
+            Công cụ này không cung cấp lời khuyên y tế. Nếu có các thắc mắc liên quan đến tiền căn bệnh tật gia đình và sức khỏe của bản thân, hãy tư vấn với bác sĩ của bạn. 
+            Quyết định cung cấp thông tin là hoàn toàn tự nguyện và không ai có thể ép buộc hoặc dụ dỗ.
     </div>
-    <div>
-        <label class="margin-top-10 margin-bottom-30 center "><input type="checkbox" formControlName="check2"> Tôi đồng ý khai báo thông tin.</label>
-    </div>
-    <div class="button-dis">
-        <button class="button-disclaimer margin-right-10" color="primary" mat-stroked-button (click)="confirm()" [routerLink]="['./thankyou']">Không</button>
-        <button class="button-disclaimer" mat-flat-button color="primary" (click)="confirm()" [routerLink]="['./input-information']" [disabled]="formGroup.invalid">Xác Nhận</button>
+    <div class=" text-center " >
+        
+        <button class=" button-disclaimer" mat-flat-button color="primary" (click)="confirm()" >Xác Nhận</button>
     </div>
 </form>
     

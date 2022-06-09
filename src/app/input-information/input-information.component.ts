@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressComponent } from '../progress/progress.component';
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+
 
 import { PersonService } from '../server_service/Person/person.service';
 
@@ -10,7 +13,7 @@ import { PersonService } from '../server_service/Person/person.service';
   styleUrls: ['./input-information.component.scss'],
 })
 export class InputInformationComponent implements OnInit {
-  constructor(private fb: FormBuilder, private api: PersonService) {}
+  constructor(private fb: FormBuilder, private api: PersonService, private dialog: MatDialog) {}
 
   public inputForm!: FormGroup;
   public personForm!: FormGroup;
@@ -97,6 +100,7 @@ export class InputInformationComponent implements OnInit {
   list_of_parent_nephew: any[] = [];
 
   ngOnInit(): void {
+     this.disclaimer();
     this.relatives_formGroup = this.fb.group({
       relatives: this.fb.array([this.newRelative()]),
     });
@@ -357,6 +361,10 @@ export class InputInformationComponent implements OnInit {
     } else {
       alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết');
     }
+  }
+
+  public disclaimer(){ 
+    const dialogRef= this.dialog.open(DisclaimerComponent)
   }
 
   goNext(progress: ProgressComponent) {
