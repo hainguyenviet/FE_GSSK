@@ -524,6 +524,7 @@
                   *ngIf="
                   relatives.controls[relativeIndex].value.isDead
                   "
+                  class="margin-right-40"
                 >
                   <mat-label>Tuổi Qua Đời</mat-label>
                   <input  type="text" matInput />
@@ -546,7 +547,7 @@
                 có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá
                 trình này nếu cần.
               </p>
-              <div formArrayName="relativeList">
+              <div formArrayName="illnessRelative">
                 <div
                   *ngFor="
                     let skill of illNessList(relativeIndex).controls;

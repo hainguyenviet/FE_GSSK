@@ -276,7 +276,7 @@ export class InputInformationComponent implements OnInit {
 
 
   illNessList(empIndex: number): FormArray {
-    return this.relatives.at(empIndex).get('relativeList') as FormArray;
+    return this.relatives.at(empIndex).get('illnessRelative') as FormArray;
   }
 
   newIllNess(): FormGroup {
