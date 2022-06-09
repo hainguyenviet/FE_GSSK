@@ -276,5 +276,4 @@ export class GenogramComponent implements OnInit {
       }
     }
   }
-
 }

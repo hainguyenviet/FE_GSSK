@@ -200,12 +200,12 @@ protected assignLayers(): void {
       const aParentsNode = this.findParentsMarriageLabelNode(spouseA!);
       const bParentsNode = this.findParentsMarriageLabelNode(spouseB!);
 
-      if (aParentsNode !== null && bParentsNode !== null && aParentsNode.position.x > bParentsNode.position.x)
-      {
-        const temp = spouseA;
-        spouseA = spouseB;
-        spouseB = spouseA;
-      }
+      // if (aParentsNode !== null && bParentsNode !== null && aParentsNode.position.x > bParentsNode.position.x)
+      // {
+      //   const temp = spouseA;
+      //   spouseA = spouseB;
+      //   spouseB = spouseA;
+      // }
 
       spouseA.position = new go.Point(v.x, v.y);
       spouseB.position = new go.Point(v.x + spouseA?.actualBounds.width! + this.spouseSpacing, v.y);

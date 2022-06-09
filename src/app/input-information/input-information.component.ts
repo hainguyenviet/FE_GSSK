@@ -346,7 +346,7 @@ export class InputInformationComponent implements OnInit {
       this.api.postPerson(this.personForm.value).subscribe({
         next: (res) => {
           sessionStorage.setItem('idUser', res.id.toString());
-          this.api.convertGenogram(sessionStorage.getItem('idUser')!);
+          this.api.convertGenogram(sessionStorage.getItem('idUser')!).subscribe();
           alert('Person added successfully');
           this.personForm.reset();
         },
