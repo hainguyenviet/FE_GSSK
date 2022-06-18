@@ -175,7 +175,7 @@ export class InputInformationComponent implements OnInit {
       gender: ['', Validators.required],
       idCard: [null],
       relation: ['', Validators.required],
-      age: [null, Validators.required],
+      age: [null],
       familyOrder: [null],
       isDead: [null],
       dead_age: [null],

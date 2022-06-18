@@ -382,7 +382,6 @@
       progressStepNext
       mat-raised-button
       color="primary"
-      [disabled]="illNessForm.invalid"
       (click)="goNext(progress)"
     >
       Tiếp theo
@@ -452,15 +451,6 @@
               </mat-radio-button>
             </mat-radio-group>
 
-            <mat-form-field class="margin-right-40">
-              <mat-label> Số CMND/CCCD/Passport </mat-label>
-              <input
-                matInput
-                placeholder="Số CMND/CCCD/Passport"
-                formControlName="idCard"
-              />
-            </mat-form-field>
-
             <mat-form-field class="margin-right-40 width-100">
               <mat-label>Tuổi hiện tại</mat-label>
               <input
@@ -484,7 +474,7 @@
 
             <mat-form-field
               *ngIf="
-                relatives.controls[relativeIndex].value.orderFamily === 'Khác'
+                relatives.controls[relativeIndex].value.familyOrder === 'Khác'
               "
             >
               <mat-label>Vd: Con tư, con năm,...</mat-label>
@@ -722,7 +712,7 @@
       progressStepNext
       mat-raised-button
       color="basic"
-      [disabled]="personalInfoForm.invalid"
+     
       (click)="postPerson()"
     >
       Lưu
