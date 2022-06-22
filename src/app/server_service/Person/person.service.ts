@@ -10,7 +10,8 @@ export class PersonService {
   //TODO: implement this URL for interacting with data
   //Example: "http://localhost:4200"
   apiURL = 'https://run.mocky.io/v3/8fc644f7-de9e-4c36-a3fe-e184f74e4f70';
-  baseURL = 'http://localhost:8080';
+  //baseURL = 'http://localhost:8080/';
+  baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient) {}
 
   getAllPerson() {

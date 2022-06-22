@@ -8,7 +8,8 @@ import { HealthRecord } from '../model/HealthRecord';
 export class HealthrecordsService {
   constructor(private http: HttpClient) {}
 
-  baseURL = 'http://localhost:8080/';
+  //baseURL = 'http://localhost:8080/';
+  baseURL = 'http://giasusuckhoe.vn/';
 
   saveInformation(healthrecords: HealthRecord) {
     //TODO: update the "this.URL" following the URL for posting data

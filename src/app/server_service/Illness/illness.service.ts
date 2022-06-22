@@ -5,7 +5,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class IllnessService {
-  baseURL = 'http://localhost:3000';
+    //baseURL = 'http://localhost:8080/';
+    baseURL = 'http://giasusuckhoe.vn/';
   constructor(private http: HttpClient) {}
 
   postIllness(data: any) {
