@@ -318,20 +318,15 @@
             </mat-form-field>
 
             <mat-form-field
+            class="example-full-width margin-right-10"
               *ngIf="itemRows.controls[i].value.code === 'Khác'"
             >
             <mat-label>Tên Bệnh</mat-label>
-            <mat-select formControlName="illName" 
-            (selectionChange)="
-                selectIllNess(
-                  itemRows.controls[i].value.illName,
-                  i
-                )
-              ">
-              <mat-option *ngFor="let option of illOther" [value]="option">
-                {{ option }}
-              </mat-option>
-            </mat-select>
+            {{selectIllNess(
+              itemRows.controls[i].value.code,
+              i
+            )}}
+            <input formControlName="illName" type="text" matInput />
             </mat-form-field>
 
             <mat-form-field
@@ -478,7 +473,7 @@
               "
             >
               <mat-label>Vd: Con tư, con năm,...</mat-label>
-              <input type="text" matInput formControlName="familyOrder"/>
+              <input type="text" matInput formControlName="familyOrderOther"/>
             </mat-form-field>
 
             <mat-form-field
@@ -629,20 +624,15 @@
             </mat-form-field>
 
             <mat-form-field
+            class="example-full-width margin-right-10"
             *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Khác'"
             >
-            <mat-label>Tên Bệnh</mat-label>
-            <mat-select formControlName="illName" 
-            (selectionChange)="
-            selectIllNessRelative(
+            {{selectIllNessRelative(
               illNessList(relativeIndex).controls[illNessIndex].value
-              .illName,relativeIndex, illNessIndex
-            )
-              ">
-              <mat-option *ngFor="let option of illOther" [value]="option">
-                {{ option }}
-              </mat-option>
-            </mat-select>
+              .code,relativeIndex, illNessIndex
+            )}}
+            <mat-label>Tên Bệnh</mat-label>
+            <input formControlName="illName" type="text" matInput />
             </mat-form-field>
 
             <mat-form-field

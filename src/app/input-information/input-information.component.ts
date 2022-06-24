@@ -175,11 +175,12 @@ export class InputInformationComponent implements OnInit {
       gender: ['', Validators.required],
       idCard: [null],
       relation: ['', Validators.required],
-      age: [null],
-      familyOrder: [null],
-      isDead: [null],
-      dead_age: [null],
-      deathCause:[null],
+      age: null,
+      familyOrder: null,
+      familyOrderOther: null,
+      isDead: null,
+      dead_age: null,
+      deathCause:null,
       illnessRelative: this.fb.array([this.newIllNess()]),
     });
   }
@@ -275,6 +276,8 @@ export class InputInformationComponent implements OnInit {
       this.itemRows.value[illNessIndex].name = 'O';
     if (value == 'Đái tháo đường MODY')
       this.itemRows.value[illNessIndex].name = 'MODY';
+    if (value == 'Khác')
+      this.itemRows.value[illNessIndex].name = 'OT';
   }
 
 
@@ -335,7 +338,12 @@ export class InputInformationComponent implements OnInit {
       this.illNessList(relativeIndex).value[illNessIndex].name = 'O';
     if (value == 'Đái tháo đường MODY')
       this.illNessList(relativeIndex).value[illNessIndex].name = 'MODY';
+      if (value == 'Khác')
+      this.illNessList(relativeIndex).value[illNessIndex].name = 'OT';
+    
   }
+
+  
 
   addNewRowIllRelative(relativeIndex: number) {
     this.illNessList(relativeIndex).push(this.newIllNess());
