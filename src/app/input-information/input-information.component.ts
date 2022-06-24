@@ -68,6 +68,8 @@ export class InputInformationComponent implements OnInit {
   relationships: any[] = [
     'Cha',
     'Mẹ',
+    'Chồng',
+    'Vợ',
     'Anh ruột',
     'Em ruột',
     'Chị ruột',
@@ -210,24 +212,26 @@ export class InputInformationComponent implements OnInit {
   }
   selectRelation(value: string, relativeIndex: number) {
     if (
-      value == 'Mẹ' ||
-      'Cô' ||
-      'Dì' ||
-      'Bà nội' ||
-      'Bà ngoại' ||
-      'Chị ruột' ||
-      'Chị/em họ'
+      ['Vợ' ,
+      'Mẹ' ,
+      'Cô' ,
+      'Dì' ,
+      'Bà nội' ,
+      'Bà ngoại' ,
+      'Chị ruột' ,
+      'Chị/em họ'].indexOf(value) !== -1
+      
     ) {
       this.relatives.value[relativeIndex].gender = 'Nữ';
-    }
-    if (
-      value == 'Cha' ||
-      value == 'Cậu' ||
-      value == 'Chú' ||
-      value == 'Anh ruột' ||
-      value == 'Ông nội' ||
-      value == 'Ông ngoại' ||
-      value == 'Anh/em họ'
+    } else if (
+        ['Cha' ,
+        'Chồng' ,
+        'Cậu' ,
+        'Chú' ,
+        'Anh ruột' ,
+        'Ông nội' ,
+        'Ông ngoại' ,
+        'Anh/em họ'].indexOf(value) !== -1
     ) {
       this.relatives.value[relativeIndex].gender = 'Nam';
     }
