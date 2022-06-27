@@ -330,6 +330,18 @@
             </mat-form-field>
 
             <mat-form-field
+            class="example-full-width margin-right-10"
+            *ngIf="itemRows.controls[i].value.illName === 'Khác'"
+            >
+            {{selectIllNess(
+              itemRows.controls[i].value.illName,
+              i
+            )}}
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
+            </mat-form-field>
+
+            <mat-form-field
               class="example-full-width margin-right-10"
               *ngIf="itemRows.controls[i].value.code === ''|| itemRows.controls[i].value.code === null"
             >
@@ -347,7 +359,7 @@
             </mat-form-field>
 
             <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
-            <mat-form-field class="margin-right-10 width-100">
+            <mat-form-field class="margin-right-10 width-40">
               <input type="text" matInput formControlName="age_detected" />
             </mat-form-field>
             <button (click)="addNewRow()" mat-mini-fab>+</button>
@@ -553,7 +565,7 @@
                     </mat-form-field>
 
                     <mat-form-field
-                    class="example-full-width margin-right-10"
+                    class="example-full-width margin-right-10 width-100 "
                     *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh ung thư'"
                   >
                     <mat-label>Tên Bệnh</mat-label>
@@ -636,6 +648,18 @@
             </mat-form-field>
 
             <mat-form-field
+            class="example-full-width margin-right-10"
+            *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.illName== 'Khác'"
+            >
+            {{selectIllNessRelative(
+              illNessList(relativeIndex).controls[illNessIndex].value
+              .illName,relativeIndex, illNessIndex
+            )}}
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
+            </mat-form-field>
+
+            <mat-form-field
               class="example-full-width margin-right-10"
               *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === ''|| illNessList(relativeIndex).controls[illNessIndex].value.code === null"
             >
@@ -653,7 +677,7 @@
             </mat-form-field>
 
                     <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
-                    <mat-form-field class="margin-right-10 width-100">
+                    <mat-form-field class="margin-right-10 width-40">
                       <input type="text" matInput formControlName="age_detected" />
                     </mat-form-field>
                     <button
