@@ -34,7 +34,8 @@ import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CarouselActionModule } from './carousel/carousel-action/carousel-action.module';
 import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-sponsors.module';
-import { LoginComponent } from './login/login.component'
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component'
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import { LoginComponent } from './login/login.component'
     InputInformationComponent,
     ThankyoupageComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
