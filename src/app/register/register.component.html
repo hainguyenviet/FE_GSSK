@@ -7,28 +7,28 @@
                 <div class="card cascading-right">
                     <div class="card-body p-5 shadow-5 text-center">
                         <h2 class="fw-bold mb-5">Đăng ký</h2>
-                        <form>
+                        <form [formGroup]="registerForm">
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label" for="form3Example1">Họ</label>
-                                    <input type="text" id="form3Example1" class="form-control" />
+                                    <input formControlName="fullName" type="text" id="form3Example1" class="form-control" />
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="form3Example2">Tên</label>
-                                    <input type="text" id="form3Example2" class="form-control" />
+                                    <input  type="text" id="form3Example2" class="form-control" />
                                 </div>
                             </div>
                             <!-- Email input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="form3Example3">địa chỉ mail</label>
-                                <input type="email" id="form3Example3" class="form-control" />
+                                <label class="form-label" for="form3Example3">Địa chỉ mail</label>
+                                <input formControlName="email" type="email" id="form3Example3" class="form-control" />
                             </div>
 
                             <!-- Password input -->
                             <div class="form-outline mb-4">
-                                <label class="form-label" for="form3Example4">mật khẩu</label>
-                                <input type="password" id="form3Example4" class="form-control" />
+                                <label class="form-label" for="form3Example4">Mật khẩu</label>
+                                <input formControlName="password" type="password" id="form3Example4" class="form-control" />
                             </div>
 
                             <div class="form-outline mb-4">
@@ -36,7 +36,7 @@
                                 <input type="password" id="form3Example4" class="form-control" />
                             </div>
                             <!-- Submit button -->
-                            <button type="submit" class="btn btn-primary btn-block mb-4"> Đăng ký</button>
+                            <button (click)="register()" type="button" class="btn btn-primary btn-block mb-4"> Đăng ký</button>
                         </form>
                     </div>
                 </div>
