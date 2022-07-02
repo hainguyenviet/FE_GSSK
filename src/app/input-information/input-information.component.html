@@ -2,6 +2,7 @@
     <app-progress-step>
         <form #personalInfoForm="ngForm" [formGroup]="personForm" class="person-form">
             <h1>THÔNG TIN CÁ NHÂN</h1>
+
             <mat-form-field class="margin-right-40">
                 <mat-label>Họ</mat-label>
                 <input formControlName="lastName" matInput placeholder="Họ" required />
@@ -11,6 +12,7 @@
                 <mat-label>Tên</mat-label>
                 <input matInput formControlName="firstName" placeholder="Tên" required />
             </mat-form-field>
+
             <br />
             <div class="radio-group">
                 <mat-radio-group required aria-label="Select an option" formControlName="gender">
