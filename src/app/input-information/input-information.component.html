@@ -1,5 +1,11 @@
+<mat-toolbar color="primary">  GIA SỬ SỨC KHỎE
+    <div class="spacer"></div>
+    <a mat-raised-button color="accent" (click)="logout()">Đăng xuất</a>
+</mat-toolbar>
+
 <app-progress #progress (stateChange)="onStateChange($event)">
     <app-progress-step>
+       
         <form #personalInfoForm="ngForm" [formGroup]="personForm" class="person-form">
             <h1>THÔNG TIN CÁ NHÂN</h1>
 

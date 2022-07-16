@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../server_service/AuthService/auth.service';
 
 @Component({
@@ -10,23 +11,22 @@ import { AuthService } from '../server_service/AuthService/auth.service';
 export class RegisterComponent implements OnInit {
 
   public registerForm!: FormGroup
-  constructor(private service: AuthService, private fb: FormBuilder) { }
+  constructor(private service: AuthService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       fullName: [''],
-      email: [''],
-      password: ['']
+      email: ['', Validators.required],
+      password: ['', Validators.required]
     })
   }
 
   register() {
-    //console.log("register Form:", this.registerForm.value)
     this.service.singup(this.registerForm.value).subscribe({next: (data) => {
-      console.log("register return: ", data)
+      this.router.navigateByUrl('/login')
     },
     error: () => {
-      alert("Error")
+      alert("Đăng kí không thành công. Xin vui lòng đăng kí lại")
     }})
   }
 }

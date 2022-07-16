@@ -60,6 +60,10 @@
   margin-top: 10px;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 @media screen and (max-width: 576px) {
   .sex {
     width: 100% !important;

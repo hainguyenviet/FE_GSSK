@@ -23,7 +23,7 @@
                         <!-- Checkbox -->
                         <div class="form-check mb-0">
                             <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                            <label class="form-check-label" for="form2Example3"> ghi nhớ mật khẩu </label>
+                            <label class="form-check-label" for="form2Example3"> Ghi nhớ mật khẩu </label>
                         </div>
                         <a href="#!" class="text-body">Quên mật khẩu</a>
                     </div>
@@ -32,6 +32,10 @@
                         <button (click)="login()" type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem">
                             Đăng nhập
                         </button>
+                        <button (click)="signinWithGG()" mat-button style="padding: 1rem;">
+                            <mat-icon style="width: 50px; height:30px"
+                                      svgIcon="logo"></mat-icon> Login With Google
+                            </button>  
                         <p class="small fw-bold mt-2 pt-1 mb-0">
                             Bạn chưa có tài khoản?
                             <a [routerLink]="['/register']" routerLinkActive="router-link-active" class="link-danger">Đăng ký</a>

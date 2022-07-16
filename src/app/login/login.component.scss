@@ -10,8 +10,26 @@
     height: calc(100% - 73px);
 }
 
+.bg-transparent{
+    background-color: transparent;
+}
+
 @media (max-width: 450px) {
     .h-custom {
         height: 100%;
     }
 }
+
+p {
+    font-family: Lato;
+  }
+  
+  .fs-Logo {
+    width: 150px;
+    height: 150px;
+    fill:red;
+  }
+  
+  .mat-icon {
+    fill:red;
+  }

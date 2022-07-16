@@ -4,8 +4,8 @@ import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
-
 import { PersonService } from '../server_service/Person/person.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ import { PersonService } from '../server_service/Person/person.service';
   styleUrls: ['./input-information.component.scss'],
 })
 export class InputInformationComponent implements OnInit {
-  constructor(private fb: FormBuilder, private api: PersonService, private dialog: MatDialog) { }
+  constructor(private fb: FormBuilder, private api: PersonService, private dialog: MatDialog, private router: Router) { }
 
   public inputForm!: FormGroup;
   public personForm!: FormGroup;
@@ -378,6 +378,12 @@ export class InputInformationComponent implements OnInit {
     }
   }
 
+  logout() {
+    localStorage.removeItem('access_token')
+    this.router.navigateByUrl('/login')
+
+  }
+
   public disclaimer() {
     const dialogRef = this.dialog.open(DisclaimerComponent)
   }
@@ -391,6 +397,5 @@ export class InputInformationComponent implements OnInit {
   }
 
   onStateChange(event: any) {
-    console.log(event);
   }
 }

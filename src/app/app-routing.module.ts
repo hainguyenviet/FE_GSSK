@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { InputInformationComponent } from './input-information/input-information.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './server_service/AuthService/auth.guard';
+import { AuthService } from './server_service/AuthService/auth.service';
 import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 
 const routes: Routes = [
@@ -18,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'input-information',
-    component: InputInformationComponent,
+    component: InputInformationComponent, canActivate:[AuthGuard]
   },
   { path: 'thankyou', component: ThankyoupageComponent },
   {
