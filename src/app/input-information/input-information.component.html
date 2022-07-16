@@ -8,7 +8,7 @@
       <h1>THÔNG TIN CÁ NHÂN</h1>
       <mat-form-field class="margin-right-40">
         <mat-label>Họ</mat-label>
-        <input formControlName="lastName" matInput placeholder="Họ" required />
+        <input formControlName="lastName" ngModel={{personList.lastName}}  matInput placeholder="Họ" required > 
       </mat-form-field>
 
       <mat-form-field>
@@ -16,6 +16,7 @@
         <input
           matInput
           formControlName="firstName"
+          ngModel={{personList.firstName}}
           placeholder="Tên"
           required
         />
@@ -28,16 +29,17 @@
           formControlName="gender"
         >
           <mat-label class="margin-right-40">Giới tính</mat-label>
-          <mat-radio-button value="Nam" class="margin-right-40"
+          <mat-radio-button [checked]="personList.gender==='Nam'" value="Nam" class="margin-right-40"
             >Nam</mat-radio-button
           >
-          <mat-radio-button value="Nữ">Nữ</mat-radio-button>
+          <mat-radio-button [checked]="personList.gender==='Nữ'" value="Nữ">Nữ</mat-radio-button>
         </mat-radio-group>
       </div>
       <mat-form-field class="margin-right-40">
         <mat-label>Ngày sinh</mat-label>
         <input
           matInput
+          ngModel={{personList.dateOfBirth}}
           [matDatepicker]="picker"
           formControlName="dateOfBirth"
           required
@@ -50,6 +52,7 @@
         <mat-label> Số điện thoại </mat-label>
         <input
           matInput
+          ngModel={{personList.phoneNumber}}
           placeholder="Số điện thoại"
           formControlName="phoneNumber"
           required
@@ -62,6 +65,7 @@
         <input
           required
           matInput
+          ngModel={{personList.idCard}}
           placeholder="Số CMND/CCCD/Passport"
           formControlName="idCard"
         />
@@ -69,7 +73,7 @@
 
       <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email" formControlName="email" required />
+        <input matInput placeholder="Email" ngModel={{personList.email}} formControlName="email" required />
       </mat-form-field>
     </form>
     <button
@@ -93,10 +97,10 @@
             <mat-label class="margin-right-40"
               >Bạn có anh em song sinh không ?</mat-label
             >
-            <mat-radio-button value="true" class="margin-right-40"
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isTwin==='true'" class="margin-right-40"
               >Có</mat-radio-button
             >
-            <mat-radio-button value="false">Không</mat-radio-button>
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isTwin==='false'">Không</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="margin-top-10">
@@ -107,21 +111,21 @@
             <mat-label class="margin-right-40"
               >Bạn có được nhận nuôi không ?</mat-label
             >
-            <mat-radio-button value="true" class="margin-right-40"
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isAdopted==='true'"   class="margin-right-40"
               >Có</mat-radio-button
             >
-            <mat-radio-button value="false">Không</mat-radio-button>
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isAdopted==='false'" >Không</mat-radio-button>
           </mat-radio-group>
         </div>
         <div>
           <label class="margin-right-5" >Chiều cao:</label>
           <mat-form-field class="margin-right-50 width-100">
-            <input matInput formControlName="height" placeholder=" " required/> 
+            <input matInput formControlName="height" ngModel={{personList.healthRecord.height}} placeholder=" " required/> 
           </mat-form-field>
           <label class="margin-right-40">Cm</label>
           <label class="margin-right-5" >Cân nặng</label>
           <mat-form-field class="width-100">
-            <input matInput formControlName="weight" placeholder=" " required/>
+            <input matInput formControlName="weight" ngModel={{personList.healthRecord.weight}} placeholder=" " required/>
           </mat-form-field>
           <label class="margin-right-10">Kg</label>
           
@@ -129,14 +133,15 @@
         <div class="">
             <mat-radio-group
             aria-label="Select an option parent" 
+            formControlName="relationship"
           >
             <mat-label class="margin-right-40"
               >Bố mẹ có quan hệ họ hàng không ?</mat-label
             >
-            <mat-radio-button value="true" class="margin-right-40"
+            <mat-radio-button value="true" [checked]="personList.healthRecord.relationship==='true'" class="margin-right-40"
               >Có</mat-radio-button
             >
-            <mat-radio-button value="false">Không</mat-radio-button>
+            <mat-radio-button value="false" [checked]="personList.healthRecord.relationship==='false'">Không</mat-radio-button>
           </mat-radio-group>
         </div>
         <div class="margin-top-10">
@@ -144,7 +149,7 @@
           <div>
             <label class="margin-right-10"> Tuổi có kinh đầu: </label>
             <mat-form-field class="margin-right-10 width-100">
-              <input type="text" matInput formControlName="firstPeriodAge" />
+              <input type="text" matInput formControlName="firstPeriodAge" ngModel={{personList.healthRecord.firstPeriodAge}} />
             </mat-form-field>
             <label class="margin-right-10">Tuổi. </label>
             <label class="margin-right-10"
@@ -156,6 +161,7 @@
               matInput
               class="width-100"
               formControlName="pregnantTime"
+              ngModel={{personList.healthRecord.pregnantTime}}
             />
           </mat-form-field>
           <label class="margin-right-10">Tháng.</label>
@@ -164,12 +170,12 @@
           <div>
             <label class="margin-right-10">Số lần mang thai: </label>
             <mat-form-field class="margin-right-10 width-100">
-              <input type="text" matInput formControlName="birthControl" />
+              <input type="text" matInput formControlName="birthControl" ngModel={{personList.healthRecord.birthControl}}/>
             </mat-form-field>
             <label class="margin-right-40">Lần. </label>
             <label class="margin-right-10">Tuổi có con đầu tiên: </label>
             <mat-form-field class="margin-right-10 width-100">
-              <input type="text" matInput formControlName="firstBornAge" />
+              <input type="text" matInput formControlName="firstBornAge" ngModel={{personList.healthRecord.firstBornAge}}/>
             </mat-form-field>
             <label class="margin-right-10">Tuổi.</label>
           </div>
@@ -185,39 +191,39 @@
             <mat-label class="margin-right-40"
               >Bạn có hút thuốc không ?</mat-label
             >
-            <mat-radio-button value="true" class="margin-right-40"
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isSmoke==='true'" class="margin-right-40"
               >Có</mat-radio-button
             >
-            <mat-radio-button value="false">Không</mat-radio-button>
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isSmoke==='false'">Không</mat-radio-button>
           </mat-radio-group>
           </div>
 
           <label class="margin-right-10">Từng hút thuốc năm bao nhiêu tuổi: </label>
           <mat-form-field class="margin-right-10 width-100 ">
-            <input type="text" matInput formControlName="smokeTime" />
+            <input type="text" matInput formControlName="smokeTime" ngModel={{personList.healthRecord.smokeTime}}/>
           </mat-form-field>
           <label class="margin-right-10">Tuổi. </label>
           <label class="margin-right-10">Bỏ thuốc năm bao nhiêu tuổi: </label>
           <mat-form-field class="margin-right-10 width-100">
-            <input type="text" matInput formControlName="giveUpSmokeAge" />
+            <input type="text" matInput formControlName="giveUpSmokeAge"  ngModel={{personList.healthRecord.giveUpSmokeAge}}/>
           </mat-form-field>
           <label class="margin-right-10">Tuổi. </label>
           <label class="margin-right-10">
             Mỗi tuần bạn uống bao nhiêu ly rượu ?
           </label>
           <mat-form-field class="margin-right-10 width-100">
-            <input type="text" matInput formControlName="wineVolume" />
+            <input type="text" matInput formControlName="wineVolume" ngModel={{personList.healthRecord.wineVolume}} />
           </mat-form-field>
           <label class="margin-right-10">
             Một tuần bạn tập thể dục bao nhiêu lần ?
           </label>
           <mat-form-field class="margin-right-10 width-100">
-            <input type="text" matInput formControlName="workOutVolume" />
+            <input type="text" matInput formControlName="workOutVolume" ngModel={{personList.healthRecord.workOutVolume}} />
           </mat-form-field>
           <br />
           <label class="margin-right-10"> Nếu có, bạn tập bộ môn gì ? </label>
           <mat-form-field class="margin-right-10">
-            <input type="text" matInput formControlName="workOutType" />
+            <input type="text" matInput formControlName="workOutType" ngModel={{personList.healthRecord.workOutType}}/>
           </mat-form-field>
         </div>
       </section>
@@ -230,12 +236,13 @@
         </p>
         <div formArrayName="itemRows">
           <div
+
             *ngFor="let itemrow of itemRows.controls; let i = index"
             [formGroupName]="i"
           >
             <mat-form-field class="example-full-width margin-right-40">
               <mat-label>Nhóm bệnh</mat-label>
-              <mat-select formControlName="code">
+              <mat-select formControlName="code" ngModel={{personList.healthRecord.illnessList[0].code}>
                 <mat-option
                   *ngFor="let option of illNessGroup"
                   [value]="option"
