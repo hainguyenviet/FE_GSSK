@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class InputInformationComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private api: PersonService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) {}
 
   public inputForm!: FormGroup;
@@ -446,6 +448,11 @@ export class InputInformationComponent implements OnInit {
     } else {
       alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết');
     }
+  }
+  logout() {
+    localStorage.removeItem('access_token')
+    this.router.navigateByUrl('/login')
+
   }
 
   public disclaimer() {

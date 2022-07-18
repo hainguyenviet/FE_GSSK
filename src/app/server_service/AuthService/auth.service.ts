@@ -3,8 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, pipe, ReplaySubject, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import {GoogleAuthProvider} from '@angular/fire/auth'
-import {AngularFireAuth} from '@angular/fire/compat/auth'
 import { Router } from '@angular/router';
 let options = {
   headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
@@ -16,14 +14,7 @@ let options = {
 export class AuthService {
 
   baseURL =  environment.baseURL
-  //private auth2!: gapi.auth2.GoogleAuth
-  //private subject = new ReplaySubject<gapi.auth2.GoogleUser>(1)
-  constructor(private http: HttpClient, private fireAth: AngularFireAuth, private router: Router) {
-    //   gapi.load('auth2', () => {
-    //    this.auth2 = gapi.auth2.init({
-    //      client_id: '967628261875-c3ieut14pgpgbu0vjldoqt53ngnib8gs.apps.googleusercontent.com'
-    //    })
-    //  })
+  constructor(private http: HttpClient, private router: Router) {
    }
   login(data: any) {
     return this.http.post<any>(`${this.baseURL}/api/login`, data, options)
@@ -38,17 +29,6 @@ export class AuthService {
       return true
     }
     return false
-  }
-
-  signInGG() {
-    return this.fireAth.signInWithPopup(new GoogleAuthProvider).then(res => {
-      this.router.navigateByUrl('/input-information')
-      localStorage.setItem('access_token', JSON.stringify(res.user?.uid))
-      console.log("token: ", JSON.stringify(res.user?.uid))
-      
-    }, err => {
-      alert(err.message)
-    })
   }
 
   handleError(error: HttpErrorResponse) {

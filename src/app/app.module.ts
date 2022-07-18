@@ -2,7 +2,7 @@
 import { CarouselModule } from './carousel/carousel.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +43,7 @@ import {
 } from 'angularx-social-login';
 import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
+import { InterceptorService } from './server_service/Interceptor/interceptor.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,7 +88,7 @@ import { environment } from 'src/environments/environment';
     SocialLoginModule,
     AngularFireModule.initializeApp(environment.firebase)
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents:[DisclaimerComponent]
