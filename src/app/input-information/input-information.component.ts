@@ -5,7 +5,7 @@ import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 import { PersonService } from '../server_service/Person/person.service';
-import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./input-information.component.scss'],
 })
 export class InputInformationComponent implements OnInit {
-  constructor(private fb: FormBuilder, private api: PersonService, private dialog: MatDialog, private router: Router) { }
+  constructor(
+    private fb: FormBuilder,
+    private api: PersonService,
+    private dialog: MatDialog
+  ) {}
 
   public inputForm!: FormGroup;
   public personForm!: FormGroup;
@@ -35,7 +39,6 @@ export class InputInformationComponent implements OnInit {
     'Ung thư tử cung',
     'Ung thư tuyến giáp',
     'Ung thư máu',
-    'Khác',
   ];
 
   illHematology: string[] = [
@@ -43,7 +46,6 @@ export class InputInformationComponent implements OnInit {
     'Huyết khối tĩnh mạch sâu',
     'Thuyên tắc phổi',
     'Bệnh tăng cholesterol máu gia đình',
-    'Khác',
   ];
 
   illCardiovascular: string[] = [
@@ -51,7 +53,6 @@ export class InputInformationComponent implements OnInit {
     'Rối loạn nhịp',
     'Bệnh cơ tim giãn',
     'Đau thắt ngực',
-    'Khác',
   ];
 
   illNeurological: string[] = [
@@ -59,20 +60,15 @@ export class InputInformationComponent implements OnInit {
     'Động kinh',
     'Rối loạn tăng động giảm chú ý',
     'Tự kỷ',
-    'Khác',
   ];
 
-  illOther: string[] = [
-    'Hen',
-    'Loãng xương',
-    'Đái tháo đường MODY',
-    'Khác',
-  ];
-
+  illOther: string[] = ['Hen', 'Loãng xương', 'Đái tháo đường MODY'];
 
   relationships: any[] = [
     'Cha',
     'Mẹ',
+    'Chồng',
+    'Vợ',
     'Anh ruột',
     'Em ruột',
     'Chị ruột',
@@ -86,7 +82,66 @@ export class InputInformationComponent implements OnInit {
     'Bà nội',
     'Con ruột',
   ];
-
+  personList = {
+    "lastName": "",
+  "firstName": "",
+  "gender": "",
+  "dateOfBirth": "",
+  "phoneNumber": "",
+  "idCard": "",
+  "email": "",
+  "healthRecord": {
+    "relationship": null,
+    "isTwin": null,
+    "isAdopted": null,
+    "height": "",
+    "weight": "",
+    "firstPeriodAge": null,
+    "birthControl": null,
+    "pregnantTime": null,
+    "firstBornAge": null,
+    "isSmoke": null,
+    "smokeTime": null,
+    "giveUpSmokeAge": null,
+    "wineVolume": null,
+    "workOutVolume": null,
+    "workOutType": null,
+    "illnessList": [
+      {
+        "code": "",
+        "illName": "",
+        "illNameOther": "",
+        "name": "",
+        "age_detected": ""
+      },
+      
+    ]
+  },
+  "relativeList": [
+    {
+      "name": "",
+      "gender": "",
+      "idCard": null,
+      "relation": "",
+      "age": null,
+      "familyOrder": "",
+      "familyOrderOther": "",
+      "isDead": null,
+      "dead_age": null,
+      "deathCause": "",
+      "illnessRelative": [
+        {
+          "code": "",
+          "illName": "",
+          "illNameOther": null,
+          "name": "",
+          "age_detected": ""
+        },
+        
+      ]
+    }
+  ],
+  };
   list_of_sex: string[] = ['Nam', 'Nữ'];
   orderFamily_option: any[] = ['Con cả', 'Con hai', 'Con ba', 'Khác'];
   causeOfdeath: any[] = [
@@ -105,7 +160,8 @@ export class InputInformationComponent implements OnInit {
   list_of_parent_nephew: any[] = [];
 
   ngOnInit(): void {
-    //  this.disclaimer();
+    this.getAllPerson();
+    this.disclaimer();
     this.relatives_formGroup = this.fb.group({
       relatives: this.fb.array([this.newRelative()]),
     });
@@ -117,6 +173,7 @@ export class InputInformationComponent implements OnInit {
     this.illnessForm = this.fb.group({
       isTwin: null,
       isAdopted: null,
+      relationship: null,
       height: ['', Validators.required],
       weight: ['', Validators.required],
       firstPeriodAge: null,
@@ -142,12 +199,29 @@ export class InputInformationComponent implements OnInit {
       email: ['', Validators.required],
       healthRecord: this.illnessForm,
       relativeList: this.relatives,
-    });
+  
+  })
+    
 
     this.initItemRows();
     this.newRelative();
+  }
 
 
+  
+    
+ 
+  public getAllPerson(): void {
+    this.api.getAllPerson().subscribe(
+      (res: any) => {
+        this.personList = res;
+        // show list person
+        console.log(this.personList.lastName)
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
   }
 
   get itemRows() {
@@ -158,7 +232,6 @@ export class InputInformationComponent implements OnInit {
     return this.fb.group({
       code: null,
       illName: null,
-      illNameOther: null,
       name: '',
       age_detected: null,
     });
@@ -216,36 +289,39 @@ export class InputInformationComponent implements OnInit {
   }
   selectRelation(value: string, relativeIndex: number) {
     if (
-      value == 'Mẹ' ||
-      'Cô' ||
-      'Dì' ||
-      'Bà nội' ||
-      'Bà ngoại' ||
-      'Chị ruột' ||
-      'Chị/em họ'
+      [
+        'Vợ',
+        'Mẹ',
+        'Cô',
+        'Dì',
+        'Bà nội',
+        'Bà ngoại',
+        'Chị ruột',
+        'Chị/em họ',
+      ].indexOf(value) !== -1
     ) {
       this.relatives.value[relativeIndex].gender = 'Nữ';
-    }
-    if (
-      value == 'Cha' ||
-      value == 'Cậu' ||
-      value == 'Chú' ||
-      value == 'Anh ruột' ||
-      value == 'Ông nội' ||
-      value == 'Ông ngoại' ||
-      value == 'Anh/em họ'
+    } else if (
+      [
+        'Cha',
+        'Chồng',
+        'Cậu',
+        'Chú',
+        'Anh ruột',
+        'Ông nội',
+        'Ông ngoại',
+        'Anh/em họ',
+      ].indexOf(value) !== -1
     ) {
       this.relatives.value[relativeIndex].gender = 'Nam';
     }
   }
 
   selectIllNess(value: string, illNessIndex: number) {
-    if (value == 'Ung thư vú')
-      this.itemRows.value[illNessIndex].name = 'BC1';
+    if (value == 'Ung thư vú') this.itemRows.value[illNessIndex].name = 'BC1';
     if (value == 'Ung thư tuyến giáp')
       this.itemRows.value[illNessIndex].name = 'TC';
-    if (value == 'Ung thư máu')
-      this.itemRows.value[illNessIndex].name = 'BC2';
+    if (value == 'Ung thư máu') this.itemRows.value[illNessIndex].name = 'BC2';
     if (value == 'Ung thư tử cung')
       this.itemRows.value[illNessIndex].name = 'UC';
     if (value == 'Ung thư dạ dày')
@@ -266,27 +342,19 @@ export class InputInformationComponent implements OnInit {
       this.itemRows.value[illNessIndex].name = 'CA2';
     if (value == 'Bệnh cơ tim giãn')
       this.itemRows.value[illNessIndex].name = 'DCM';
-    if (value == 'Đau thắt ngực')
-      this.itemRows.value[illNessIndex].name = 'AP';
+    if (value == 'Đau thắt ngực') this.itemRows.value[illNessIndex].name = 'AP';
     if (value == 'Rối loạn tâm thần')
       this.itemRows.value[illNessIndex].name = 'P';
-    if (value == 'Động kinh')
-      this.itemRows.value[illNessIndex].name = 'E';
+    if (value == 'Động kinh') this.itemRows.value[illNessIndex].name = 'E';
     if (value == 'Rối loạn tăng động giảm chú ý')
       this.itemRows.value[illNessIndex].name = 'ADHD';
-    if (value == 'Tự kỷ')
-      this.itemRows.value[illNessIndex].name = 'A1';
-    if (value == 'Hen')
-      this.itemRows.value[illNessIndex].name = 'A2';
-    if (value == 'Loãng xương')
-      this.itemRows.value[illNessIndex].name = 'O';
+    if (value == 'Tự kỷ') this.itemRows.value[illNessIndex].name = 'A1';
+    if (value == 'Hen') this.itemRows.value[illNessIndex].name = 'A2';
+    if (value == 'Loãng xương') this.itemRows.value[illNessIndex].name = 'O';
     if (value == 'Đái tháo đường MODY')
       this.itemRows.value[illNessIndex].name = 'MODY';
-    if (value == 'Khác')
-      this.itemRows.value[illNessIndex].name = 'OT';
+    if (value == 'Khác') this.itemRows.value[illNessIndex].name = 'OT';
   }
-
-
 
   illNessList(empIndex: number): FormArray {
     return this.relatives.at(empIndex).get('illnessRelative') as FormArray;
@@ -296,13 +364,16 @@ export class InputInformationComponent implements OnInit {
     return this.fb.group({
       code: [null],
       illName: [''],
-      illNameOther: null,
       name: [''],
       age_detected: [null],
     });
   }
 
-  selectIllNessRelative(value: string, relativeIndex: number, illNessIndex: number) {
+  selectIllNessRelative(
+    value: string,
+    relativeIndex: number,
+    illNessIndex: number
+  ) {
     if (value == 'Ung thư vú')
       this.illNessList(relativeIndex).value[illNessIndex].name = 'BC1';
     if (value == 'Ung thư tuyến giáp')
@@ -347,10 +418,7 @@ export class InputInformationComponent implements OnInit {
       this.illNessList(relativeIndex).value[illNessIndex].name = 'MODY';
     if (value == 'Khác')
       this.illNessList(relativeIndex).value[illNessIndex].name = 'OT';
-
   }
-
-
 
   addNewRowIllRelative(relativeIndex: number) {
     this.illNessList(relativeIndex).push(this.newIllNess());
@@ -365,7 +433,9 @@ export class InputInformationComponent implements OnInit {
       this.api.postPerson(this.personForm.value).subscribe({
         next: (res) => {
           sessionStorage.setItem('idUser', res.id.toString());
-          this.api.convertGenogram(sessionStorage.getItem('idUser')!).subscribe();
+          this.api
+            .convertGenogram(sessionStorage.getItem('idUser')!)
+            .subscribe();
           alert('Person added successfully');
           this.personForm.reset();
         },
@@ -378,14 +448,8 @@ export class InputInformationComponent implements OnInit {
     }
   }
 
-  logout() {
-    localStorage.removeItem('access_token')
-    this.router.navigateByUrl('/login')
-
-  }
-
   public disclaimer() {
-    const dialogRef = this.dialog.open(DisclaimerComponent)
+    const dialogRef = this.dialog.open(DisclaimerComponent);
   }
 
   goNext(progress: ProgressComponent) {
@@ -397,5 +461,6 @@ export class InputInformationComponent implements OnInit {
   }
 
   onStateChange(event: any) {
+    console.log(event);
   }
 }
