@@ -4,6 +4,7 @@ import { Observable, pipe, ReplaySubject, throwError } from 'rxjs';
 import { catchError, map, retry } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { text } from '@fortawesome/fontawesome-svg-core';
 let options = {
   headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
 };
@@ -21,7 +22,7 @@ export class AuthService {
   }
 
   singup(data: any) {
-    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'})
+    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
   }
 
   isLoggedIn() {

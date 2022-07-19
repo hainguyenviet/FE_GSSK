@@ -1,21 +1,33 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor(private router: Router) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      const token = localStorage.getItem('access_token')
-      let jwtTokent = req.clone({
+    const authToken = localStorage.getItem('access_token')
+    if (authToken != null) {
+      req = req.clone({
         setHeaders: {
-          Authorization: 'Bearer ' + token
+          Authorization: "Bearer " + authToken
         }
-      })
-      return next.handle(jwtTokent)
+      });
+    }
+    return next.handle(req).pipe(tap(() => { },
+      (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401 || err.status === 403) {
+            //this.router.navigate(['login']);
+            alert("Xảy ra lỗi, vui lòng truy cập lại")
+          }
+        }
+      }));
   }
 }

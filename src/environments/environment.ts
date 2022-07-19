@@ -5,14 +5,6 @@
 export const environment = {
   production: false,
   baseURL: 'http://localhost:8080',
-  firebase : {
-    apiKey: "AIzaSyDZ-bqz_BO2Flxc-lyGHFr2_5CZcHAV_sU",
-    authDomain: "gssk-a99d5.firebaseapp.com",
-    projectId: "gssk-a99d5",
-    storageBucket: "gssk-a99d5.appspot.com",
-    messagingSenderId: "1017721446231",
-    appId: "1:1017721446231:web:5966c57d2b49f51114a812"
-  }
 };
 
 /*

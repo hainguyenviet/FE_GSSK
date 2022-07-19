@@ -10,6 +10,7 @@ import { Person } from '../../server_service/model/Person';
 export class PersonService {
  
   baseURL = environment.baseURL
+  username = sessionStorage.getItem('username')
  // baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient) {}
 
@@ -36,7 +37,7 @@ export class PersonService {
     // {
     //   return this.http.post(`${this.baseURL}/api/genogram/convert/` + id, null, {headers: headers})
     // }
-    return this.http.post(`${this.baseURL}/api/genogram/convert/` + id, null)
+    return this.http.post(`${this.baseURL}/api/genogram/convert/` + this.username, null)
   }
 
   getGenogram(id: string): Observable<any[]> {

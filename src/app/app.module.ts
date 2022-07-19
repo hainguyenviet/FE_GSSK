@@ -85,8 +85,7 @@ import { InterceptorService } from './server_service/Interceptor/interceptor.ser
     CarouselActionModule,
     CarouselSponsorsModule,
     MatToolbarModule,
-    SocialLoginModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    SocialLoginModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],

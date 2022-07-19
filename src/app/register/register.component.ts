@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.service.singup(this.registerForm.value).subscribe({next: (data) => {
       this.router.navigateByUrl('/login')
     },
-    error: () => {
+    error: (error) => {
       alert("Đăng kí không thành công. Xin vui lòng đăng kí lại")
     }})
   }

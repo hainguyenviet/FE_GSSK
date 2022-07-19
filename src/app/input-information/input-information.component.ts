@@ -452,7 +452,7 @@ export class InputInformationComponent implements OnInit {
   logout() {
     localStorage.removeItem('access_token')
     this.router.navigateByUrl('/login')
-
+    sessionStorage.removeItem('username')
   }
 
   public disclaimer() {

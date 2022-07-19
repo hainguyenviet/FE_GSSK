@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     this.service.login(body).subscribe({
       next: (data) => {
         localStorage.setItem('access_token', data.access_token)
+        sessionStorage.setItem('username', data.username )
         this.router.navigateByUrl('/input-information')
       }
     })
