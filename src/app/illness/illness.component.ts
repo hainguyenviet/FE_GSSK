@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { IllnessService } from '../server_service/Illness/illness.service';
 @Component({
   selector: 'app-illness',
   templateUrl: './illness.component.html',
@@ -11,7 +10,6 @@ export class IllnessComponent implements OnInit {
   selectedValue: string;
   constructor(
     private _fb: FormBuilder,
-    private apiIll: IllnessService
   ) {
     this.selectedValue = '';
   }

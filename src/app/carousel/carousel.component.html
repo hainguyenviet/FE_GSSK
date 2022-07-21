@@ -1,29 +1,42 @@
-<div *ngIf="images && images.length >0"  class="carousel-container" >
-    <div *ngFor="let image of images; let i=index" class="carousel">
-        <span class="description-carousel" [ngClass]="{'des-active': selectedIndex===i}">{{image.des}} </span>
-        <img  
-            [src]="image.imageSrc" [alt]="image.imageAlt"
-            [ngClass]="{'image-active': selectedIndex===i}"
-            
-        >
+<div class="container">
+  <div *ngIf="images && images.length > 0" class="carousel-container my-5">
+    <div *ngFor="let image of images; let i = index" class="carousel">
+      <span
+        class="description-carousel"
+        [ngClass]="{ 'des-active': selectedIndex === i }"
+        >{{ image.des }}
+      </span>
+      <img
+        [src]="image.imageSrc"
+        [alt]="image.imageAlt"
+        [ngClass]="{ 'image-active': selectedIndex === i }"
+      />
     </div>
 
-
-    <div *ngIf="indicators" class="carousel-dot-container" >
-        <span *ngFor="let image of images; let i=index"
-            class="dot"
-            [ngClass]="{'active':selectedIndex ===i}"
-            (click)="selectImage(i)"> 
-        </span>
+    <div *ngIf="indicators" class="carousel-dot-container">
+      <span
+        *ngFor="let image of images; let i = index"
+        class="dot"
+        [ngClass]="{ active: selectedIndex === i }"
+        (click)="selectImage(i)"
+      >
+      </span>
     </div>
 
     <button *ngIf="controls" class="btn-carousel btn-prev">
-        <i class="fas fa-arrow-circle-left icon-carousel icon-prev" aria-hidden="true"
-        (click)="onPrevClick()"></i>
+      <i
+        class="fas fa-arrow-circle-left icon-carousel icon-prev"
+        aria-hidden="true"
+        (click)="onPrevClick()"
+      ></i>
     </button>
-    
+
     <button *ngIf="controls" class="btn-carousel btn-next">
-        <i class="fas fa-arrow-circle-right icon-carousel icon-next" aria-hidden="true"
-        (click)="onNextClick()"></i>
+      <i
+        class="fas fa-arrow-circle-right icon-carousel icon-next"
+        aria-hidden="true"
+        (click)="onNextClick()"
+      ></i>
     </button>
+  </div>
 </div>
