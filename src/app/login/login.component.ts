@@ -33,17 +33,14 @@ export class LoginComponent implements OnInit {
     this.service.login(body).subscribe({
       next: (data) => {
         localStorage.setItem('access_token', data.access_token)
-        sessionStorage.setItem('username', data.username )
+        localStorage.setItem('username', data.username )
         this.router.navigateByUrl('/input-information')
       }
     })
   }
 
   loginGoogle() {
-    console.log("fedfrgreg")
-    window.open('http://localhost:8080/oauth2/authorization/google', '_self')
-    
-  
+    this.service.loginGoogle()
   }
  
 }

@@ -22,9 +22,9 @@ export class AuthService {
   }
 
   loginGoogle() {
-    return this.http.get<any>(`${this.baseURL}/api/oauth/success`)
+    window.open(this.baseURL + '/oauth2/authorization/google', '_self')
   }
-
+  
   singup(data: any) {
     return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
   }
