@@ -8,7 +8,8 @@ import { Person } from '../../server_service/model/Person';
   providedIn: 'root',
 })
 export class PersonService {
- 
+  // baseURL = 'http://localhost:3000';
+
   baseURL = environment.baseURL
   username = sessionStorage.getItem('username')
  // baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
@@ -19,16 +20,16 @@ export class PersonService {
   //   return token? new HttpHeaders().set('Authorization', 'Bearer ' + token) : null; 
   // }
   getAllPerson() {
-    return this.http.get<Person>(`${this.baseURL}/person`);
+    return this.http.get<Person>(`${this.baseURL}/api/person/`+ this.username);
   }
 
-  postPerson(data: any) {
+  updatePerson(data: any) {
     //let headers = this.getHeaders();
     // if (headers instanceof HttpHeaders)
     // {
     //   return this.http.post<any>(`${this.baseURL}/api/person/create`, data, {headers: headers});
     // }
-    return this.http.post<any>(`${this.baseURL}/api/person/create`, data);
+    return this.http.put<any>(`${this.baseURL}/api/person/update/`+ this.username, data);
   }
 
   convertGenogram(id: string) {

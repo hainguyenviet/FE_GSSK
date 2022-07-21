@@ -85,64 +85,62 @@ export class InputInformationComponent implements OnInit {
     'Con ruột',
   ];
   personList = {
-    "lastName": "",
-  "firstName": "",
-  "gender": "",
-  "dateOfBirth": "",
-  "phoneNumber": "",
-  "idCard": "",
-  "email": "",
-  "healthRecord": {
-    "relationship": null,
-    "isTwin": null,
-    "isAdopted": null,
-    "height": "",
-    "weight": "",
-    "firstPeriodAge": null,
-    "birthControl": null,
-    "pregnantTime": null,
-    "firstBornAge": null,
-    "isSmoke": null,
-    "smokeTime": null,
-    "giveUpSmokeAge": null,
-    "wineVolume": null,
-    "workOutVolume": null,
-    "workOutType": null,
-    "illnessList": [
-      {
-        "code": "",
-        "illName": "",
-        "illNameOther": "",
-        "name": "",
-        "age_detected": ""
-      },
-      
-    ]
-  },
-  "relativeList": [
-    {
-      "name": "",
-      "gender": "",
-      "idCard": null,
-      "relation": "",
-      "age": null,
-      "familyOrder": "",
-      "familyOrderOther": "",
-      "isDead": null,
-      "dead_age": null,
-      "deathCause": "",
-      "illnessRelative": [
+    lastName: '',
+    firstName: '',
+    gender: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    idCard: '',
+    email: '',
+    healthRecord: {
+      relationship: null,
+      isTwin: null,
+      isAdopted: null,
+      height: '',
+      weight: '',
+      firstPeriodAge: null,
+      birthControl: null,
+      pregnantTime: null,
+      firstBornAge: null,
+      isSmoke: null,
+      smokeTime: null,
+      giveUpSmokeAge: null,
+      wineVolume: null,
+      workOutVolume: null,
+      workOutType: null,
+      illnessList: [
         {
-          "code": "",
-          "illName": "",
-          "illNameOther": null,
-          "name": "",
-          "age_detected": ""
+          code: 'phuc',
+          illName: '',
+          illNameOther: '',
+          name: '',
+          age_detected: '',
         },
-        
-      ]
-    }
-  ],
+      ],
+    },
+    relativeList: [
+      {
+        name: '',
+        gender: '',
+        idCard: null,
+        relation: '',
+        age: null,
+        familyOrder: '',
+        familyOrderOther: '',
+        isDead: null,
+        dead_age: null,
+        deathCause: '',
+        illnessRelative: [
+          {
+            code: 'phuc',
+            illName: '',
+            illNameOther: null,
+            name: '',
+            age_detected: '',
+          },
+        ],
+      },
+    ],
   };
   list_of_sex: string[] = ['Nam', 'Nữ'];
   orderFamily_option: any[] = ['Con cả', 'Con hai', 'Con ba', 'Khác'];
@@ -160,75 +158,98 @@ export class InputInformationComponent implements OnInit {
   ];
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
+  ress = {};
 
   ngOnInit(): void {
-    this.getAllPerson();
     this.disclaimer();
-    this.relatives_formGroup = this.fb.group({
-      relatives: this.fb.array([this.newRelative()]),
-    });
-
-    this.addmore = this.fb.group({
-      itemRows: this.fb.array([this.initItemRows()]),
-    });
-
-    this.illnessForm = this.fb.group({
-      isTwin: null,
-      isAdopted: null,
-      relationship: null,
-      height: ['', Validators.required],
-      weight: ['', Validators.required],
-      firstPeriodAge: null,
-      birthControl: null,
-      pregnantTime: null,
-      firstBornAge: null,
-      isSmoke: null,
-      smokeTime: null,
-      giveUpSmokeAge: null,
-      wineVolume: null,
-      workOutVolume: null,
-      workOutType: null,
-      illnessList: this.itemRows,
-    });
-
-    this.personForm = this.fb.group({
-      lastName: ['', Validators.required],
-      firstName: ['', Validators.required],
-      gender: ['', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      idCard: ['', Validators.required],
-      email: ['', Validators.required],
-      healthRecord: this.illnessForm,
-      relativeList: this.relatives,
-  
-  })
-    
-
-    this.initItemRows();
-    this.newRelative();
-  }
-
-
-  
-    
- 
-  public getAllPerson(): void {
     this.api.getAllPerson().subscribe(
       (res: any) => {
         this.personList = res;
-        // show list person
-        console.log(this.personList.lastName)
+        this.addmore = this.fb.group({
+          itemRows: this.fb.array(this.personList.healthRecord.illnessList.map(datum => this.generateDatumFormGroup(datum))),
+        });
+
+        this.illnessForm = this.fb.group({
+          isTwin: res.healthRecord.isTwin,
+          isAdopted: res.healthRecord.isAdopted,
+          relationship: res.healthRecord.relationship,
+          height: [res.healthRecord.height, Validators.required],
+          weight: [res.healthRecord.weight, Validators.required],
+          firstPeriodAge: res.healthRecord.firstPeriodAge,
+          birthControl: res.healthRecord.birthControl,
+          pregnantTime: res.healthRecord.pregnantTime,
+          firstBornAge: res.healthRecord.firstBornAge,
+          isSmoke: res.healthRecord.isSmoke,
+          smokeTime: res.healthRecord.smokeTime,
+          giveUpSmokeAge: res.healthRecord.giveUpSmokeAge,
+          wineVolume: res.healthRecord.wineVolume,
+          workOutVolume: res.healthRecord.workOutVolume,
+          workOutType: res.healthRecord.workOutType,
+          illnessList: this.itemRows,
+        });
+
+
+        this.relatives_formGroup = this.fb.group({
+          relatives: this.fb.array(
+            this.personList.relativeList.map((datum) =>
+              this.generateDatumRelativeFormGroup(datum)
+              )
+              ),
+          });
+        console.log(res.dateOfBirth);
+        
+        var date = new Date(res.dateOfBirth)
+        
+        // revertDate = revertDate.slice(1,11)
+        console.log(date.toString());
+        
+        this.personForm = this.fb.group({
+          lastName: [res.lastName, Validators.required],
+          firstName: [res.firstName, Validators.required],
+          gender: [res.gender, Validators.required],
+          dateOfBirth: [date, Validators.required],
+          phoneNumber: [res.phoneNumber, Validators.required],
+          idCard: [res.idCard, Validators.required],
+          email: [res.email, Validators.required],
+          healthRecord: this.illnessForm,
+          relativeList: this.relatives,
+        });
+      }
+    );
+
+
+    this.initItemRows();
+  }
+
+  private generateDatumFormGroup(datum: any) {
+    return this.fb.group({
+      code: this.fb.control({ value: datum.code, disabled: false }),
+      illName: this.fb.control({ value: datum.illName, disabled: false }),
+      name: this.fb.control({ value: datum.name, disabled: false }),
+      age_detected: this.fb.control({
+        value: datum.age_detected,
+        disabled: false,
+      }),
+    });
+  }
+
+
+  public getAllPerson() {
+    this.api.getAllPerson().subscribe(
+      (res: any) => {
+        this.personList = res;
+        // console.log(this.personList);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    );
+      );
   }
 
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
   }
+
 
   initItemRows(): FormGroup {
     return this.fb.group({
@@ -250,7 +271,33 @@ export class InputInformationComponent implements OnInit {
     return this.relatives_formGroup.controls['relatives'] as FormArray;
   }
 
+  private generateDatumRelativeFormGroup(datum: any) {
+    return this.fb.group({
+      name: this.fb.control({ value: datum.name, disabled: false }),
+      gender: this.fb.control({ value: datum.gender, disabled: false }),
+      idCard: this.fb.control({ value: datum.idCard, disabled: false }),
+      age: this.fb.control({ value: datum.age, disabled: false }),
+      relation: this.fb.control({ value: datum.relation, disabled: false }),
+      familyOrder: this.fb.control({
+        value: datum.familyOrder,
+        disabled: false,
+      }),
+      familyOrderOther: this.fb.control({
+        value: datum.familyOrderOther,
+        disabled: false,
+      }),
+      isDead: this.fb.control({ value: datum.age, disabled: false }),
+      dead_age: this.fb.control({ value: datum.dead_age, disabled: false }),
+      deathCause: this.fb.control({ value: datum.deathCause, disabled: false }),
+      illnessRelative: this.fb.control({
+        value: datum.illnessRelative,
+        disabled: false,
+      }),
+    });
+  }
+
   newRelative(): FormGroup {
+    
     return this.fb.group({
       name: ['', Validators.required],
       gender: ['', Validators.required],
@@ -358,8 +405,8 @@ export class InputInformationComponent implements OnInit {
     if (value == 'Khác') this.itemRows.value[illNessIndex].name = 'OT';
   }
 
-  illNessList(empIndex: number): FormArray {
-    return this.relatives.at(empIndex).get('illnessRelative') as FormArray;
+   illNessList(empIndex: number): FormArray {
+    return this.relatives.at(empIndex).get("illnessRelative") as FormArray;
   }
 
   newIllNess(): FormGroup {
@@ -430,16 +477,17 @@ export class InputInformationComponent implements OnInit {
     this.illNessList(empIndex).removeAt(illNessIndex);
   }
 
-  postPerson() {
+  updatePerson() {
+    console.log(this.personForm.value);
+    console.log(this.personList);
     if (this.personForm.valid) {
-      this.api.postPerson(this.personForm.value).subscribe({
+      this.api.updatePerson(this.personForm.value).subscribe({
         next: (res) => {
           sessionStorage.setItem('idUser', res.id.toString());
           this.api
             .convertGenogram(sessionStorage.getItem('idUser')!)
             .subscribe();
           alert('Person added successfully');
-          this.personForm.reset();
         },
         error: () => {
           alert('Error');
@@ -450,9 +498,9 @@ export class InputInformationComponent implements OnInit {
     }
   }
   logout() {
-    localStorage.removeItem('access_token')
-    this.router.navigateByUrl('/login')
-    sessionStorage.removeItem('username')
+    localStorage.removeItem('access_token');
+    this.router.navigateByUrl('/login');
+    sessionStorage.removeItem('username');
   }
 
   public disclaimer() {

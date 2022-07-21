@@ -65,17 +65,17 @@ export class PersonComponent implements OnInit {
       }
     );
   }
-  postPerson() {
-    if (this.personForm.valid) {
-      this.api.postPerson(this.personForm.value).subscribe({
-        next: (res) => {
-          alert('Person added successfully');
-          this.personForm.reset();
-        },
-        error: () => {
-          alert('Error');
-        },
-      });
-    }
-  }
+  // postPerson() {
+  //   if (this.personForm.valid) {
+  //     this.api.updatePerson(this.personForm.value).subscribe({
+  //       next: (res) => {
+  //         alert('Person added successfully');
+  //         this.personForm.reset();
+  //       },
+  //       error: () => {
+  //         alert('Error');
+  //       },
+  //     });
+  //   }
+  // }
 }
