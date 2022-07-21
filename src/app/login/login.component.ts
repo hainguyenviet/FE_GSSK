@@ -1,9 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ThrowStmt } from '@angular/compiler';
 import { error } from '@angular/compiler/src/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../server_service/AuthService/auth.service';
 import {SocialAuthService, SocialUser, GoogleLoginProvider} from 'angularx-social-login'
 
@@ -16,7 +16,9 @@ import {SocialAuthService, SocialUser, GoogleLoginProvider} from 'angularx-socia
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup
   
-  constructor(private service: AuthService, private fb: FormBuilder, private router: Router) { }
+  constructor(private service: AuthService, private fb: FormBuilder, private router: Router, private http: HttpClient, private activeRoute: ActivatedRoute) {
+    
+   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -37,7 +39,11 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  signinWithGG() {
+  loginGoogle() {
+    console.log("fedfrgreg")
+    window.open('http://localhost:8080/oauth2/authorization/google', '_self')
+    
+  
   }
  
 }

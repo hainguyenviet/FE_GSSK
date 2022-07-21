@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DirectingComponent } from './directing/directing/directing.component';
 import { GenogramComponent } from './genogram/genogram.component';
 import { HomeComponent } from './home/home.component';
 import { InputInformationComponent } from './input-information/input-information.component';
@@ -31,13 +32,16 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
   },
-  /* {
-    path: '', component:  
-  } */
+  {
+    path: 'info',
+    component: DirectingComponent
+  },
+  { path: '**', redirectTo: '', canActivate: [AuthGuard] }
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

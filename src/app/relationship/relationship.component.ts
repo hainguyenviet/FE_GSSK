@@ -37,12 +37,12 @@ export class RelationshipComponent implements OnInit {
     this.relatives_formGroup = this.fb.group({
       relatives: this.fb.array([this.newRelative()])
     });
-    this.http.get('')
-      .subscribe( () => {
-        this.relatives_formGroup = this.fb.group({
-          relatives: this.fb.array(data.map(datum => this.generateDatumFormGroup(datum)))
-        });
-      });
+    // this.http.get('')
+    //   .subscribe( () => {
+    //     this.relatives_formGroup = this.fb.group({
+    //       relatives: this.fb.array(data.map(datum => this.generateDatumFormGroup(datum)))
+    //     });
+    //   });
   }
   enableSection(index: any, disabled: any) {
     const relatives_formGroup = (<FormArray>this.relatives_formGroup.get('relatives')).at(index);

@@ -21,6 +21,10 @@ export class AuthService {
     return this.http.post<any>(`${this.baseURL}/api/login`, data, options)
   }
 
+  loginGoogle() {
+    return this.http.get<any>(`${this.baseURL}/api/oauth/success`)
+  }
+
   singup(data: any) {
     return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
   }

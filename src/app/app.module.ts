@@ -44,6 +44,7 @@ import {
 import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './server_service/Interceptor/interceptor.service';
+import { DirectingComponent } from './directing/directing/directing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,7 @@ import { InterceptorService } from './server_service/Interceptor/interceptor.ser
     ThankyoupageComponent,
     LoginComponent,
     RegisterComponent,
+    DirectingComponent,
   ],
   imports: [
     BrowserModule,
