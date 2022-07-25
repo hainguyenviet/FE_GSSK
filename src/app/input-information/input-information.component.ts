@@ -499,8 +499,8 @@ export class InputInformationComponent implements OnInit {
   }
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('username');
     this.router.navigateByUrl('/login');
-    sessionStorage.removeItem('username');
   }
 
   public disclaimer() {

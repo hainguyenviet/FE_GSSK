@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
 
   loginGoogle() {
     this.service.loginGoogle()
+    //localStorage.removeItem('access_token')
   }
  
 }

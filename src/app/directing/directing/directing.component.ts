@@ -17,8 +17,8 @@ export class DirectingComponent implements OnInit {
  
     this.activatedRoute.params.subscribe(params => {   
       localStorage.setItem('access_token', params.token)
-      localStorage.setItem('username', params.username)
-      this.router.navigateByUrl('input-information')
+      localStorage.setItem('username', params.email)
+      this.router.navigateByUrl('/input-information')
     });
   
   }
