@@ -2,8 +2,8 @@
 import { CarouselModule } from './carousel/carousel.module';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -33,9 +33,18 @@ import { InputInformationComponent } from './input-information/input-information
 import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { CarouselActionModule } from './carousel/carousel-action/carousel-action.module';
-import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-sponsors.module'
-
-
+import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-sponsors.module';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component'
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login';
+import {AngularFireModule} from '@angular/fire/compat'
+import { environment } from 'src/environments/environment';
+import { InterceptorService } from './server_service/Interceptor/interceptor.service';
+import { DirectingComponent } from './directing/directing/directing.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +59,9 @@ import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-spons
     DisclaimerComponent,
     InputInformationComponent,
     ThankyoupageComponent,
+    LoginComponent,
+    RegisterComponent,
+    DirectingComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,9 +85,11 @@ import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-spons
     FontAwesomeModule,
     CarouselModule,
     CarouselActionModule,
-    CarouselSponsorsModule
+    CarouselSponsorsModule,
+    MatToolbarModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents:[DisclaimerComponent]

@@ -1,29 +1,47 @@
-
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DirectingComponent } from './directing/directing/directing.component';
 import { GenogramComponent } from './genogram/genogram.component';
 import { HomeComponent } from './home/home.component';
 import { InputInformationComponent } from './input-information/input-information.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { AuthGuard } from './server_service/AuthService/auth.guard';
+import { AuthService } from './server_service/AuthService/auth.service';
 import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
 
 const routes: Routes = [
   {
-    path:'',component: HomeComponent
+    path: '',
+    component: HomeComponent,
   },
   {
-    path:'genogram',component: GenogramComponent
+    path: 'genogram',
+    component: GenogramComponent,
   },
   {
-    path:'input-information',component: InputInformationComponent
+    path: 'input-information',
+    component: InputInformationComponent, canActivate:[AuthGuard]
   },
-  {path:'thankyou',component: ThankyoupageComponent}
-  /* {
-    path: '', component:  
-  } */
+  { path: 'thankyou', component: ThankyoupageComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+  },
+  {
+    path: 'info',
+    component: DirectingComponent
+  },
+  { path: '**', redirectTo: '', canActivate: [AuthGuard] }
+
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

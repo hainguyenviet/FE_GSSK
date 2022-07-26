@@ -52,15 +52,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+    if (localStorage.getItem('access_token') != null)
+    {
+      localStorage.removeItem('access_token')
+    }
+    if (localStorage.getItem('username') != null)
+    {
+      localStorage.removeItem('username')
+    }
   }
 
   disclaimer(){ 
     const dialogRef= this.dialog.open(DisclaimerComponent)
   }
-
-
-  
+ 
 
   ngAfterViewInit() {}
 }

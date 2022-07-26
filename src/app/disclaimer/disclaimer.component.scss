@@ -1,33 +1,36 @@
-
-.margin-top-10{
+.margin-top-10 {
     margin-top: 10px;
-    
 }
 
-.margin-bottom-30{
+.margin-bottom-30 {
     margin-bottom: 30px;
+    max-width: 100%;
+    word-break: break-word;
 }
-.margin-right-10{
+
+.margin-right-10 {
     margin-right: 10px;
 }
 
-label input{
+label input {
     margin-top: 10px;
     top: -2px;
 }
-.button-dis{
+
+.button-dis {
     display: flex;
     justify-content: space-between;
 }
-.button-disclaimer{
-    width: 300px;
 
+.button-disclaimer {
+    width: 100%;
 }
 
-.disclaimer{
+.disclaimer {
     width: 500px;
+    font-size: 10px;
+    word-break: break-word;
 }
-
 
 .close {
     float: right;
@@ -41,11 +44,9 @@ label input{
     margin-top: -72px;
     margin-right: -24px;
     border-radius: 3px;
-  }
-
-.close:hover{
-    background-color:#003E92 ;
-    color:#fff;
 }
-  
 
+.close:hover {
+    background-color: #003E92;
+    color: #fff;
+}
