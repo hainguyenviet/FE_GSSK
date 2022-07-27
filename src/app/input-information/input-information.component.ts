@@ -32,7 +32,6 @@ export class InputInformationComponent implements OnInit {
     'Nhóm bệnh huyết học',
     'Nhóm bệnh tim mạch',
     'Nhóm bệnh nội thần kinh/tâm thần',
-    'Khác',
   ];
   illCancer: string[] = [
     'Ung thư vú',
@@ -41,6 +40,7 @@ export class InputInformationComponent implements OnInit {
     'Ung thư tử cung',
     'Ung thư tuyến giáp',
     'Ung thư máu',
+    'Khác',
   ];
 
   illHematology: string[] = [
@@ -48,6 +48,7 @@ export class InputInformationComponent implements OnInit {
     'Huyết khối tĩnh mạch sâu',
     'Thuyên tắc phổi',
     'Bệnh tăng cholesterol máu gia đình',
+    'Khác',
   ];
 
   illCardiovascular: string[] = [
@@ -55,6 +56,7 @@ export class InputInformationComponent implements OnInit {
     'Rối loạn nhịp',
     'Bệnh cơ tim giãn',
     'Đau thắt ngực',
+    'Khác',
   ];
 
   illNeurological: string[] = [
@@ -62,9 +64,10 @@ export class InputInformationComponent implements OnInit {
     'Động kinh',
     'Rối loạn tăng động giảm chú ý',
     'Tự kỷ',
+    'Khác',
   ];
 
-  illOther: string[] = ['Hen', 'Loãng xương', 'Đái tháo đường MODY'];
+  illOther: string[] = ['Hen', 'Loãng xương', 'Đái tháo đường MODY', 'Khác',];
 
   relationships: any[] = [
     'Cha',
@@ -226,6 +229,7 @@ export class InputInformationComponent implements OnInit {
       code: this.fb.control({ value: datum.code, disabled: false }),
       illName: this.fb.control({ value: datum.illName, disabled: false }),
       name: this.fb.control({ value: datum.name, disabled: false }),
+      illNameOther:this.fb.control({ value: datum.illNameOther, disabled: false }),
       age_detected: this.fb.control({
         value: datum.age_detected,
         disabled: false,
@@ -255,6 +259,7 @@ export class InputInformationComponent implements OnInit {
     return this.fb.group({
       code: null,
       illName: null,
+      illNameOther:null,
       name: '',
       age_detected: null,
     });
@@ -413,6 +418,7 @@ export class InputInformationComponent implements OnInit {
     return this.fb.group({
       code: [null],
       illName: [''],
+      illNameOther:null,
       name: [''],
       age_detected: [null],
     });

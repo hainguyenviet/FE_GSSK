@@ -325,14 +325,14 @@
 
             <mat-form-field
             class="example-full-width margin-right-10"
-              *ngIf="itemRows.controls[i].value.code === 'Khác'"
+            *ngIf="itemRows.controls[i].value.illName === 'Khác'"
             >
-            <mat-label>Tên Bệnh</mat-label>
             {{selectIllNess(
-              itemRows.controls[i].value.code,
+              itemRows.controls[i].value.illName,
               i
             )}}
-            <input formControlName="illName" type="text" matInput />
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
             </mat-form-field>
 
             <mat-form-field
@@ -531,7 +531,7 @@
               </div>
               
 
-            <section class="margin-top-10 " >
+            <section class="margin-top-10 ">
               <h1>Thông tin sức khỏe</h1>
               <p>
                 Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu
@@ -547,7 +547,6 @@
                   "
                 >
                   <div [formGroupName]="illNessIndex">
-                    
                     <mat-form-field class="example-full-width margin-right-40">
                       <mat-label>Nhóm bệnh</mat-label>
                       <mat-select formControlName="code" >
@@ -633,14 +632,14 @@
 
             <mat-form-field
             class="example-full-width margin-right-10"
-            *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Khác'"
+            *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.illName== 'Khác'"
             >
             {{selectIllNessRelative(
               illNessList(relativeIndex).controls[illNessIndex].value
-              .code,relativeIndex, illNessIndex
+              .illName,relativeIndex, illNessIndex
             )}}
-            <mat-label>Tên Bệnh</mat-label>
-            <input formControlName="illName" type="text" matInput />
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
             </mat-form-field>
 
             <mat-form-field
