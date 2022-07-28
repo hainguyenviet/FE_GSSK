@@ -1,0 +1,726 @@
+<mat-toolbar color="primary">  GIA SỬ SỨC KHỎE
+    <div class="spacer"></div>
+    <a mat-raised-button color="accent" (click)="logout()">Đăng xuất</a>
+</mat-toolbar>
+<app-progress #progress (stateChange)="onStateChange($event)">
+  <app-progress-step>
+    <form
+      #personalInfoForm="ngForm"
+      [formGroup]="personForm"
+      class="person-form"
+    >
+      <h1>THÔNG TIN CÁ NHÂN</h1>
+      <mat-form-field class="margin-right-40">
+        <mat-label>Họ</mat-label>
+        <input formControlName="lastName"  matInput placeholder="Họ" required > 
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Tên</mat-label>
+        <input
+          matInput
+          formControlName="firstName"
+          placeholder="Tên"
+          required
+        />
+      </mat-form-field>
+      <br />
+      <div class="radio-group">
+        <mat-radio-group
+          required
+          aria-label="Select an option"
+          formControlName="gender"
+        >
+          <mat-label class="margin-right-40">Giới tính</mat-label>
+          <mat-radio-button [checked]="personList.gender==='Nam'" value="Nam" class="margin-right-40"
+            >Nam</mat-radio-button
+          >
+          <mat-radio-button [checked]="personList.gender==='Nữ'" value="Nữ">Nữ</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <mat-form-field class="margin-right-40">
+        <mat-label>Ngày sinh</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="dateOfBirth"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field class="margin-right-40">
+        <mat-label> Số điện thoại </mat-label>
+        <input
+          matInput
+          placeholder="Số điện thoại"
+          formControlName="phoneNumber"
+          required
+        />
+      </mat-form-field>
+      <br />
+
+      <mat-form-field class="margin-right-40">
+        <mat-label> Số CMND/CCCD/Passport </mat-label>
+        <input
+          required
+          matInput
+          placeholder="Số CMND/CCCD/Passport"
+          formControlName="idCard"
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" required />
+      </mat-form-field>
+    </form>
+    <button
+      progressStepNext
+      mat-raised-button
+      color="accent"
+      (click)="goNext(progress)"
+    >
+      Tiếp theo
+    </button>
+  </app-progress-step>
+  <app-progress-step class="padding-bottom-50 height">
+    <form #illNessForm="ngForm" [formGroup]="illnessForm">
+      <section>
+        <h1>HỒ SƠ BỆNH LÝ</h1>
+        <div>
+          <mat-radio-group
+            aria-label="Select an option isTwin"
+            formControlName="isTwin"
+          >
+            <mat-label class="margin-right-40"
+              >Bạn có anh em song sinh không ?</mat-label
+            >
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isTwin==='true'" class="margin-right-40"
+              >Có</mat-radio-button
+            >
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isTwin==='false'">Không</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="margin-top-10">
+          <mat-radio-group
+            aria-label="Select an option isAdopted"
+            formControlName="isAdopted"
+          >
+            <mat-label class="margin-right-40"
+              >Bạn có được nhận nuôi không ?</mat-label
+            >
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isAdopted==='true'"   class="margin-right-40"
+              >Có</mat-radio-button
+            >
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isAdopted==='false'" >Không</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div>
+          <label class="margin-right-5" >Chiều cao:</label>
+          <mat-form-field class="margin-right-50 width-100">
+            <input matInput formControlName="height" placeholder=" " required/> 
+          </mat-form-field>
+          <label class="margin-right-40">Cm</label>
+          <label class="margin-right-5" >Cân nặng</label>
+          <mat-form-field class="width-100">
+            <input matInput formControlName="weight" placeholder=" " required/>
+          </mat-form-field>
+          <label class="margin-right-10">Kg</label>
+          
+        </div>
+        <div class="">
+            <mat-radio-group
+            aria-label="Select an option parent" 
+            formControlName="relationship"
+          >
+            <mat-label class="margin-right-40"
+              >Bố mẹ có quan hệ họ hàng không ?</mat-label
+            >
+            <mat-radio-button value="true" [checked]="personList.healthRecord.relationship==='true'" class="margin-right-40"
+              >Có</mat-radio-button
+            >
+            <mat-radio-button value="false" [checked]="personList.healthRecord.relationship==='false'">Không</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="margin-top-10">
+          <h2>Điền vào các mục sau nếu bạn là nữ:</h2>
+          <div>
+            <label class="margin-right-10"> Tuổi có kinh đầu: </label>
+            <mat-form-field class="margin-right-10 width-100">
+              <input type="text" matInput formControlName="firstPeriodAge"  />
+            </mat-form-field>
+            <label class="margin-right-10">Tuổi. </label>
+            <label class="margin-right-10"
+            >Khoảng thời gian dùng thuốc tránh thai:
+          </label>
+          <mat-form-field class="margin-right-10 width-100">
+            <input
+              type="text"
+              matInput
+              class="width-100"
+              formControlName="pregnantTime"
+            />
+          </mat-form-field>
+          <label class="margin-right-10">Tháng.</label>
+          </div>
+          
+          <div>
+            <label class="margin-right-10">Số lần mang thai: </label>
+            <mat-form-field class="margin-right-10 width-100">
+              <input type="text" matInput formControlName="birthControl" />
+            </mat-form-field>
+            <label class="margin-right-40">Lần. </label>
+            <label class="margin-right-10">Tuổi có con đầu tiên: </label>
+            <mat-form-field class="margin-right-10 width-100">
+              <input type="text" matInput formControlName="firstBornAge"/>
+            </mat-form-field>
+            <label class="margin-right-10">Tuổi.</label>
+          </div>
+        </div>
+
+        <div>
+          <h2>Điền vào các mục sau cho cả nam và nữ:</h2>
+          <div>
+            <mat-radio-group
+            aria-label="Select an option isAdopted"
+            formControlName="isSmoke"
+          >
+            <mat-label class="margin-right-40"
+              >Bạn có hút thuốc không ?</mat-label
+            >
+            <mat-radio-button value="true" [checked]="personList.healthRecord.isSmoke==='true'" class="margin-right-40"
+              >Có</mat-radio-button
+            >
+            <mat-radio-button value="false" [checked]="personList.healthRecord.isSmoke==='false'">Không</mat-radio-button>
+          </mat-radio-group>
+          </div>
+
+          <label class="margin-right-10">Từng hút thuốc năm bao nhiêu tuổi: </label>
+          <mat-form-field class="margin-right-10 width-100 ">
+            <input type="text" matInput formControlName="smokeTime" />
+          </mat-form-field>
+          <label class="margin-right-10">Tuổi. </label>
+          <label class="margin-right-10">Bỏ thuốc năm bao nhiêu tuổi: </label>
+          <mat-form-field class="margin-right-10 width-100">
+            <input type="text" matInput formControlName="giveUpSmokeAge"  />
+          </mat-form-field>
+          <label class="margin-right-10">Tuổi. </label>
+          <label class="margin-right-10">
+            Mỗi tuần bạn uống bao nhiêu ly rượu ?
+          </label>
+          <mat-form-field class="margin-right-10 width-100">
+            <input type="text" matInput formControlName="wineVolume" />
+          </mat-form-field>
+          <label class="margin-right-10">
+            Một tuần bạn tập thể dục bao nhiêu lần ?
+          </label>
+          <mat-form-field class="margin-right-10 width-100">
+            <input type="text" matInput formControlName="workOutVolume" />
+          </mat-form-field>
+          <br />
+          <label class="margin-right-10"> Nếu có, bạn tập bộ môn gì ? </label>
+          <mat-form-field class="margin-right-10">
+            <input type="text" matInput formControlName="workOutType" />
+          </mat-form-field>
+        </div>
+      </section>
+      <section [formGroup]="addmore">
+        <h1>Thông tin sức khỏe</h1>
+        <p>
+          Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu có). Sau
+          đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá trình này nếu
+          cần.
+        </p>
+        <div formArrayName="itemRows">
+          <div
+
+            *ngFor="let itemrow of itemRows.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <mat-form-field class="example-full-width margin-right-40">
+              <mat-label>Nhóm bệnh</mat-label>
+              <mat-select formControlName="code" >
+                <mat-option
+                  *ngFor="let option of illNessGroup"
+                  [value]="option"
+                >
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="itemRows.controls[i].value.code === 'Nhóm bệnh ung thư'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName"
+              (selectionChange)="
+                  selectIllNess(
+                    itemRows.controls[i].value.illName,
+                    i
+                  )
+                ">
+                <mat-option *ngFor="let option of illCancer" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="itemRows.controls[i].value.code === 'Nhóm bệnh huyết học'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+                  selectIllNess(
+                    itemRows.controls[i].value.illName,
+                    i
+                  )
+                ">
+                <mat-option *ngFor="let option of illHematology" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="itemRows.controls[i].value.code === 'Nhóm bệnh tim mạch'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+                  selectIllNess(
+                    itemRows.controls[i].value.illName,
+                    i
+                  )
+                ">
+                <mat-option *ngFor="let option of illCardiovascular" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="itemRows.controls[i].value.code === 'Nhóm bệnh nội thần kinh/tâm thần'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+                  selectIllNess(
+                    itemRows.controls[i].value.illName,
+                    i
+                  )
+                ">
+                <mat-option *ngFor="let option of illNeurological" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+            class="example-full-width margin-right-10"
+            *ngIf="itemRows.controls[i].value.illName === 'Khác'"
+            >
+            {{selectIllNess(
+              itemRows.controls[i].value.illName,
+              i
+            )}}
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="itemRows.controls[i].value.code === ''|| itemRows.controls[i].value.code === null"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select 
+              >
+                <mat-option *ngFor="let option of list_of_parent_nephew" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="margin-right-10 width-100 displayNone">
+              <input type="text" matInput formControlName="name" ngModel="{{ itemRows.value[i].name }}" />
+            </mat-form-field>
+
+            <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+            <mat-form-field class="margin-right-10 width-100">
+              <input type="text" matInput formControlName="age_detected" />
+            </mat-form-field>
+            <button (click)="addNewRow()" mat-mini-fab>+</button>
+            <button
+              *ngIf="itemRows.controls.length > 1"
+              (click)="deleteRow(i)"
+              mat-mini-fab
+            >
+              -
+            </button>
+          </div>
+        </div>
+      </section>
+    </form>
+
+    <button
+      progressStepPrev
+      mat-raised-button
+      color="accent"
+      
+      (click)="goPrev(progress)"
+      class="margin-right-10"
+    >
+      Trở lại
+    </button>
+    <button
+      progressStepNext
+      mat-raised-button
+      color="primary"
+      (click)="goNext(progress)"
+    >
+      Tiếp theo
+    </button>
+  </app-progress-step>
+  <app-progress-step>
+    <section #relativesForm="ngForm" [formGroup]="relatives_formGroup">
+      <h1>THÔNG TIN THÂN NHÂN</h1>
+      <div formArrayName="relatives">
+        <div
+          *ngFor="
+            let employee of relatives.controls;
+            let relativeIndex = index
+          "
+        >
+          <h2>Thân nhân {{ relativeIndex + 1 }}:</h2>
+          <div>
+            <h1>
+              Thông tin cơ bản
+              <button
+                *ngIf="relatives.controls.length > 1"
+                mat-raised-button
+                color="warn"
+                (click)="removeRelation(relativeIndex)"
+              >
+                Xóa
+              </button>
+            </h1>
+          </div>
+          <div [formGroupName]="relativeIndex">
+            <mat-form-field class="margin-right-40">
+              <mat-label>Thân nhân</mat-label>
+              <mat-select
+                formControlName="relation"
+                (selectionChange)="
+                  selectRelation(
+                    relatives.controls[relativeIndex].value.relation,
+                    relativeIndex
+                  )
+                "
+              >
+                <mat-option
+                  *ngFor="let option of relationships"
+                  [value]="option"
+                >
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="margin-right-40">
+              <mat-label>Họ và tên</mat-label>
+              <input type="text" matInput formControlName="name" />
+            </mat-form-field>
+
+            <mat-radio-group
+              aria-label="Select an option"
+              formControlName="gender"
+              ngModel="{{ relatives.value[relativeIndex].gender }}"
+            >
+              <mat-radio-button
+                class="margin-right-40"
+                *ngFor="let sex of list_of_sex"
+                [value]="sex"
+              >
+                {{ sex }}
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field class="margin-right-40 width-100">
+              <mat-label>Tuổi hiện tại</mat-label>
+              <input
+                type="number"
+                matInput
+                formControlName="age"
+              />
+            </mat-form-field>
+
+            <mat-form-field class="margin-right-10">
+              <mat-label>Thứ tự trong gia đình</mat-label>
+              <mat-select formControlName="familyOrder">
+                <mat-option
+                  *ngFor="let order of orderFamily_option"
+                  [value]="order"
+                >
+                  {{ order }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              *ngIf="
+                relatives.controls[relativeIndex].value.familyOrder === 'Khác'
+              "
+            >
+              <mat-label>Vd: Con tư, con năm,...</mat-label>
+              <input type="text" matInput formControlName="familyOrderOther"/>
+            </mat-form-field>
+
+            <mat-form-field
+              class="margin-right-40"
+              *ngIf="
+                relatives.controls[relativeIndex].value.relation ===
+                  'Anh/em họ' ||
+                relatives.controls[relativeIndex].value.relation ===
+                  'Chị/em họ'
+              "
+            >
+              <mat-label>Con của</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let option of list_of_parent_nephew"
+                  [value]="option"
+                >
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div>
+                <mat-label class="margin-right-40">
+                  Đã Qua Đời
+                </mat-label>
+                <mat-checkbox
+                  class="margin-right-40"
+                  formControlName="isDead"
+                ></mat-checkbox>
+
+                <mat-form-field
+                  *ngIf="
+                  relatives.controls[relativeIndex].value.isDead
+                  "
+                  class="margin-right-40"
+                >
+                  <mat-label>Tuổi Qua Đời</mat-label>
+                  <input  type="text" matInput />
+                </mat-form-field>
+                <mat-form-field
+                  *ngIf="
+                  relatives.controls[relativeIndex].value.isDead
+                  "
+                >
+                  <mat-label>Nguyên Nhân Tử Vong</mat-label>
+                  <input formControlName="deathCause" type="text" matInput />
+                </mat-form-field>
+              </div>
+              
+
+            <section class="margin-top-10 ">
+              <h1>Thông tin sức khỏe</h1>
+              <p>
+                Trong danh sách bên dưới, hãy chọn Bệnh hoặc Tình trạng (nếu
+                có). Sau đó chọn Độ tuổi lúc Chẩn đoán. Bạn có thể lặp lại quá
+                trình này nếu cần.
+              </p>
+              <div formArrayName="illnessRelative" >
+                <div
+                
+                  *ngFor="
+                    let skill of illNessList(relativeIndex).controls
+                    let illNessIndex = index
+                  "
+                >
+                  <div [formGroupName]="illNessIndex">
+                    <mat-form-field class="example-full-width margin-right-40">
+                      <mat-label>Nhóm bệnh</mat-label>
+                      <mat-select formControlName="code" >
+                        <mat-option
+                          *ngFor="let option of illNessGroup"
+                          [value]="option"
+                        >
+                          {{ option }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field
+                    class="example-full-width margin-right-10"
+                    *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh ung thư'"
+                  >
+                    <mat-label>Tên Bệnh</mat-label>
+                    <mat-select formControlName="illName"
+                    (selectionChange)="
+                    selectIllNessRelative(
+                          illNessList(relativeIndex).controls[illNessIndex].value
+                          .illName,relativeIndex, illNessIndex
+                        )
+                      ">
+                      <mat-option *ngFor="let option of illCancer" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh huyết học'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+              selectIllNessRelative(
+                illNessList(relativeIndex).controls[illNessIndex].value
+                .illName, relativeIndex, illNessIndex
+              )
+                ">
+                <mat-option *ngFor="let option of illHematology" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh tim mạch'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+              selectIllNessRelative(
+                illNessList(relativeIndex).controls[illNessIndex].value.illName, relativeIndex, illNessIndex
+              )
+                ">
+                <mat-option *ngFor="let option of illCardiovascular" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === 'Nhóm bệnh nội thần kinh/tâm thần'"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select formControlName="illName" 
+              (selectionChange)="
+              selectIllNessRelative(
+                illNessList(relativeIndex).controls[illNessIndex].value
+                .illName,relativeIndex, illNessIndex
+              )
+                ">
+                <mat-option *ngFor="let option of illNeurological" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+            class="example-full-width margin-right-10"
+            *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.illName== 'Khác'"
+            >
+            {{selectIllNessRelative(
+              illNessList(relativeIndex).controls[illNessIndex].value
+              .illName,relativeIndex, illNessIndex
+            )}}
+            <mat-label>Tên Bệnh Khác </mat-label>
+            <input formControlName="illNameOther" type="text" matInput />
+            </mat-form-field>
+
+            <mat-form-field
+              class="example-full-width margin-right-10"
+              *ngIf="illNessList(relativeIndex).controls[illNessIndex].value.code === ''|| illNessList(relativeIndex).controls[illNessIndex].value.code === null"
+            >
+              <mat-label>Tên Bệnh</mat-label>
+              <mat-select 
+              >
+                <mat-option *ngFor="let option of list_of_parent_nephew" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="margin-right-10 width-100 displayNone">
+              <input type="text" matInput formControlName="name" ngModel="{{ illNessList(relativeIndex).controls[illNessIndex].value.name }}" />
+            </mat-form-field>
+
+                    <label class="margin-right-10"> Tuổi lúc chuẩn đoán </label>
+                    <mat-form-field class="margin-right-10 width-100">
+                      <input type="text" matInput formControlName="age_detected" />
+                    </mat-form-field>
+                    <button
+                      (click)="addNewRowIllRelative(relativeIndex)"
+                      mat-mini-fab
+                    >
+                      +
+                    </button>
+                    <button
+                      *ngIf="illNessList(relativeIndex).controls.length > 1"
+                      (click)="
+                        deleteRowIllRelative(relativeIndex, illNessIndex)
+                      "
+                      mat-mini-fab
+                    >
+                      -
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+    <button
+      mat-raised-button
+      color="success"
+      (click)="addNewRelation()"
+      class="margin-right-10"
+    >
+      Thêm
+    </button>
+
+    <button
+      progressStepNext
+      mat-raised-button
+      color="primary"
+      (click)="goPrev(progress)"
+      class="margin-right-10"
+    >
+      Trở lại
+    </button>
+    <button
+      class="margin-right-10"
+      progressStepNext
+      mat-raised-button
+      color="basic"
+     
+      (click)="updatePerson()"
+    >
+      Lưu
+    </button>
+    <button
+      progressStepNext
+      mat-raised-button
+      color="basic"
+      [routerLink]="['/genogram']"
+    >
+      Phân Tích
+    </button>
+  </app-progress-step>
+</app-progress>

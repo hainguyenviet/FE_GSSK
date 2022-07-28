@@ -1,0 +1,44 @@
+{
+  "person": [
+    {
+      "lastName": "luong",
+      "firstName": "phuc",
+      "gender": "1",
+      "dateOfBirth": "2022-05-10T17:00:00.000Z",
+      "phoneNumber": "1223333",
+      "idCard": "1233334",
+      "email": "aff@gmail.com",
+      "id": 1
+    },
+    {
+      "lastName": "luong",
+      "firstName": "phuc",
+      "gender": "1",
+      "dateOfBirth": "2022-05-10T17:00:00.000Z",
+      "phoneNumber": "1223333",
+      "idCard": "1233334",
+      "email": "aff@gmail.com",
+      "id": 2
+    },
+    {
+      "lastName": "luong",
+      "firstName": "aaa",
+      "gender": "2",
+      "dateOfBirth": "2022-05-04T17:00:00.000Z",
+      "phoneNumber": "12335556",
+      "idCard": "2333",
+      "email": "phuclm.sgt@gmail.com",
+      "id": 3
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

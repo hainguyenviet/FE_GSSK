@@ -8,4 +8,4 @@ export class illness{
         this.name = name
         this.code = code
     }
-}
+} 
