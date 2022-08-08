@@ -24,6 +24,9 @@ import {MatSelectModule} from '@angular/material/select';
 import { RelationshipComponent } from './relationship/relationship.component';
 import { GenogramComponent } from "./genogram/genogram.component";
 import { HomeComponent } from './home/home.component';
+
+import { MomentDateModule } from '@angular/material-moment-adapter';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +55,8 @@ import { HomeComponent } from './home/home.component';
     MatCheckboxModule,
     MatAutocompleteModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    MomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent],

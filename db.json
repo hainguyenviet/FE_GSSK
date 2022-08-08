@@ -1,0 +1,61 @@
+{
+  "person": [
+    {
+      "lastName": "Tran",
+      "firstName": "Hung",
+      "gender": "1",
+      "dateOfBirth": "2022-08-03T17:00:00.000Z",
+      "phoneNumber": "91238902138",
+      "idCard": "1283928392",
+      "email": "htt@gmail.com",
+      "id": 1
+    },
+    {
+      "lastName": "Tran",
+      "firstName": "223",
+      "gender": "1",
+      "dateOfBirth": "2022-08-03T17:00:00.000Z",
+      "phoneNumber": "0999181",
+      "idCard": "12827378",
+      "email": "htt@gmail.com",
+      "id": 2
+    },
+    {
+      "lastName": "Tran",
+      "firstName": "Hoà",
+      "gender": "1",
+      "dateOfBirth": "2022-08-10T17:00:00.000Z",
+      "phoneNumber": "09982736",
+      "idCard": "1827328378",
+      "email": "12873@gmail.com",
+      "id": 3
+    },
+    {
+      "lastName": "Tran",
+      "firstName": "Hoà",
+      "gender": "1",
+      "dateOfBirth": "2022-08-10T17:00:00.000Z",
+      "phoneNumber": "09982736",
+      "idCard": "1827328378",
+      "email": "12873@gmail.com",
+      "id": 4
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
