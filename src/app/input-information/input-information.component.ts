@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProgressComponent } from '../progress/progress.component';
-import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DatePipe } from '@angular/common';
 
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -14,6 +15,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./input-information.component.scss'],
 })
 export class InputInformationComponent implements OnInit {
+
+  //  bsValue = new Date();
   constructor(
     private fb: FormBuilder,
     private api: PersonService,
@@ -113,7 +116,7 @@ export class InputInformationComponent implements OnInit {
       workOutType: null,
       illnessList: [
         {
-          code: 'phuc',
+          code: '',
           illName: '',
           illNameOther: '',
           name: '',
@@ -135,7 +138,7 @@ export class InputInformationComponent implements OnInit {
         deathCause: '',
         illnessRelative: [
           {
-            code: 'phuc',
+            code: '',
             illName: '',
             illNameOther: null,
             name: '',
@@ -162,6 +165,8 @@ export class InputInformationComponent implements OnInit {
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
   ress = {};
+
+  
 
   ngOnInit(): void {
     this.disclaimer();
@@ -199,26 +204,24 @@ export class InputInformationComponent implements OnInit {
               )
               ),
           });
-        console.log(res.dateOfBirth);
+
+        //  let date = new DatePipe('en-US').transform(this.personList.dateOfBirth, 'dd/MM/yyyy')
+          this.personForm = this.fb.group({
+            lastName: [this.personList.lastName||null, Validators.required],
+            firstName: [this.personList.firstName, Validators.required],
+            gender: [this.personList.gender, Validators.required],
+            dateOfBirth: [this.personList.dateOfBirth, Validators.required],
+            phoneNumber: [this.personList.phoneNumber, Validators.required],
+            idCard: [this.personList.idCard, Validators.required],
+            email: [this.personList.email, Validators.required],
+            healthRecord: this.illnessForm,
+            relativeList: this.relatives,
+          });
+          
+          
+        }
+        );
         
-        var date = new Date(res.dateOfBirth)
-        
-        // revertDate = revertDate.slice(1,11)
-        console.log(date.toString());
-        
-        this.personForm = this.fb.group({
-          lastName: [res.lastName, Validators.required],
-          firstName: [res.firstName, Validators.required],
-          gender: [res.gender, Validators.required],
-          dateOfBirth: [date, Validators.required],
-          phoneNumber: [res.phoneNumber, Validators.required],
-          idCard: [res.idCard, Validators.required],
-          email: [res.email, Validators.required],
-          healthRecord: this.illnessForm,
-          relativeList: this.relatives,
-        });
-      }
-    );
 
 
     this.initItemRows();
@@ -260,7 +263,7 @@ export class InputInformationComponent implements OnInit {
       code: null,
       illName: null,
       illNameOther:null,
-      name: '',
+      name: null,
       age_detected: null,
     });
   }
@@ -291,13 +294,10 @@ export class InputInformationComponent implements OnInit {
         value: datum.familyOrderOther,
         disabled: false,
       }),
-      isDead: this.fb.control({ value: datum.age, disabled: false }),
+      isDead: this.fb.control({ value: datum.isDead, disabled: false }),
       dead_age: this.fb.control({ value: datum.dead_age, disabled: false }),
       deathCause: this.fb.control({ value: datum.deathCause, disabled: false }),
-      illnessRelative: this.fb.control({
-        value: datum.illnessRelative,
-        disabled: false,
-      }),
+      illnessRelative: this.fb.array(datum.illnessRelative.map((data : any)=>this.generateDatumFormGroup(data))) 
     });
   }
 
@@ -411,6 +411,7 @@ export class InputInformationComponent implements OnInit {
   }
 
    illNessList(empIndex: number): FormArray {
+    
     return this.relatives.at(empIndex).get("illnessRelative") as FormArray;
   }
 
@@ -419,7 +420,7 @@ export class InputInformationComponent implements OnInit {
       code: [null],
       illName: [''],
       illNameOther:null,
-      name: [''],
+      name: null,
       age_detected: [null],
     });
   }
