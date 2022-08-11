@@ -138,7 +138,7 @@ export class InputInformationComponent implements OnInit {
         deathCause: '',
         illnessRelative: [
           {
-            code: 'phuc',
+            code: '',
             illName: '',
             illNameOther: null,
             name: '',
