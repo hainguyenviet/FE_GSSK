@@ -29,12 +29,14 @@
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <button (click)="login()" type="button" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem; width: 250px;">
-                            Đăng nhập
-                        </button>
-                        <button (click)="loginGoogle()" type="button" class="btn btn-primary btn-lg" style="width: 250px; margin-top: 10px; ">
-                            Đăng nhập với Google
-                        </button>
+                        <div class="box">
+                            <button (click)="login()" type="button" class="btn btn-primary btn-lg btn-dn">
+                                Đăng nhập
+                            </button>
+                            <button (click)="loginGoogle()" type="button" class="btn btn-primary btn-lg btn-dn" >
+                                Đăng nhập với Google
+                            </button>
+                        </div>
                         <!-- <a mat-raised-button   (click)="loginGoogle()">Đăng nhập với Google</a> -->
                         <p class="small fw-bold mt-2 pt-1 mb-0">
                             Bạn chưa có tài khoản?
