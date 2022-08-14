@@ -37,6 +37,11 @@ import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-spons
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component'
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
@@ -45,6 +50,10 @@ import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './server_service/Interceptor/interceptor.service';
 import { DirectingComponent } from './directing/directing/directing.component';
+import { AdminComponent } from './admin/admin.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { SidenavComponent } from './admin/sidenav/sidenav.component';
+import { HeaderComponent } from './admin/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +71,10 @@ import { DirectingComponent } from './directing/directing/directing.component';
     LoginComponent,
     RegisterComponent,
     DirectingComponent,
+    AdminComponent,
+    DashboardComponent,
+    SidenavComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +83,7 @@ import { DirectingComponent } from './directing/directing/directing.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    MatMenuModule,
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
@@ -87,7 +101,11 @@ import { DirectingComponent } from './directing/directing/directing.component';
     CarouselActionModule,
     CarouselSponsorsModule,
     MatToolbarModule,
-    SocialLoginModule
+    MatDividerModule,
+    SocialLoginModule,
+    MatSidenavModule,
+    MatListModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],

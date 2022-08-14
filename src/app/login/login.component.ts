@@ -34,7 +34,11 @@ export class LoginComponent implements OnInit {
       next: (data) => {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('username', data.username )
-        this.router.navigateByUrl('/input-information')
+        if(data.username=="admin"){
+          this.router.navigateByUrl('/admin')
+        }else{
+          this.router.navigateByUrl('/input-information')
+        }
       }
     })
   }

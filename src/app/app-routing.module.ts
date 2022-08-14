@@ -1,3 +1,5 @@
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { AdminComponent } from './admin/admin.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DirectingComponent } from './directing/directing/directing.component';
@@ -33,10 +35,17 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
+    path:'admin', component: AdminComponent
+  },
+  {
+    path:'admin/dashboard', component: DashboardComponent
+  },
+  {
     path: 'info',
     component: DirectingComponent
   },
-  { path: '**', redirectTo: '', canActivate: [AuthGuard] }
+  { path: '**', redirectTo: '', canActivate: [AuthGuard] },
+  
 
 ];
 

@@ -4,17 +4,17 @@ export class Person {
     lastName: string;
     phone: number;
     idCard: string;
-    date: Date;
-    mail: string;
+    dateOfBirth: string;
+    email: string;
     gender: string;
-    constructor(id: number, firstName: string, lastName: string, phone: number, idCard: string, date: Date, mail: string, gender: string){
-      this.date = date;
+    constructor(id: number, firstName: string, lastName: string, phone: number, idCard: string, dateOfBirth: string, email: string, gender: string){
+      this.dateOfBirth = dateOfBirth;
       this.id = id  
       this.firstName = firstName
       this.lastName = lastName
       this.idCard = idCard
       this.phone = phone
-      this.mail = mail
+      this.email = email
       this.gender = gender
     }
   }

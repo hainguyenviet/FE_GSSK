@@ -1,0 +1,100 @@
+
+body{
+    background-color:rgb(240, 235, 250);
+}
+.header{
+    text-align: center;
+    font-family: Verdana;
+    font-weight: bolder;
+    color: rgb(11, 28, 137) ;
+    margin: 40px 0;
+}
+
+.contact-form{
+    display: flex;
+    flex-direction: row;
+}
+
+.contact-office{
+    width: 40%;
+    
+}
+
+.contact-location-office{
+    margin: auto;
+    // padding: 0 65px;
+    width: 70%;
+    margin-bottom: 50px;
+}
+
+.contact-location-office h3{
+    font-family: Verdana;
+    font-weight: 500;
+    opacity: 0.5;
+    color: rgb(11, 28, 137) ;
+    margin-bottom: 4px;
+}
+.contact-location-office p{
+    // font-family: Verdana;
+    font-weight:--p-font-weight-bold;
+}
+
+.contact-input{
+    background-color: #ffffff;
+    margin-right: 5%;
+    width: 60%;
+    border-radius: 16px;
+    padding-top: 24px;
+}
+
+.contact-input-infor{
+    display: flex;
+    flex-direction: row;
+    margin: 0 5% ;
+    
+}
+
+.contact-input-infor div{
+    display: flex;
+    flex-direction: column;
+    padding: 16px 16px 16px 0;
+    width: 100%;
+
+}
+
+.contact-input-infor label{
+    font-family: Verdana;
+    font-weight: --p-font-weight-bold;
+    padding-left: 24px;
+    color: rgb(11, 28, 137) ;
+}
+
+.contact-input-infor input{
+    padding-left: 16px;
+    border-radius: 24px;
+    height: 48px;
+    // border-style: solid;
+    border: 1px solid #dbdbdb;
+}
+
+.contact-input-infor textarea{
+    padding-left: 24px;
+    padding-top: 4px;
+    border-radius: 24px;
+    resize: none;
+    border: 1px solid #dbdbdb;
+}
+
+.contact-input button{
+    font-family: Verdana;
+    font-weight: bold;
+    margin-left: 5%;
+    margin-bottom: 40px;
+    margin-top: 8px;
+    width: 120px;
+    height: 48px;
+    color: #ffffff;
+    border: none;
+    border-radius: 24px;
+    background-color: rgb(11, 28, 137);
+}

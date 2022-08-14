@@ -24,8 +24,9 @@ export class InterceptorService implements HttpInterceptor {
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401 || err.status === 403) {
-            //this.router.navigate(['login']);
-            alert("Xảy ra lỗi, vui lòng truy cập lại")
+            alert(err.message)
+            this.router.navigate(['login']);
+            
           }
         }
       }));
