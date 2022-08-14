@@ -3,16 +3,34 @@ import { ProgressComponent } from '../progress/progress.component';
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { DatePipe } from '@angular/common'
+import { MatDatepicker } from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 @Component({
   selector: 'app-home',
   templateUrl: './input-information.component.html',
   styleUrls: ['./input-information.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class InputInformationComponent implements OnInit {
 
@@ -21,8 +39,12 @@ export class InputInformationComponent implements OnInit {
     private fb: FormBuilder,
     private api: PersonService,
     private dialog: MatDialog,
-    private router: Router
-  ) {}
+    private router: Router,
+    private dateAdapter: DateAdapter<Date>,
+
+  ) {
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+  }
 
   public inputForm!: FormGroup;
   public personForm!: FormGroup;
@@ -165,6 +187,7 @@ export class InputInformationComponent implements OnInit {
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
   ress = {};
+  dateOfBirth = new Date();
 
   
 
@@ -204,7 +227,7 @@ export class InputInformationComponent implements OnInit {
               )
               ),
           });
-
+          
         //  let date = new DatePipe('en-US').transform(this.personList.dateOfBirth, 'dd/MM/yyyy')
           this.personForm = this.fb.group({
             lastName: [this.personList.lastName||null, Validators.required],

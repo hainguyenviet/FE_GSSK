@@ -42,31 +42,10 @@
       </div>
       <mat-form-field class="margin-right-40">
         <mat-label>Ngày sinh</mat-label>
-        <!-- <input
-          type="text"
-          matInput
-          formControlName="dateOfBirth"
-          class="form-control"
-          #dp="bsDatepicker"
-          bsDatepicker
-          [bsValue]="bsValue"
-        /> -->
-        <input
-          matInput
-          placeholder="Datepicker"
-          class="form-control"
-          formControlName="dateOfBirth"
-        />
-        <!-- <input
-         type="date"
-          matInput
-          
-          formControlName="dateOfBirth"
-          required
-        /> -->
-        <!-- <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker> -->
-      </mat-form-field>
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
 
       <mat-form-field class="margin-right-40">
         <mat-label> Số điện thoại </mat-label>

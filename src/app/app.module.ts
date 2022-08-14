@@ -37,6 +37,7 @@ import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-spons
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component'
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 import {
   GoogleLoginProvider,
   FacebookLoginProvider
@@ -87,7 +88,9 @@ import { DirectingComponent } from './directing/directing/directing.component';
     CarouselActionModule,
     CarouselSponsorsModule,
     MatToolbarModule,
-    SocialLoginModule
+    SocialLoginModule,
+    MomentDateModule
+    
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],
