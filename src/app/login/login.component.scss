@@ -6,9 +6,9 @@
     background: #eee;
 }
 
-// .h-custom {
-//     height: calc(100% - 73px);
-// }
+.h-custom {
+    height: 100%;
+}
 
 .bg-transparent{
     background-color: transparent;
@@ -18,6 +18,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.height-100{
+    height: 125vh !important;
 }
 
 .btn-dn{
