@@ -9,9 +9,9 @@ import { Person } from '../../server_service/model/Person';
 })
 export class PersonService {
 
-  baseURL = environment.baseURL
+  //baseURL = 'http://localhost:8080';//environment.baseURL
   username = localStorage.getItem('username')
- // baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
+  baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient) {}
 
   getAllPerson() {
