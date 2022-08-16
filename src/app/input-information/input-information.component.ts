@@ -161,6 +161,7 @@ export class InputInformationComponent implements OnInit {
   ress = {};
 
   ngOnInit(): void {
+    console.log("token: ", localStorage.getItem('access_token'))
     this.disclaimer();
     this.api.getAllPerson().subscribe(
       (res: any) => {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GenogramLayout } from './layout';
 import * as go from 'gojs';
 import { PersonService } from '../server_service/Person/person.service';
+import {jsPDF} from 'jspdf'
+import domtoimage from 'dom-to-image'
 
 const $ = go.GraphObject.make;
 @Component({
@@ -11,7 +13,7 @@ const $ = go.GraphObject.make;
 })
 export class GenogramComponent implements OnInit {
   constructor(private personService: PersonService) { }
-
+ 
   ngOnInit(): void {
     this.personService.getGenogram(sessionStorage.getItem('idUser')!).subscribe(
       (data: any[]) => {
@@ -275,5 +277,22 @@ export class GenogramComponent implements OnInit {
         diagram.model.addLinkData(cdata)
       }
     }
+  }
+
+  makePDF() {
+    const genogramTree = document.getElementById('myDiagramDiv')!;
+    const genogramHeight = genogramTree.clientHeight;
+    const genogramWidth = genogramTree.clientWidth;
+    const options = { background: 'white', width: genogramWidth, height: genogramHeight };
+    domtoimage.toPng(genogramTree, options).then((imgData) => {
+     // const doc = new jsPDF(genogramHeight > genogramWidth ? 'l' : 'p', 'mm', [genogramWidth, 300]);
+     var doc = new jsPDF("p", "mm", "a4");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      doc.save('genogram.pdf');
+ });
   }
 }
