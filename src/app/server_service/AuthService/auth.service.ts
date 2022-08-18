@@ -30,10 +30,11 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    if (localStorage.getItem('access_token') != null) {
-      return true
-    }
-    return false
+    return localStorage.getItem('access_token') && localStorage.getItem('ROLE')
+  }
+
+  public clearLocalStorage() {
+    localStorage.clear()
   }
 
   handleError(error: HttpErrorResponse) {

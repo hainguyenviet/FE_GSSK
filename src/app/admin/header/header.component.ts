@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/server_service/AuthService/auth.service';
 
 
 
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleSidebarForMe: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
   }
@@ -21,8 +22,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('username');
+    this.authService.clearLocalStorage();
     this.router.navigateByUrl('/home');
   }
 }

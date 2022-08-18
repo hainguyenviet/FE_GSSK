@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../server_service/AuthService/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ export class InputInformationComponent implements OnInit {
     private fb: FormBuilder,
     private api: PersonService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   public inputForm!: FormGroup;
@@ -508,8 +510,9 @@ export class InputInformationComponent implements OnInit {
     }
   }
   logout() {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('username');
+    // localStorage.removeItem('access_token');
+    // localStorage.removeItem('username');
+    this.authService.clearLocalStorage()
     this.router.navigateByUrl('/home');
   }
 

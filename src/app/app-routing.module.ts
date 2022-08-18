@@ -19,11 +19,11 @@ const routes: Routes = [
   },
   {
     path: 'genogram',
-    component: GenogramComponent,
+    component: GenogramComponent, canActivate:[AuthGuard],data: {role: 'USER'}
   },
   {
     path: 'input-information',
-    component: InputInformationComponent, canActivate:[AuthGuard]
+    component: InputInformationComponent, canActivate:[AuthGuard],data: {role: 'USER'}
   },
   { path: 'thankyou', component: ThankyoupageComponent },
   {
@@ -35,10 +35,10 @@ const routes: Routes = [
     component: RegisterComponent,
   },
   {
-    path:'admin', component: AdminComponent
+    path:'admin', component: AdminComponent, canActivate:[AuthGuard], data: {role: 'ADMIN'}
   },
   {
-    path:'admin/dashboard', component: DashboardComponent
+    path:'admin/dashboard', component: DashboardComponent, canActivate:[AuthGuard], data: {role: 'ADMIN'}
   },
   {
     path: 'info',
