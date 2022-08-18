@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
     {
       localStorage.removeItem('username')
     }
+    console.log("USERNAME", localStorage.getItem('username'))
   }
 
   disclaimer(){ 

@@ -14,8 +14,15 @@ export class PersonService {
  // baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient) {}
 
+
   getAllPerson() {
-    return this.http.get<Person>(`${this.baseURL}/api/person/`+ this.username);
+    //console.log("USERNAME: ", this.usernames)
+    return this.http.get<Person>(`${this.baseURL}/api/person/all`);
+  }
+
+  getPerson(usernames: any) {
+    //console.log("USERNAME: ", this.usernames)
+    return this.http.get<Person>(`${this.baseURL}/api/person/`+  usernames);
   }
 
   updatePerson(data: any) {
@@ -28,6 +35,10 @@ export class PersonService {
 
   getGenogram(id: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseURL}/api/genogram/` + id);
+  }
+
+  getRisk(username: any): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/api/genogram/risk/` + username);
   }
 
   handleError(error: HttpErrorResponse) {

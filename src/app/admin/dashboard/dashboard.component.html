@@ -8,6 +8,7 @@
             <th scope="col">Họ Tên</th>
             <th scope="col">Email</th>
             <th scope="col">Giới Tính</th>
+            <th scope="col">Chỉnh Sửa Lần Cuối</th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -17,6 +18,7 @@
             <td>{{employee.lastName + employee.lastName ||"Chưa cập Nhật"}}</td>
             <td>{{employee.email||"Chưa cập Nhật"}}</td>
             <td>{{employee.gender||"Chưa cập Nhật"}}</td>
+            <td>{{employee.updateAt||"Chưa cập Nhật"}}</td>
             <td>
                 <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editEmployee" >View Detail</button>
             </td>

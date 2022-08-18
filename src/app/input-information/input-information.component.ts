@@ -165,14 +165,17 @@ export class InputInformationComponent implements OnInit {
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
   ress = {};
+  usernames : any
 
   
 
   ngOnInit(): void {
+    this.usernames = localStorage.getItem('username')
     this.disclaimer();
-    this.api.getAllPerson().subscribe(
+    this.api.getPerson(this.usernames).subscribe(
       (res: any) => {
         this.personList = res;
+        
         this.addmore = this.fb.group({
           itemRows: this.fb.array(this.personList.healthRecord.illnessList.map(datum => this.generateDatumFormGroup(datum))),
         });
@@ -241,17 +244,17 @@ export class InputInformationComponent implements OnInit {
   }
 
 
-  public getAllPerson() {
-    this.api.getAllPerson().subscribe(
-      (res: any) => {
-        this.personList = res;
-        // console.log(this.personList);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-      );
-  }
+  // public getAllPerson() {
+  //   this.api.getAllPerson().subscribe(
+  //     (res: any) => {
+  //       this.personList = res;
+  //       // console.log(this.personList);
+  //     },
+  //     (error: HttpErrorResponse) => {
+  //       alert(error.message);
+  //     }
+  //     );
+  // }
 
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
@@ -507,7 +510,7 @@ export class InputInformationComponent implements OnInit {
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('username');
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/home');
   }
 
   public disclaimer() {

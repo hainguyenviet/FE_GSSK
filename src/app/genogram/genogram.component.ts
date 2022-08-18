@@ -12,7 +12,13 @@ const $ = go.GraphObject.make;
 export class GenogramComponent implements OnInit {
   constructor(private personService: PersonService) { }
 
+  risk: any;
   ngOnInit(): void {
+    this.personService.getRisk(localStorage.getItem('username')).subscribe(
+      (data:any)=>{
+        this.risk= data;
+      }
+    )
     this.personService.getGenogram(sessionStorage.getItem('idUser')!).subscribe(
       (data: any[]) => {
         const myDiagram = $(go.Diagram, 'myDiagramDiv', {

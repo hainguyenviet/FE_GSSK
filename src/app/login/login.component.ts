@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    console.log("USERNAME LOGIN: ", localStorage.getItem('username'))
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -32,13 +33,16 @@ export class LoginComponent implements OnInit {
                 + '&password=' + this.loginForm.value.password
     this.service.login(body).subscribe({
       next: (data) => {
+        
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('username', data.username )
-        if(data.username=="admin"){
-          this.router.navigateByUrl('/admin')
-        }else{
+        console.log("USERNAME MANUAL: ", localStorage.getItem('username'))
+        //console.log("USERNAME: ")
+        // if(data.username=="admin"){
+        //   this.router.navigateByUrl('/admin')
+        // }else{
           this.router.navigateByUrl('/input-information')
-        }
+        // }
       }
     })
   }
