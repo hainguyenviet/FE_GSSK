@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
   public getAllPerson(): void {
     this.api.getAllPerson().subscribe(
       (res: any) => {
-        console.log(res);
         this.data = res;
       },
       (error: HttpErrorResponse) => {

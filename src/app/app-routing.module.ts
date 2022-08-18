@@ -39,7 +39,7 @@ const routes: Routes = [
     path:'admin', component: AdminComponent, canActivate:[AuthGuard], data: {role: 'ADMIN'}
   },
   {
-    path:'admin/person', component: PersonDetailComponent
+    path:'person/:username', component: PersonDetailComponent
   },
   {
     path: 'info',

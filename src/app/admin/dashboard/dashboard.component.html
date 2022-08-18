@@ -20,7 +20,7 @@
             <td>{{employee.gender||"Chưa cập Nhật"}}</td>
             <td>{{employee.updateAt||"Chưa cập Nhật"}}</td>
             <td>
-                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editEmployee" routerLink="/admin/person" >View Detail</button>
+                <button type="button" class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editEmployee" [routerLink]="['/person', employee.username]" >View Detail</button>
             </td>
       
           </tr>

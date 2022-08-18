@@ -9,7 +9,8 @@ export class Person {
     gender: string;
     updateAt: string;
     appID: string;
-    constructor(appID:string,id: number, firstName: string, lastName: string, phone: number, idCard: string, dateOfBirth: string, email: string, gender: string, updateAt:string){
+    username: string;
+    constructor(appID:string,id: number, firstName: string, lastName: string, phone: number, idCard: string, dateOfBirth: string, email: string, gender: string,username:string, updateAt:string){
       this.dateOfBirth = dateOfBirth;
       this.id = id  
       this.appID = appID
@@ -20,5 +21,6 @@ export class Person {
       this.email = email
       this.gender = gender
       this.updateAt = updateAt
+      this.username = username
     }
   }
