@@ -1,3 +1,4 @@
+import { PersonDetailComponent } from './person-detail/person-detail.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { NgModule } from '@angular/core';
@@ -38,7 +39,7 @@ const routes: Routes = [
     path:'admin', component: AdminComponent, canActivate:[AuthGuard], data: {role: 'ADMIN'}
   },
   {
-    path:'admin/dashboard', component: DashboardComponent, canActivate:[AuthGuard], data: {role: 'ADMIN'}
+    path:'admin/person', component: PersonDetailComponent
   },
   {
     path: 'info',

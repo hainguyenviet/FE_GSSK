@@ -54,6 +54,7 @@ import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { SidenavComponent } from './admin/sidenav/sidenav.component';
 import { HeaderComponent } from './admin/header/header.component';
+import { PersonDetailComponent } from './person-detail/person-detail.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +76,7 @@ import { HeaderComponent } from './admin/header/header.component';
     DashboardComponent,
     SidenavComponent,
     HeaderComponent,
+    PersonDetailComponent,
   ],
   imports: [
     BrowserModule,
