@@ -9,21 +9,20 @@ import { Person } from '../../server_service/model/Person';
 })
 export class PersonService {
 
-  baseURL = environment.baseURL
-  username = localStorage.getItem('username')
- // baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
+  baseURL = 'http://localhost:8080';//environment.baseURL
+  //baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient) {}
 
-  getAllPerson() {
-    return this.http.get<Person>(`${this.baseURL}/api/person/`+ this.username);
+  getAllPerson(username: string) {
+    return this.http.get<Person>(`${this.baseURL}/api/person/`+ username);
   }
 
-  updatePerson(data: any) {
-    return this.http.put<any>(`${this.baseURL}/api/person/update/`+ this.username, data);
+  updatePerson(data: any, username: string) {
+    return this.http.put<any>(`${this.baseURL}/api/person/update/`+ username, data);
   }
 
-  convertGenogram(id: string) {
-    return this.http.post(`${this.baseURL}/api/genogram/convert/` + this.username, null)
+  convertGenogram(username: string) {
+    return this.http.post(`${this.baseURL}/api/genogram/convert/` + username, null)
   }
 
   getGenogram(id: string): Observable<any[]> {

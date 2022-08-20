@@ -189,11 +189,13 @@ export class InputInformationComponent implements OnInit {
   ress = {};
   dateOfBirth = new Date();
 
+  username: string = ""
   
 
   ngOnInit(): void {
     this.disclaimer();
-    this.api.getAllPerson().subscribe(
+    this.username = localStorage.getItem('username')!
+    this.api.getAllPerson(this.username).subscribe(
       (res: any) => {
         this.personList = res;
         this.addmore = this.fb.group({
@@ -264,17 +266,7 @@ export class InputInformationComponent implements OnInit {
   }
 
 
-  public getAllPerson() {
-    this.api.getAllPerson().subscribe(
-      (res: any) => {
-        this.personList = res;
-        // console.log(this.personList);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-      );
-  }
+  
 
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
@@ -511,11 +503,11 @@ export class InputInformationComponent implements OnInit {
     console.log(this.personForm.value);
     console.log(this.personList);
     if (this.personForm.valid) {
-      this.api.updatePerson(this.personForm.value).subscribe({
+      this.api.updatePerson(this.personForm.value, this.username).subscribe({
         next: (res) => {
           sessionStorage.setItem('idUser', res.id.toString());
           this.api
-            .convertGenogram(sessionStorage.getItem('idUser')!)
+            .convertGenogram(this.username)
             .subscribe();
           alert('Person added successfully');
         },
