@@ -24,9 +24,10 @@
       <br />
       <div class="radio-group">
         <mat-radio-group
-          required
           aria-label="Select an option"
           formControlName="gender"
+          required
+          name="Gioi Tinh"
         >
           <mat-label class="margin-right-40">Giới tính</mat-label>
           <mat-radio-button
@@ -40,9 +41,9 @@
           >
         </mat-radio-group>
       </div>
-      <mat-form-field class="margin-right-40">
+      <mat-form-field class="margin-right-40" >
         <mat-label>Ngày sinh</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" />
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required="true"/>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -73,6 +74,15 @@
         <input matInput placeholder="Email" formControlName="email" required />
       </mat-form-field>
     </form>
+    <button
+      class="margin-right-10"
+      progressStepNext
+      mat-raised-button
+      color="basic"
+      (click)="updatePerson()"
+    >
+      Lưu
+    </button>
     <button
       progressStepNext
       mat-raised-button
@@ -131,12 +141,12 @@
         <div>
           <label class="margin-right-5">Chiều cao:</label>
           <mat-form-field class="margin-right-50 width-100">
-            <input matInput formControlName="height" placeholder=" " required />
+            <input matInput formControlName="height" placeholder=" "  />
           </mat-form-field>
           <label class="margin-right-40">Cm</label>
           <label class="margin-right-5">Cân nặng</label>
           <mat-form-field class="width-100">
-            <input matInput formControlName="weight" placeholder=" " required />
+            <input matInput formControlName="weight" placeholder=" "  />
           </mat-form-field>
           <label class="margin-right-10">Kg</label>
         </div>
@@ -408,6 +418,16 @@
         </div>
       </section>
     </form>
+
+    <button
+      class="margin-right-10"
+      progressStepNext
+      mat-raised-button
+      color="basic"
+      (click)="updatePerson()"
+    >
+      Lưu
+    </button>
 
     <button
       progressStepPrev
