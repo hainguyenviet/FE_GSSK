@@ -27,7 +27,7 @@ export class AuthService {
   }
   
   singup(data: any) {
-    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
+    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'})
   }
 
   isLoggedIn() {

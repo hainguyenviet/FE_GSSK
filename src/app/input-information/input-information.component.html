@@ -1,3 +1,4 @@
+
 <mat-toolbar color="primary">
   GIA SỬ SỨC KHỎE
   <div class="spacer"></div>
@@ -8,10 +9,11 @@
     <h1>THÔNG TIN CÁ NHÂN</h1>
     <form *ngIf="personForm" [formGroup]="personForm" class="person-form">
       <mat-form-field class="margin-right-40">
-        <mat-label>Họ</mat-label>
-        <input matInput formControlName="lastName" placeholder="Họ" required />
+        <mat-label>Họ </mat-label>
+        <input matInput formControlName="lastName" placeholder="Họ" required />  
+        <mat-error  *ngIf="lastName && lastName.invalid && lastName.touched" class="error" >Vui lòng nhập Họ</mat-error> 
       </mat-form-field>
-
+      
       <mat-form-field>
         <mat-label>Tên</mat-label>
         <input
@@ -19,7 +21,9 @@
           formControlName="firstName"
           placeholder="Tên"
           required
+          
         />
+        <mat-error  *ngIf="firstName && firstName.invalid && firstName.touched" class="error" >Vui lòng nhập Tên</mat-error> 
       </mat-form-field>
       <br />
       <div class="radio-group">
@@ -46,6 +50,7 @@
         <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required="true"/>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
+        <mat-error  *ngIf="dateOfBirth && dateOfBirth.invalid && dateOfBirth.touched" class="error" >Vui lòng nhập Ngày sinh</mat-error>
     </mat-form-field>
 
       <mat-form-field class="margin-right-40">
@@ -56,6 +61,7 @@
           formControlName="phoneNumber"
           required
         />
+        <mat-error  *ngIf="phoneNumber && phoneNumber.invalid && phoneNumber.touched" class="error" >Vui lòng nhập Số điện thoại</mat-error>
       </mat-form-field>
       <br />
 
@@ -67,14 +73,17 @@
           placeholder="Số CMND/CCCD/Passport"
           formControlName="idCard"
         />
+        <mat-error  *ngIf="idCard && idCard.invalid && idCard.touched" class="error" >Vui lòng nhập Số CMND/CCCD/Passport</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" required />
+        <mat-error  *ngIf="email && email.invalid && email.touched" class="error" >Vui lòng nhập Email</mat-error>
       </mat-form-field>
     </form>
     <button
+<<<<<<< HEAD
       class="margin-right-10"
       progressStepNext
       mat-raised-button
@@ -84,10 +93,17 @@
       Lưu
     </button>
     <button
+=======
+    class="margin-top-10"
+>>>>>>> d824e53e652ca0112e79175afc239c4cd1f5d4d2
       progressStepNext
       mat-raised-button
       color="accent"
       (click)="goNext(progress)"
+      [disabled]="personForm.controls['lastName'].invalid
+      || personForm.controls['firstName'].invalid
+      || personForm.controls['idCard'].invalid
+      || personForm.controls['phoneNumber'].invalid"
     >
       Tiếp theo
     </button>
@@ -95,7 +111,7 @@
   <app-progress-step class="padding-bottom-50 height">
     <form *ngIf="illnessForm" [formGroup]="illnessForm">
       <section>
-        <h1>HỒ SƠ BỆNH LÝ</h1>
+        <h1>THÔNG TIN SỨC KHỎE</h1>
         <div>
           <mat-radio-group
             aria-label="Select an option isTwin"
@@ -141,12 +157,22 @@
         <div>
           <label class="margin-right-5">Chiều cao:</label>
           <mat-form-field class="margin-right-50 width-100">
+<<<<<<< HEAD
             <input matInput formControlName="height" placeholder=" "  />
+=======
+            <input matInput formControlName="height" placeholder=" " required />
+            <mat-error  *ngIf="height && height.invalid && height.touched" class="error1" >Nhập chiều cao</mat-error> 
+>>>>>>> d824e53e652ca0112e79175afc239c4cd1f5d4d2
           </mat-form-field>
           <label class="margin-right-40">Cm</label>
           <label class="margin-right-5">Cân nặng</label>
           <mat-form-field class="width-100">
+<<<<<<< HEAD
             <input matInput formControlName="weight" placeholder=" "  />
+=======
+            <input matInput formControlName="weight" placeholder=" " required />
+            <mat-error  *ngIf="weight && weight.invalid && weight.touched" class="error1" >Nhập cân nặng</mat-error>
+>>>>>>> d824e53e652ca0112e79175afc239c4cd1f5d4d2
           </mat-form-field>
           <label class="margin-right-10">Kg</label>
         </div>

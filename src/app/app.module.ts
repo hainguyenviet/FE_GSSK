@@ -46,6 +46,7 @@ import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './server_service/Interceptor/interceptor.service';
 import { DirectingComponent } from './directing/directing/directing.component';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,7 @@ import { DirectingComponent } from './directing/directing/directing.component';
     ThankyoupageComponent,
     LoginComponent,
     RegisterComponent,
-    DirectingComponent,
+    DirectingComponent
   ],
   imports: [
     BrowserModule,
@@ -88,9 +89,7 @@ import { DirectingComponent } from './directing/directing/directing.component';
     CarouselActionModule,
     CarouselSponsorsModule,
     MatToolbarModule,
-    SocialLoginModule,
-    MomentDateModule
-    
+    SocialLoginModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],
