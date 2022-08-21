@@ -14,8 +14,8 @@ let options = {
 })
 export class AuthService {
 
-  baseURL =  'http://localhost:8080';//environment.baseURL
-  //baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
+  //baseURL =  'http://localhost:8080';//environment.baseURL
+  baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient, private router: Router) {
    }
   login(data: any) {
