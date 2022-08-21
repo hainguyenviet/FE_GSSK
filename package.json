@@ -32,11 +32,8 @@
     "bootstrap-icons": "^1.9.1",
     "gojs": "^2.2.5",
     "install": "^0.13.0",
-<<<<<<< HEAD
     "moment": "^2.29.4",
-=======
     "ngx-toastr": "^13.2.1",
->>>>>>> d824e53e652ca0112e79175afc239c4cd1f5d4d2
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "webpack": "^5.72.1",
