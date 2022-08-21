@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../server_service/AuthService/auth.service';
 import {SocialAuthService, SocialUser, GoogleLoginProvider} from 'angularx-social-login'
+import { NotificationService } from '../server_service/notification/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -15,8 +16,14 @@ import {SocialAuthService, SocialUser, GoogleLoginProvider} from 'angularx-socia
 
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup
-  
-  constructor(private service: AuthService, private fb: FormBuilder, private router: Router, private http: HttpClient, private activeRoute: ActivatedRoute) {
+  public showPassword!: boolean
+  hide = true;
+  constructor(private service: AuthService, 
+    private fb: FormBuilder, 
+    private router: Router, 
+    private http: HttpClient, 
+    private activeRoute: ActivatedRoute,
+    private notificate: NotificationService) {
     
    }
 
@@ -35,13 +42,15 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('username', data.username )
         this.router.navigateByUrl('/input-information')
+      },
+      error: (error) => {
+        this.notificate.showError("Email hoặc mật khẩu không đúng", "Vui lòng đăng nhập lại")
       }
     })
   }
 
   loginGoogle() {
     this.service.loginGoogle()
-    //localStorage.removeItem('access_token')
   }
  
 }

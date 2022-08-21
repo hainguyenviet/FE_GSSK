@@ -4,10 +4,10 @@ import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@ang
 import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
-
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -165,16 +165,21 @@ export class InputInformationComponent implements OnInit {
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
   ress = {};
-
   username: string = ""
-  
 
   ngOnInit(): void {
-    this.disclaimer();
+    if (this.isFirstTime() === true)
+    {
+      this.disclaimer();
+    }
+   
+    
     this.username = localStorage.getItem('username')!
     this.api.getAllPerson(this.username).subscribe(
       (res: any) => {
+        localStorage.setItem('lastName', res.lastName)
         this.personList = res;
+        this.personList.email = this.username
         this.addmore = this.fb.group({
           itemRows: this.fb.array(this.personList.healthRecord.illnessList.map(datum => this.generateDatumFormGroup(datum))),
         });
@@ -228,7 +233,44 @@ export class InputInformationComponent implements OnInit {
 
     this.initItemRows();
   }
+ isFirstTime() {
+  if (localStorage.getItem('lastName') === 'null')
+  {
+    return true
+  }
+  else {
+    return false
+  }
+ }
 
+ get lastName() {
+  return this.personForm.get('lastName');
+ }
+ get gender() {
+  return this.personForm.get('gender');
+ }
+ get firstName() {
+  return this.personForm.get('firstName');
+ }
+ get phoneNumber() {
+  return this.personForm.get('phoneNumber');
+ }
+ get idCard() {
+  return this.personForm.get('idCard');
+ }
+ get email() {
+  return this.personForm.get('email');
+ }
+
+ get dateOfBirth() {
+  return this.personForm.get('dateOfBirth');
+ }
+ get height() {
+  return this.personForm.get('healthRecord')?.get('height');
+ }
+ get weight() {
+  return this.personForm.get('healthRecord')?.get('weight');
+ }
   private generateDatumFormGroup(datum: any) {
     return this.fb.group({
       code: this.fb.control({ value: datum.code, disabled: false }),
@@ -495,6 +537,7 @@ export class InputInformationComponent implements OnInit {
     } else {
       alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết');
     }
+
   }
   logout() {
     localStorage.removeItem('access_token');
