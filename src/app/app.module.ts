@@ -38,10 +38,6 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component'
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
 import { MomentDateModule } from '@angular/material-moment-adapter';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from 'angularx-social-login';
 import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './server_service/Interceptor/interceptor.service';
@@ -89,7 +85,10 @@ import { ToastrModule } from 'ngx-toastr';
     CarouselActionModule,
     CarouselSponsorsModule,
     MatToolbarModule,
-    SocialLoginModule
+    SocialLoginModule,
+    ToastrModule.forRoot(),
+    MomentDateModule
+
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],

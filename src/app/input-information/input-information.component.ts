@@ -34,7 +34,6 @@ export const MY_DATE_FORMATS = {
 })
 export class InputInformationComponent implements OnInit {
 
-  //  bsValue = new Date();
   constructor(
     private fb: FormBuilder,
     private api: PersonService,
@@ -186,8 +185,6 @@ export class InputInformationComponent implements OnInit {
   ];
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
-  ress = {};
-  dateOfBirth = new Date();
 
   username: string = ""
 
@@ -236,7 +233,6 @@ export class InputInformationComponent implements OnInit {
               ),
           });
           
-        //  let date = new DatePipe('en-US').transform(this.personList.dateOfBirth, 'dd/MM/yyyy')
           this.personForm = this.fb.group({
             lastName: [this.personList.lastName||null, Validators.required],
             firstName: [this.personList.firstName, Validators.required],
