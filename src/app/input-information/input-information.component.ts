@@ -539,8 +539,6 @@ export class InputInformationComponent implements OnInit {
   }
 
   updatePerson() {
-    console.log(this.personForm.value);
-    console.log(this.personList);
     if (this.personForm.valid) {
       this.api.updatePerson(this.personForm.value, this.username).subscribe({
         next: (res) => {
