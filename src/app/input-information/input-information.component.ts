@@ -3,28 +3,48 @@ import { ProgressComponent } from '../progress/progress.component';
 import { FormGroup, Validators, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { DisclaimerComponent } from '../disclaimer/disclaimer.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { DatePipe } from '@angular/common'
+import { MatDatepicker } from '@angular/material/datepicker';
+import { DateAdapter } from '@angular/material/core';
 
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../server_service/AuthService/auth.service';
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 @Component({
   selector: 'app-home',
   templateUrl: './input-information.component.html',
   styleUrls: ['./input-information.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class InputInformationComponent implements OnInit {
 
-  //  bsValue = new Date();
   constructor(
     private fb: FormBuilder,
     private api: PersonService,
     private dialog: MatDialog,
     private router: Router,
+    private dateAdapter: DateAdapter<Date>,
     private authService: AuthService
-  ) {}
+  ) {
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+  }
 
   public inputForm!: FormGroup;
   public personForm!: FormGroup;
@@ -140,7 +160,7 @@ export class InputInformationComponent implements OnInit {
         deathCause: '',
         illnessRelative: [
           {
-            code: 'phuc',
+            code: '',
             illName: '',
             illNameOther: null,
             name: '',
@@ -166,18 +186,22 @@ export class InputInformationComponent implements OnInit {
   ];
   index_of_relationship = 0;
   list_of_parent_nephew: any[] = [];
-  ress = {};
-  usernames : any
 
-  
+  username: string = ""
 
   ngOnInit(): void {
-    this.usernames = localStorage.getItem('username')
-    this.disclaimer();
-    this.api.getPerson(this.usernames).subscribe(
+    if (this.isFirstTime() === true)
+    {
+      this.disclaimer();
+    }
+   
+    
+    this.username = localStorage.getItem('username')!
+    this.api.getPerson(this.username).subscribe(
       (res: any) => {
+        localStorage.setItem('lastName', res.lastName)
         this.personList = res;
-        
+        this.personList.email = this.username
         this.addmore = this.fb.group({
           itemRows: this.fb.array(this.personList.healthRecord.illnessList.map(datum => this.generateDatumFormGroup(datum))),
         });
@@ -186,8 +210,8 @@ export class InputInformationComponent implements OnInit {
           isTwin: res.healthRecord.isTwin,
           isAdopted: res.healthRecord.isAdopted,
           relationship: res.healthRecord.relationship,
-          height: [res.healthRecord.height, Validators.required],
-          weight: [res.healthRecord.weight, Validators.required],
+          height: [res.healthRecord.height],
+          weight: [res.healthRecord.weight],
           firstPeriodAge: res.healthRecord.firstPeriodAge,
           birthControl: res.healthRecord.birthControl,
           pregnantTime: res.healthRecord.pregnantTime,
@@ -209,8 +233,7 @@ export class InputInformationComponent implements OnInit {
               )
               ),
           });
-
-        //  let date = new DatePipe('en-US').transform(this.personList.dateOfBirth, 'dd/MM/yyyy')
+          
           this.personForm = this.fb.group({
             lastName: [this.personList.lastName||null, Validators.required],
             firstName: [this.personList.firstName, Validators.required],
@@ -231,7 +254,44 @@ export class InputInformationComponent implements OnInit {
 
     this.initItemRows();
   }
+ isFirstTime() {
+  if (localStorage.getItem('lastName') === 'null')
+  {
+    return true
+  }
+  else {
+    return false
+  }
+ }
 
+ get lastName() {
+  return this.personForm.get('lastName');
+ }
+ get gender() {
+  return this.personForm.get('gender');
+ }
+ get firstName() {
+  return this.personForm.get('firstName');
+ }
+ get phoneNumber() {
+  return this.personForm.get('phoneNumber');
+ }
+ get idCard() {
+  return this.personForm.get('idCard');
+ }
+ get email() {
+  return this.personForm.get('email');
+ }
+
+ get dateOfBirth() {
+  return this.personForm.get('dateOfBirth');
+ }
+ get height() {
+  return this.personForm.get('healthRecord')?.get('height');
+ }
+ get weight() {
+  return this.personForm.get('healthRecord')?.get('weight');
+ }
   private generateDatumFormGroup(datum: any) {
     return this.fb.group({
       code: this.fb.control({ value: datum.code, disabled: false }),
@@ -246,17 +306,7 @@ export class InputInformationComponent implements OnInit {
   }
 
 
-  // public getAllPerson() {
-  //   this.api.getAllPerson().subscribe(
-  //     (res: any) => {
-  //       this.personList = res;
-  //       // console.log(this.personList);
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //     );
-  // }
+  
 
   get itemRows() {
     return this.addmore.controls['itemRows'] as FormArray;
@@ -490,14 +540,12 @@ export class InputInformationComponent implements OnInit {
   }
 
   updatePerson() {
-    console.log(this.personForm.value);
-    console.log(this.personList);
     if (this.personForm.valid) {
-      this.api.updatePerson(this.personForm.value).subscribe({
+      this.api.updatePerson(this.personForm.value, this.username).subscribe({
         next: (res) => {
           sessionStorage.setItem('idUser', res.id.toString());
           this.api
-            .convertGenogram(sessionStorage.getItem('idUser')!)
+            .convertGenogram(this.username)
             .subscribe();
           alert('Person added successfully');
         },
@@ -508,6 +556,7 @@ export class InputInformationComponent implements OnInit {
     } else {
       alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết');
     }
+
   }
   logout() {
     // localStorage.removeItem('access_token');

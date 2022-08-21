@@ -14,7 +14,8 @@ let options = {
 })
 export class AuthService {
 
-  baseURL =  environment.baseURL
+  baseURL =  'http://localhost:8080';//environment.baseURL
+  //baseURL = 'http://giasusuckhoe.vn/gssk-1.0.0';
   constructor(private http: HttpClient, private router: Router) {
    }
   login(data: any) {
@@ -26,7 +27,7 @@ export class AuthService {
   }
   
   singup(data: any) {
-    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'}).pipe(catchError(this.handleError))
+    return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'})
   }
 
   isLoggedIn() {

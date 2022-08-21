@@ -47,35 +47,12 @@ export class PersonComponent implements OnInit {
       idCard: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
     });
-    //this.getAllPerson();
+   // this.getAllPerson();
     //console.log(this.updatePerson.value)
   }
   get f() {
     return this.personForm.controls;
   }
-  // public getAllPerson(): void {
-  //   this.api.getAllPerson().subscribe(
-  //     (res: any) => {
-  //       this.personList = res;
-  //       // show list person
-  //       //console.log(this.personList)
-  //     },
-  //     (error: HttpErrorResponse) => {
-  //       alert(error.message);
-  //     }
-  //   );
-  // }
-  // postPerson() {
-  //   if (this.personForm.valid) {
-  //     this.api.updatePerson(this.personForm.value).subscribe({
-  //       next: (res) => {
-  //         alert('Person added successfully');
-  //         this.personForm.reset();
-  //       },
-  //       error: () => {
-  //         alert('Error');
-  //       },
-  //     });
-  //   }
-  // }
+
+
 }

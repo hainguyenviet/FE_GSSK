@@ -37,19 +37,16 @@ import{CarouselSponsorsModule} from './carousel/carousel-sponsors/carousel-spons
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component'
 import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from 'angularx-social-login';
+import { MomentDateModule } from '@angular/material-moment-adapter';
 import {AngularFireModule} from '@angular/fire/compat'
 import { environment } from 'src/environments/environment';
 import { InterceptorService } from './server_service/Interceptor/interceptor.service';
 import { DirectingComponent } from './directing/directing/directing.component';
+import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './admin/admin.component';
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { SidenavComponent } from './admin/sidenav/sidenav.component';
@@ -105,9 +102,10 @@ import { PersonDetailComponent } from './person-detail/person-detail.component';
     MatToolbarModule,
     MatDividerModule,
     SocialLoginModule,
+    ToastrModule.forRoot(),
+    MomentDateModule,
     MatSidenavModule,
-    MatListModule,
-    BsDatepickerModule.forRoot(),
+    MatListModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],

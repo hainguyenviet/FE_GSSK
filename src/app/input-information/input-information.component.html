@@ -1,3 +1,4 @@
+
 <mat-toolbar color="primary">
   GIA SỬ SỨC KHỎE
   <div class="spacer"></div>
@@ -8,10 +9,11 @@
     <h1>THÔNG TIN CÁ NHÂN</h1>
     <form *ngIf="personForm" [formGroup]="personForm" class="person-form">
       <mat-form-field class="margin-right-40">
-        <mat-label>Họ</mat-label>
-        <input matInput formControlName="lastName" placeholder="Họ" required />
+        <mat-label>Họ </mat-label>
+        <input matInput formControlName="lastName" placeholder="Họ" required />  
+        <mat-error  *ngIf="lastName && lastName.invalid && lastName.touched" class="error" >Vui lòng nhập Họ</mat-error> 
       </mat-form-field>
-
+      
       <mat-form-field>
         <mat-label>Tên</mat-label>
         <input
@@ -19,20 +21,23 @@
           formControlName="firstName"
           placeholder="Tên"
           required
+          
         />
+        <mat-error  *ngIf="firstName && firstName.invalid && firstName.touched" class="error" >Vui lòng nhập Tên</mat-error> 
       </mat-form-field>
       <br />
       <div class="radio-group">
+        <mat-label  class="margin-right-40">Giới tính</mat-label>
         <mat-radio-group
-          required
           aria-label="Select an option"
           formControlName="gender"
+          required
         >
-          <mat-label class="margin-right-40">Giới tính</mat-label>
           <mat-radio-button
             [checked]="personList.gender === 'Nam'"
             value="Nam"
             class="margin-right-40"
+            
             >Nam</mat-radio-button
           >
           <mat-radio-button [checked]="personList.gender === 'Nữ'" value="Nữ"
@@ -40,35 +45,13 @@
           >
         </mat-radio-group>
       </div>
-      <mat-form-field class="margin-right-40">
+      <mat-form-field class="margin-right-40" >
         <mat-label>Ngày sinh</mat-label>
-        <!-- <input
-          type="text"
-          matInput
-          formControlName="dateOfBirth"
-          class="form-control"
-          #dp="bsDatepicker"
-          bsDatepicker
-          [bsValue]="bsValue"
-        /> -->
-        <input
-          matInput
-          placeholder="Datepicker"
-          class="form-control"
-          formControlName="dateOfBirth"
-          #dp="bsDatepicker"
-          bsDatepicker
-        />
-        <!-- <input
-         type="date"
-          matInput
-          
-          formControlName="dateOfBirth"
-          required
-        /> -->
-        <!-- <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker> -->
-      </mat-form-field>
+        <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" required="true"/>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error  *ngIf="dateOfBirth && dateOfBirth.invalid && dateOfBirth.touched" class="error" >Vui lòng nhập Ngày sinh</mat-error>
+    </mat-form-field>
 
       <mat-form-field class="margin-right-40">
         <mat-label> Số điện thoại </mat-label>
@@ -78,6 +61,7 @@
           formControlName="phoneNumber"
           required
         />
+        <mat-error  *ngIf="phoneNumber && phoneNumber.invalid && phoneNumber.touched" class="error" >Vui lòng nhập Số điện thoại</mat-error>
       </mat-form-field>
       <br />
 
@@ -89,14 +73,28 @@
           placeholder="Số CMND/CCCD/Passport"
           formControlName="idCard"
         />
+        <mat-error  *ngIf="idCard && idCard.invalid && idCard.touched" class="error" >Vui lòng nhập Số CMND/CCCD/Passport</mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput placeholder="Email" formControlName="email" required />
+        <mat-error  *ngIf="email && email.invalid && email.touched" class="error" >Vui lòng nhập Email</mat-error>
       </mat-form-field>
     </form>
+
     <button
+      class="margin-right-10"
+      progressStepNext
+      mat-raised-button
+      color="basic"
+      (click)="updatePerson()"
+    >
+      Lưu
+    </button>
+
+    <button
+    class="margin-top-10"
       progressStepNext
       mat-raised-button
       color="accent"
@@ -108,7 +106,7 @@
   <app-progress-step class="padding-bottom-50 height">
     <form *ngIf="illnessForm" [formGroup]="illnessForm">
       <section>
-        <h1>HỒ SƠ BỆNH LÝ</h1>
+        <h1>THÔNG TIN SỨC KHỎE</h1>
         <div>
           <mat-radio-group
             aria-label="Select an option isTwin"
@@ -154,12 +152,12 @@
         <div>
           <label class="margin-right-5">Chiều cao:</label>
           <mat-form-field class="margin-right-50 width-100">
-            <input matInput formControlName="height" placeholder=" " required />
+            <input matInput formControlName="height" placeholder=" "  />
           </mat-form-field>
           <label class="margin-right-40">Cm</label>
           <label class="margin-right-5">Cân nặng</label>
           <mat-form-field class="width-100">
-            <input matInput formControlName="weight" placeholder=" " required />
+            <input matInput formControlName="weight" placeholder=" "  />
           </mat-form-field>
           <label class="margin-right-10">Kg</label>
         </div>
@@ -431,6 +429,16 @@
         </div>
       </section>
     </form>
+
+    <button
+      class="margin-right-10"
+      progressStepNext
+      mat-raised-button
+      color="basic"
+      (click)="updatePerson()"
+    >
+      Lưu
+    </button>
 
     <button
       progressStepPrev

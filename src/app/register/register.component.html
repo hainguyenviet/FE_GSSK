@@ -1,52 +1,107 @@
-<!-- Section: Design Block -->
 <section class="text-center text-lg-start">
-    <!-- Jumbotron -->
     <div class="container py-4">
         <div class="row g-0 align-items-center">
             <div class="col-lg-6 mb-5 mb-lg-0">
                 <div class="card cascading-right">
                     <div class="card-body p-5 shadow-5 text-center">
                         <h2 class="fw-bold mb-5">Đăng ký</h2>
-                        <form [formGroup]="registerForm">
+                        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label" for="form3Example1">Họ</label>
-                                    <input formControlName="fullName" type="text" id="form3Example1" class="form-control" />
+                                    <input formControlName="lastName" type="text" id="form3Example1"
+                                        class="form-control" required
+                                        [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+                                    <div *ngIf="!submitted && f.lastName && f.lastName.invalid && f.lastName.touched "
+                                        class="error">Vui lòng nhập Họ</div>
+                                    <div *ngIf="submitted && f.lastName.errors" class="error">
+                                        <div *ngIf="f.lastName.errors.required">Vui lòng nhập Họ</div>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label" for="form3Example2">Tên</label>
-                                    <input  type="text" id="form3Example2" class="form-control" />
+                                    <input formControlName="firstName" type="text" id="form3Example2"
+                                        class="form-control" required
+                                        [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+                                    <div *ngIf="!submitted && f.firstName && f.firstName.invalid && f.firstName.touched "
+                                        class="error">Vui lòng nhập Tên</div>
+                                    <div *ngIf="submitted && f.firstName.errors" class="error">
+                                        <div *ngIf="f.firstName.errors.required">Vui lòng nhập Tên</div>
+                                    </div>
                                 </div>
                             </div>
-                            <!-- Email input -->
+
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example3">Địa chỉ mail</label>
-                                <input formControlName="email" type="email" id="form3Example3" class="form-control" />
+                                <input formControlName="email" type="email" id="form3Example3" class="form-control"
+                                    required [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                   
+                                <div *ngIf="submitted && f.email.errors" class="error">
+                                    <div *ngIf="f.email.errors.required">Vui lòng nhập email</div>
+                                    <div *ngIf="f.email.errors.email">Vui lòng nhập email đúng cú pháp</div>
+                                </div>
                             </div>
 
-                            <!-- Password input -->
+
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example4">Mật khẩu</label>
-                                <input formControlName="password" type="password" id="form3Example4" class="form-control" />
+                                <input formControlName="password" 
+                                [type]="showPassword ? 'text' : 'password'"
+                                 id="form3Example4"
+                                    class="form-control" required
+                                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" >
+                                    <div>
+                                        <i alt="show" class="far fa-eye eye-show" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="showPassword"></i>
+                                        <i alt="hide" class="far fa-eye-slash eye-hide" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="!showPassword"></i>
+                                      </div>
+                                <div *ngIf="submitted && f.password.errors" class="error">
+                                    <div *ngIf="f.password.errors.required">Vui lòng nhập Mật khẩu</div>
+                                    <div *ngIf="f.password.errors.minlength">
+                                        Mật khẩu ít nhất 8 kí tự
+                                      </div>
+                                </div>
                             </div>
 
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example4">Xác nhận mật khẩu</label>
-                                <input type="password" id="form3Example4" class="form-control" />
+                                <input formControlName="confirmPassword" 
+                                [type]="showPassword ? 'text' : 'password'"
+                                id="form3Example4"
+                                    class="form-control" required 
+                                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }"
+                                    />  
+                                    <div>
+                                        <i alt="show" class="far fa-eye eye-show" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="showPassword"></i>
+                                        <i alt="hide" class="far fa-eye-slash eye-hide" 
+                                        (click)="showPassword = !showPassword"
+                                        [class.hide]="!showPassword"></i>
+                                      </div>
+                                <div *ngIf="submitted && f.confirmPassword.errors" class="error">
+                                    <div *ngIf="f.confirmPassword.errors.required">Vui lòng xác nhận mật khẩu</div> 
+                                    <div *ngIf="f.confirmPassword.errors.mustMatch">Mật khẩu xác nhận không chính xác</div> 
+                                </div>
                             </div>
-                            <!-- Submit button -->
-                            <button (click)="register()" type="button" class="btn btn-primary btn-block mb-4"> Đăng ký</button>
+                            <button type="submit" class="btn btn-primary btn-block mb-4"> Đăng ký</button>
                         </form>
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-6 mb-5 mb-lg-0">
-                <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4" alt="" />
+                <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg" class="w-100 rounded-4 shadow-4"
+                    alt="" />
             </div>
         </div>
     </div>
-    <!-- Jumbotron -->
+
 </section>
-<!-- Section: Design Block -->
+<!-- <button (click)="register()" type="button" class="btn btn-primary btn-block mb-4"> Đăng ký</button> -->
