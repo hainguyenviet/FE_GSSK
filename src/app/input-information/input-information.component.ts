@@ -11,6 +11,7 @@ import { DateAdapter } from '@angular/material/core';
 import { PersonService } from '../server_service/Person/person.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NotificationService } from '../server_service/notification/notification.service';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -40,7 +41,7 @@ export class InputInformationComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private dateAdapter: DateAdapter<Date>,
-
+    private notify: NotificationService
   ) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
@@ -546,14 +547,14 @@ export class InputInformationComponent implements OnInit {
           this.api
             .convertGenogram(this.username)
             .subscribe();
-          alert('Person added successfully');
+          this.notify.showSuccess("Dữ liệu lưu thành công", "")
         },
         error: () => {
-          alert('Error');
+          this.notify.showError("Hệ thống xảy ra lỗi", "Vui lòng refresh")
         },
       });
     } else {
-      alert('Hãy Điền Đầy Đủ Thông Tin Cần Thiết');
+      this.notify.showWarning("Vui lòng nhập thông tin cần thiết", "")
     }
 
   }
