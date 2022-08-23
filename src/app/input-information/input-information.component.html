@@ -23,7 +23,7 @@
           required
           
         />
-        <mat-error  *ngIf="firstName && firstName.invalid && firstName.touched" class="error" >Vui lòng nhập Tên</mat-error> 
+        <mat-error  *ngIf="firstName && firstName.invalid && firstName.touched && firstName.errors?.required" class="error" >Vui lòng nhập Tên</mat-error> 
       </mat-form-field>
       <br />
       <div class="radio-group">
@@ -43,6 +43,7 @@
           <mat-radio-button [checked]="personList.gender === 'Nữ'" value="Nữ"
             >Nữ</mat-radio-button
           >
+          <mat-error  *ngIf="gender && gender.invalid && gender.touched" class="error" >Vui Chọn Giới tính</mat-error>
         </mat-radio-group>
       </div>
       <mat-form-field class="margin-right-40" >
@@ -89,6 +90,8 @@
       mat-raised-button
       color="basic"
       (click)="updatePerson()"
+      (click)="this.personForm.markAllAsTouched()"
+      
     >
       Lưu
     </button>
