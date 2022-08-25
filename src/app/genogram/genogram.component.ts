@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GenogramLayout } from './layout';
 import * as go from 'gojs';
 import { PersonService } from '../server_service/Person/person.service';
-
+import {jsPDF} from 'jspdf'
+import domtoimage from 'dom-to-image'
+import { NotificationService } from '../server_service/notification/notification.service';
 const $ = go.GraphObject.make;
 @Component({
   selector: 'app-genogram',
@@ -10,109 +12,137 @@ const $ = go.GraphObject.make;
   styleUrls: ['./genogram.component.scss'],
 })
 export class GenogramComponent implements OnInit {
-  constructor(private personService: PersonService) { }
+  constructor(private personService: PersonService, private notificate: NotificationService) {
 
-  risk: any;
+  }
+  username: string = "";
+  riskUTV: string = "";
+  riskUTDTT: string = ""
   ngOnInit(): void {
-    
-    this.personService.getGenogram(sessionStorage.getItem('idUser')!).subscribe(
-      (data: any[]) => {
-        const myDiagram = $(go.Diagram, 'myDiagramDiv', {
-          initialAutoScale: go.Diagram.Uniform,
-          'undoManager.isEnabled': true,
-          // when a node is selected, draw a big yellow circle behind it
-          nodeSelectionAdornmentTemplate: $(
-            go.Adornment,
-            'Auto',
-            { layerName: 'Grid' }, // the predefined layer that is behind everything else
-            $(go.Shape, 'Circle', { fill: '#c1cee3', stroke: null }),
-            $(go.Placeholder, { margin: 2 })
-          ),
-          // use a custom layout, defined below
-          layout: $(GenogramLayout, {
-            direction: 90,
-            layerSpacing: 30,
-            columnSpacing: 10,
-          }),
-        });
+    this.username = localStorage.getItem('username')!
+    this.personService.getRiskUTV(this.username).subscribe((result: any[]) => {
+      this.riskUTV = result[0]
 
+      this.personService.getRiskUTDTT(this.username).subscribe((result: any[]) => {
+        this.riskUTDTT = result[0]
 
-        myDiagram.nodeTemplateMap.add("M",  // male
-          $(go.Node, "Vertical",
-            { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
-            $(go.Panel,
-              { name: "ICON" },
-              $(go.Shape, "Square",
-                { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#919191", portId: "" }),
-              $(go.Panel,
-                { // for each attribute show a Shape at a particular place in the overall square
-                  itemTemplate:
-                    $(go.Panel,
-                      $(go.Shape,
-                        { stroke: null, strokeWidth: 0 },
-                        new go.Binding("fill", "", this.attrFill),
-                        new go.Binding("geometry", "", this.maleGeometry))
-                    ),
-                  margin: 1
-                },
-                new go.Binding("itemArray", "a")
+        this.personService.getGenogram(sessionStorage.getItem('idUser')!).subscribe(
+          (data: any[]) => {
+            const myDiagram = $(go.Diagram, 'myDiagramDiv', {
+              initialAutoScale: go.Diagram.Uniform,
+              'undoManager.isEnabled': true,
+              // when a node is selected, draw a big yellow circle behind it
+              nodeSelectionAdornmentTemplate: $(
+                go.Adornment,
+                'Auto',
+                { layerName: 'Grid' }, // the predefined layer that is behind everything else
+                $(go.Shape, 'Circle', { fill: '#c1cee3', stroke: null }),
+                $(go.Placeholder, { margin: 2 })
+              ),
+              // use a custom layout, defined below
+              layout: $(GenogramLayout, {
+                direction: 90,
+                layerSpacing: 30,
+                columnSpacing: 10,
+              }),
+            });
+
+            const riskUTVResultText = "Nguy cơ Ung thư vú: " + this.riskLogicSetup(this.riskUTV);
+            const riskUTDTTResultText = "Nguy cơ Ung thư đại trực tràng: " + this.riskLogicSetup(this.riskUTDTT)
+            // Show UI Lượng Giá Nguy Cơ
+
+            myDiagram.add(
+              $(go.Part, 'Table', { position: new go.Point(500, 50), selectable: false },
+                $(go.TextBlock, 'Lượng giá nguy cơ', { row: 0, font: '700 20px Droid Serif, sans-serif' }),
+                $(go.Panel, 'Horizontal', { row: 1, alignment: go.Spot.Left },
+                  $(go.Shape, 'Rectangle', { desiredSize: new go.Size(30, 30), fill: this.riskSetupColor(this.riskLogicSetup(this.riskUTV)), margin: 5 }),
+                  $(go.TextBlock, riskUTVResultText, { font: '700 13px Droid Serif, sans-serif' })),
+                $(go.Panel, 'Horizontal', { row: 2, alignment: go.Spot.Left },
+                  $(go.Shape, 'Rectangle', { desiredSize: new go.Size(30, 30), fill: this.riskSetupColor(this.riskLogicSetup(this.riskUTDTT)), margin: 5 }),
+                  $(go.TextBlock, riskUTDTTResultText, { font: '700 13px Droid Serif, sans-serif' })),
               )
-            ),
-            $(go.TextBlock,
-              { textAlign: "center", maxSize: new go.Size(80, NaN) },
-              new go.Binding("text", "n"))
-          ));
+            );
+
+            myDiagram.nodeTemplateMap.add("M",  // male
+              $(go.Node, "Vertical",
+                { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+                $(go.Panel,
+                  { name: "ICON" },
+                  $(go.Shape, "Square",
+                    { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#919191", portId: "" }),
+                  $(go.Panel,
+                    { // for each attribute show a Shape at a particular place in the overall square
+                      itemTemplate:
+                        $(go.Panel,
+                          $(go.Shape,
+                            { stroke: null, strokeWidth: 0 },
+                            new go.Binding("fill", "", this.attrFill),
+                            new go.Binding("geometry", "", this.maleGeometry))
+                        ),
+                      margin: 1
+                    },
+                    new go.Binding("itemArray", "a")
+                  )
+                ),
+                $(go.TextBlock,
+                  { textAlign: "center", maxSize: new go.Size(80, NaN) },
+                  new go.Binding("text", "n"))
+              ));
 
 
-        myDiagram.nodeTemplateMap.add("F",  // female
-          $(go.Node, "Vertical",
-            { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
-            $(go.Panel,
-              { name: "ICON" },
-              $(go.Shape, "Circle",
-                { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#a1a1a1", portId: "" }),
-              $(go.Panel,
-                { // for each attribute show a Shape at a particular place in the overall circle
-                  itemTemplate:
-                    $(go.Panel,
-                      $(go.Shape,
-                        { stroke: null, strokeWidth: 0 },
-                        new go.Binding("fill", "", this.attrFill),
-                        new go.Binding("geometry", "", this.femaleGeometry))
-                    ),
-                  margin: 1
+            myDiagram.nodeTemplateMap.add("F",  // female
+              $(go.Node, "Vertical",
+                { locationSpot: go.Spot.Center, locationObjectName: "ICON", selectionObjectName: "ICON" },
+                $(go.Panel,
+                  { name: "ICON" },
+                  $(go.Shape, "Circle",
+                    { width: 40, height: 40, strokeWidth: 2, fill: "white", stroke: "#a1a1a1", portId: "" }),
+                  $(go.Panel,
+                    { // for each attribute show a Shape at a particular place in the overall circle
+                      itemTemplate:
+                        $(go.Panel,
+                          $(go.Shape,
+                            { stroke: null, strokeWidth: 0 },
+                            new go.Binding("fill", "", this.attrFill),
+                            new go.Binding("geometry", "", this.femaleGeometry))
+                        ),
+                      margin: 1
+                    },
+                    new go.Binding("itemArray", "a")
+                  )
+                ),
+                $(go.TextBlock,
+                  { textAlign: "center", maxSize: new go.Size(80, NaN) },
+                  new go.Binding("text", "n"))
+              ));
+
+            myDiagram.nodeTemplateMap.add("LinkLabel",
+              $(go.Node, { selectable: false, width: 1, height: 1, fromEndSegmentLength: 20 }));
+
+            myDiagram.linkTemplate =  // for parent-child relationships
+              $(go.Link,
+                {
+                  routing: go.Link.Orthogonal, corner: 5,
+                  layerName: "Background", selectable: false,
+                  fromSpot: go.Spot.Bottom, toSpot: go.Spot.Top
                 },
-                new go.Binding("itemArray", "a")
-              )
-            ),
-            $(go.TextBlock,
-              { textAlign: "center", maxSize: new go.Size(80, NaN) },
-              new go.Binding("text", "n"))
-          ));
-
-        myDiagram.nodeTemplateMap.add("LinkLabel",
-          $(go.Node, { selectable: false, width: 1, height: 1, fromEndSegmentLength: 20 }));
-
-        myDiagram.linkTemplate =  // for parent-child relationships
-          $(go.Link,
-            {
-              routing: go.Link.Orthogonal, corner: 5,
-              layerName: "Background", selectable: false,
-              fromSpot: go.Spot.Bottom, toSpot: go.Spot.Top
-            },
-            $(go.Shape, { stroke: "#424242", strokeWidth: 2 })
-          );
+                $(go.Shape, { stroke: "#424242", strokeWidth: 2 })
+              );
 
 
 
-        myDiagram.linkTemplateMap.add("Marriage",  // for marriage relationships
-          $(go.Link,
-            { selectable: false },
-            $(go.Shape, { strokeWidth: 2.5, stroke: "#5d8cc1" /* blue */ })
-          ));
-        this.setupDiagram(myDiagram, data, 3)
-      }
-    )
+            myDiagram.linkTemplateMap.add("Marriage",  // for marriage relationships
+              $(go.Link,
+                { selectable: false },
+                $(go.Shape, { strokeWidth: 2.5, stroke: "#5d8cc1" /* blue */ })
+              ));
+            this.setupDiagram(myDiagram, data, 3)
+          }
+        )
+      })
+    })
+
+
   }
 
 
@@ -126,6 +156,34 @@ export class GenogramComponent implements OnInit {
 
     this.setupMarriages(diagram);
     this.setupParents(diagram);
+  }
+
+  riskSetupColor(a: string) {
+    switch (a) {
+      case "Cao": return "#ff0000";   ///red
+      case "Trung bình": return "#ffff00";
+      case "Thấp": return "#00FF00";
+      default: return "Thấp";
+    }
+  }
+  riskLogicSetup(a: string) {
+    switch (a) {
+      case "UNGTHUVU_CAO":
+      case "UNGTHUDAITRUCTRANG_CAO":
+        return "Cao";
+        break;
+      case "UNGTHUVU_TB":
+      case "UNGTHUDAITRUCTRANG_TB":
+        return "Trung bình";
+        break;
+      case "UNGTHUVU_THAP":
+      case "UNGTHUDAITRUCTRANG_THAP":
+        return "Thấp";
+        break;
+      default:
+        return "Thấp";
+        break;
+    }
   }
 
   attrFill(a: string) {
@@ -277,5 +335,22 @@ export class GenogramComponent implements OnInit {
         diagram.model.addLinkData(cdata)
       }
     }
+  }
+
+  makePDF() {
+    const genogramTree = document.getElementById('myDiagramDiv')!;
+    const genogramHeight = genogramTree.clientHeight;
+    const genogramWidth = genogramTree.clientWidth;
+    const options = { background: 'white', width: genogramWidth, height: genogramHeight };
+    domtoimage.toPng(genogramTree, options).then((imgData) => {
+     // const doc = new jsPDF(genogramHeight > genogramWidth ? 'l' : 'p', 'mm', [genogramWidth, 300]);
+     var doc = new jsPDF("p", "mm", "a4");
+      const imgProps = doc.getImageProperties(imgData);
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      doc.save('genogram.pdf');
+ });
   }
 }

@@ -108,6 +108,7 @@ export class InputInformationComponent implements OnInit {
     'Dì',
     'Cô',
     'Chú',
+    'Bác',
     'Ông ngoại',
     'Bà ngoại',
     'Ông nội',
@@ -201,6 +202,7 @@ export class InputInformationComponent implements OnInit {
     this.username = localStorage.getItem('username')!
     this.api.getPerson(this.username).subscribe(
       (res: any) => {
+        sessionStorage.setItem('idUser', res.id.toString())
         localStorage.setItem('lastName', res.lastName)
         this.personList = res;
         this.personList.email = this.username
@@ -422,6 +424,7 @@ export class InputInformationComponent implements OnInit {
         'Ông nội',
         'Ông ngoại',
         'Anh/em họ',
+        'Bác'
       ].indexOf(value) !== -1
     ) {
       this.relatives.value[relativeIndex].gender = 'Nam';
@@ -545,7 +548,6 @@ export class InputInformationComponent implements OnInit {
     if (this.personForm.valid) {
       this.api.updatePerson(this.personForm.value, this.username).subscribe({
         next: (res) => {
-          sessionStorage.setItem('idUser', res.id.toString());
           this.api
             .convertGenogram(this.username)
             .subscribe();
@@ -561,10 +563,10 @@ export class InputInformationComponent implements OnInit {
 
   }
   logout() {
-    // localStorage.removeItem('access_token');
-    // localStorage.removeItem('username');
-    this.authService.clearLocalStorage()
-    this.router.navigateByUrl('/home');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('username');
+    sessionStorage.removeItem('idUser');
+    this.router.navigateByUrl('/login');
   }
 
   public disclaimer() {

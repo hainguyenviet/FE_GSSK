@@ -35,6 +35,13 @@ export class PersonService {
     return this.http.get<any[]>(`${this.baseURL}/api/genogram/` + id);
   }
 
+  getRiskUTV(username: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/api/genogram/riskUTV/` + username);
+  }
+  
+  getRiskUTDTT(username: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseURL}/api/genogram/riskUTDTT/` + username);
+  }
   handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
