@@ -40,6 +40,7 @@ import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-logi
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import {AngularFireModule} from '@angular/fire/compat'
@@ -89,6 +90,7 @@ import { PersonDetailComponent } from './person-detail/person-detail.component';
     MatRadioModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatPaginatorModule,
     MatCheckboxModule,
     MatAutocompleteModule,
     MatSelectModule,

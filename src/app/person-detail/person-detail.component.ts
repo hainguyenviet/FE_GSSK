@@ -16,7 +16,6 @@ export class PersonDetailComponent implements OnInit {
   personDetail: any
   ngOnInit(): void {
     this.username = this.route.snapshot.paramMap.get('username');
-    console.log(this.username);
     this.api.getPerson(this.username).subscribe(
       (res: any) => {
         this.personDetail = res;

@@ -119,14 +119,14 @@
               >Bạn có anh em song sinh không ?</mat-label
             >
             <mat-radio-button
-              value="true"
-              [checked]="personList.healthRecord.isTwin === 'true'"
+              value="Có"
+              [checked]="personList.healthRecord.isTwin === 'Có'"
               class="margin-right-40"
               >Có</mat-radio-button
             >
             <mat-radio-button
-              value="false"
-              [checked]="personList.healthRecord.isTwin === 'false'"
+              value="Không"
+              [checked]="personList.healthRecord.isTwin === 'Không'"
               >Không</mat-radio-button
             >
           </mat-radio-group>
@@ -140,14 +140,14 @@
               >Bạn có được nhận nuôi không ?</mat-label
             >
             <mat-radio-button
-              value="true"
-              [checked]="personList.healthRecord.isAdopted === 'true'"
+              value="Có"
+              [checked]="personList.healthRecord.isAdopted === 'Có'"
               class="margin-right-40"
               >Có</mat-radio-button
             >
             <mat-radio-button
-              value="false"
-              [checked]="personList.healthRecord.isAdopted === 'false'"
+              value="Không"
+              [checked]="personList.healthRecord.isAdopted === 'Không'"
               >Không</mat-radio-button
             >
           </mat-radio-group>
@@ -164,7 +164,7 @@
           </mat-form-field>
           <label class="margin-right-10">Kg</label>
         </div>
-        <div class="">
+        <!-- <div class="">
           <mat-radio-group
             aria-label="Select an option parent"
             formControlName="relationship"
@@ -184,7 +184,7 @@
               >Không</mat-radio-button
             >
           </mat-radio-group>
-        </div>
+        </div> -->
         <div class="margin-top-10">
           <h2>Điền vào các mục sau nếu bạn là nữ:</h2>
           <div>
@@ -232,14 +232,14 @@
                 >Bạn có hút thuốc không ?</mat-label
               >
               <mat-radio-button
-                value="true"
-                [checked]="personList.healthRecord.isSmoke === 'true'"
+                value="Có"
+                [checked]="personList.healthRecord.isSmoke === 'Có'"
                 class="margin-right-40"
                 >Có</mat-radio-button
               >
               <mat-radio-button
-                value="false"
-                [checked]="personList.healthRecord.isSmoke === 'false'"
+                value="Không"
+                [checked]="personList.healthRecord.isSmoke === 'Không'"
                 >Không</mat-radio-button
               >
             </mat-radio-group>
@@ -439,6 +439,7 @@
       mat-raised-button
       color="basic"
       (click)="updatePerson()"
+      (click)="this.personForm.markAllAsTouched()"
     >
       Lưu
     </button>
@@ -841,6 +842,7 @@
       mat-raised-button
       color="basic"
       (click)="updatePerson()"
+      (click)="this.personForm.markAllAsTouched()"
     >
       Lưu
     </button>
