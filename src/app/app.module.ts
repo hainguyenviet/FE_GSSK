@@ -53,6 +53,7 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { SidenavComponent } from './admin/sidenav/sidenav.component';
 import { HeaderComponent } from './admin/header/header.component';
 import { PersonDetailComponent } from './person-detail/person-detail.component';
+import {NgxPaginationModule } from 'ngx-pagination'
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,8 @@ import { PersonDetailComponent } from './person-detail/person-detail.component';
     ToastrModule.forRoot(),
     MomentDateModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    NgxPaginationModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],

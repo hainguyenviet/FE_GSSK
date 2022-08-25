@@ -19,6 +19,11 @@ export class PersonService {
     return this.http.get<Person>(`${this.baseURL}/api/person/all`);
   }
 
+  getCountAllPerson() {
+    //console.log("USERNAME: ", this.usernames)
+    return this.http.get<any>(`${this.baseURL}/api/person/total`);
+  }
+
   getPerson(usernames: any) {
     return this.http.get<Person>(`${this.baseURL}/api/person/`+  usernames);
   }

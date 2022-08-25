@@ -4,8 +4,10 @@
   <div class="spacer"></div>
   <a mat-raised-button color="accent" (click)="logout()">Đăng xuất</a>
 </mat-toolbar>
+
 <app-progress #progress (stateChange)="onStateChange($event)">
-  <app-progress-step>
+  <app-progress-step >
+    
     <h1>THÔNG TIN CÁ NHÂN</h1>
     <form *ngIf="personForm" [formGroup]="personForm" class="person-form">
       <mat-form-field class="margin-right-40">
@@ -85,7 +87,7 @@
     </form>
 
     <button
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
       progressStepNext
       mat-raised-button
       color="basic"
@@ -97,7 +99,7 @@
     </button>
 
     <button
-    class="margin-top-10"
+    class="margin-top-10 margin-bottom-40"
       progressStepNext
       mat-raised-button
       color="accent"
@@ -105,6 +107,7 @@
     >
       Tiếp theo
     </button>
+ 
   </app-progress-step>
   <app-progress-step class="padding-bottom-50 height">
     <form *ngIf="illnessForm" [formGroup]="illnessForm">
@@ -434,7 +437,7 @@
     </form>
 
     <button
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
       progressStepNext
       mat-raised-button
       color="basic"
@@ -449,7 +452,7 @@
       mat-raised-button
       color="accent"
       (click)="goPrev(progress)"
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
     >
       Trở lại
     </button>
@@ -822,7 +825,7 @@
       mat-raised-button
       color="success"
       (click)="addNewRelation()"
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
     >
       Thêm
     </button>
@@ -832,12 +835,12 @@
       mat-raised-button
       color="primary"
       (click)="goPrev(progress)"
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
     >
       Trở lại
     </button>
     <button
-      class="margin-right-10"
+      class="margin-right-10 margin-bottom-40"
       progressStepNext
       mat-raised-button
       color="basic"
@@ -847,6 +850,7 @@
       Lưu
     </button>
     <button
+      class="margin-right-10 margin-bottom-40"
       progressStepNext
       mat-raised-button
       color="basic"
