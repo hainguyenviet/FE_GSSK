@@ -2,27 +2,43 @@
 
 
 <div class="display-data">
-
-    <p> Họ Và Tên: {{this.personDetail.lastName + " " + this.personDetail.firstName || "Chưa Cập Nhật"}}  </p>
-    <p> Giới Tính: {{this.personDetail.gender || "Chưa Cập Nhật"}}  </p>
-    <p> CMND/CCCD: {{this.personDetail.idCard || "Chưa Cập Nhật"}}</p>
-    <p> Số Điện Thoại: {{this.personDetail.phoneNumber || "Chưa Cập Nhật"}} </p>
-    <p> Email: {{this.personDetail.email}} </p>
-    <p> Chiều Cao: {{this.personDetail.healthRecord.height || "Chưa Cập Nhật"}} </p>
-    <p> Cân Nặng: {{this.personDetail.healthRecord.weight || "Chưa Cập Nhật"}} </p>
-    <p> Sinh Đôi: {{this.personDetail.healthRecord.isTwin || "Chưa Cập Nhật"}}  </p>
-    <p> Được Nhận Nuôi: {{this.personDetail.healthRecord.isAdopted || "Chưa Cập Nhật"}} </p>
-    <p> Tuổi Có Kinh Đầu: {{this.personDetail.healthRecord.firstPeriodAge || "Chưa Cập Nhật"}}  </p>
-    <p> Số Lần Mang Thai {{this.personDetail.healthRecord.birthControl || "Chưa Cập Nhật"}}  </p>
-    <p> Khoảng Thời Gian Dùng Thuốc Tránh Thai: {{this.personDetail.healthRecord.pregnantTime || "Chưa Cập Nhật"}} </p>
-    <p> Tuổi Có con Đầu Tiên: {{this.personDetail.healthRecord.firstBornAge || "Chưa Cập Nhật"}}  </p>
-    <p> Hút Thuốc: {{this.personDetail.healthRecord.isSmoke || "Chưa Cập Nhật"}}  </p>
-    <p> Từng Hút Thuốc Năm Bao Nhiêu Tuổi:{{this.personDetail.healthRecord.smokeTime || "Chưa Cập Nhật"}}  </p>
-    <p> Bỏ Thuốc Năm Bao Nhiêu Tuổi: {{this.personDetail.healthRecord.giveUpSmokeAge || "Chưa Cập Nhật"}}  </p>
-    <p> Mỗi Tuần Uống Bao Nhiêu Ly Rượu: {{this.personDetail.healthRecord.wineVolume || "Chưa Cập Nhật"}}  </p>
-    <p> Số lần Tập Thể Dục Mỗi Tuần: {{this.personDetail.healthRecord.workOutVolume || "Chưa Cập Nhật"}} </p>
-    <p>Bộ Môn Thể Thao:{{this.personDetail.healthRecord.workOutType || "Chưa Cập Nhật"}}  </p>
-    <p>Danh Sách Bệnh:</p>
+  <div class="display-row">
+    <p> <strong>Họ Và Tên: </strong>  {{this.personDetail.lastName || "Chưa Cập Nhật"}} {{ this.personDetail.firstName }}  </p>
+    <p> <strong>Giới Tính: </strong>  {{this.personDetail.gender || "Chưa Cập Nhật"}}  </p>
+    <p> <strong>Ngày Sinh: </strong> {{this.personDetail.dateOfBirth || "Chưa Cập Nhật"}}</p>
+  </div>
+  <div class="display-row">
+    <p> <strong>CMND/CCCD: </strong>  {{this.personDetail.idCard || "Chưa Cập Nhật"}}</p>
+    <p> <strong>Số Điện Thoại:  </strong> {{this.personDetail.phoneNumber || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Email: </strong>  {{this.personDetail.email}} </p>
+  </div>
+  <div class="display-row">
+    <p><strong>Chiều Cao: </strong>  {{this.personDetail.healthRecord.height || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Cân Nặng: </strong>  {{this.personDetail.healthRecord.weight || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Sinh Đôi: </strong>  {{this.personDetail.healthRecord.isTwin || "Chưa Cập Nhật"}}  </p>
+  </div>
+  <div class="display-row">
+    <p> <strong>Được Nhận Nuôi: </strong>  {{this.personDetail.healthRecord.isAdopted || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Tuổi Có Kinh Đầu: </strong>  {{this.personDetail.healthRecord.firstPeriodAge || "Chưa Cập Nhật"}}  </p>
+    <p> <strong> Số Lần Mang Thai: </strong> {{this.personDetail.healthRecord.birthControl || "Chưa Cập Nhật"}}  </p>
+  </div>
+  <div class="display-row">
+    <p> <strong>Khoảng Thời Gian Dùng Thuốc Tránh Thai: </strong>  {{this.personDetail.healthRecord.pregnantTime || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Tuổi Có con Đầu Tiên: </strong>  {{this.personDetail.healthRecord.firstBornAge || "Chưa Cập Nhật"}}  </p>
+  </div>
+  <div class="display-row">
+    <p> <strong>Hút Thuốc:</strong>  {{this.personDetail.healthRecord.isSmoke || "Chưa Cập Nhật"}}  </p>
+    <p> <strong>Từng Hút Thuốc Năm Bao Nhiêu Tuổi: </strong> {{this.personDetail.healthRecord.smokeTime || "Chưa Cập Nhật"}}  </p>
+  </div>
+  <div class="display-row">
+    <p> <strong>Bỏ Thuốc Năm Bao Nhiêu Tuổi: </strong>  {{this.personDetail.healthRecord.giveUpSmokeAge || "Chưa Cập Nhật"}}  </p>
+    <p> <strong>Mỗi Tuần Uống Bao Nhiêu Ly Rượu: </strong>  {{this.personDetail.healthRecord.wineVolume || "Chưa Cập Nhật"}}  </p>
+  </div>
+  <div class="display-row">
+    <p> <strong>Số lần Tập Thể Dục Mỗi Tuần: </strong>  {{this.personDetail.healthRecord.workOutVolume || "Chưa Cập Nhật"}} </p>
+    <p> <strong>Bộ Môn Thể Thao: </strong>{{this.personDetail.healthRecord.workOutType || "Chưa Cập Nhật"}}  </p>
+  </div>
+    <strong>Danh Sách Bệnh:</strong>
     <table class="table table-hover">
         <thead>
           <tr>
@@ -42,18 +58,28 @@
           
         </tbody>
       </table>
-      <span>Danh Sách Thân Nhân</span>
+      <strong class="margin-top-40"> Danh Sách Thân Nhân: </strong>
       <div *ngFor="let employee of this.personDetail.relativeList; let i = index" > 
-        <h4>Thân Nhân {{i +1}}</h4>
-        <p>Mối Quan Hệ: {{employee.relation}}</p>
-        <p>Họ Tên: {{employee.name}}</p>
-        <p>Tuổi: {{employee.age}}</p>
-        <p>Giới Tính: {{employee.gender}}</p>
-        <p>THứ Tự Trong Gia Đình: {{employee.familyOrder}}</p>
-        <p>Đã Qua Đời: {{employee.isDead}}</p>
-        <p>Tuổi Qua Đời: {{employee.death_age}}</p>
-        <p>Nguyên Nhân Qua Đời: {{employee.deathCause}}</p>
-        <p>Danh Sách Bệnh Thân Nhân {{i +1}}</p>
+        <h3> <strong> Thân Nhân {{i +1}} </strong> </h3>
+        <p>  <strong>Mối Quan Hệ:</strong> {{employee.relation ||"Chưa cập Nhật"}}</p>
+        <div class="display-row-relative-1">
+          <p>  <strong>Họ Tên:</strong> {{employee.name ||"Chưa cập Nhật"}}</p>
+          <p>  <strong>Tuổi: </strong>{{employee.age ||"Chưa cập Nhật"}}</p>
+          <p>  <strong>Giới Tính:</strong> {{employee.gender ||"Chưa cập Nhật"}}</p>
+        </div>
+        <div class="display-row-relative">
+          <p>  <strong>Thứ Tự Trong Gia Đình:</strong> {{employee.familyOrder ||"Chưa cập Nhật"}}</p>
+          <div class="display-row">  <strong>Đã Qua Đời:</strong> 
+            <p *ngIf=" employee.isDead ==='true'"> Đã Qua Đời </p>
+            <p *ngIf=" employee.isDead ==='false'||employee.isDead === null "> Chưa Qua Đời </p>
+          </div>
+          <div class="display-row">  <strong>Tuổi Qua Đời: </strong> 
+            <p *ngIf="employee.death_age !==-1"> {{employee.death_age}}</p> 
+            <p *ngIf="employee.death_age ===-1"> Chưa cập Nhật </p> 
+          </div>
+        </div>
+        <p>  <strong>Nguyên Nhân Qua Đời: </strong> {{employee.deathCause ||"Chưa cập Nhật"}}</p>
+        <strong>Danh Sách Bệnh Thân Nhân {{i +1}}</strong>
         <table class="table table-hover">
           <thead>
             <tr>
@@ -73,5 +99,6 @@
             
           </tbody>
         </table>
+        <hr>
       </div>
 </div>

@@ -52,3 +52,44 @@ $color: #0cf;
 .display-data{
     margin: 0px 10%;
 }
+
+.display-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.display-row-relative{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.display-row-relative-1{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.display-row p {
+  width: 400px;
+}
+.display-row-relative p {
+  width: 250px;
+}
+
+.display-row-relative-1 p {
+  width: 400px;
+}
+
+.display-data strong {
+  font-size: 16px;
+}
+
+.display-data h3 {
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.margin-top-40{
+  margin-top: 40px;
+}

@@ -18,7 +18,7 @@
               currentPage: page,
               totalItems: count }" >
             <td>{{employee.appID }}</td>
-            <td>{{employee.lastName  + employee.firstName ||"Chưa cập Nhật"}}</td>
+            <td>{{employee.lastName ||"Chưa cập Nhật"}} {{employee.firstName}}</td>
             <td>{{employee.email||"Chưa cập Nhật"}}</td>
             <td>{{employee.gender||"Chưa cập Nhật"}}</td>
             <td>{{employee.updateAt||"Chưa cập Nhật"}}</td>
