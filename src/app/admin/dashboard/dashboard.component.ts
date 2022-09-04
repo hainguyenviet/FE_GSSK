@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   data: Person[]=[];
   page: number = 1;
   count: any;
-  pageSize: number = 2;
+  pageSize: number = 25;
   pageSizes: any = [5, 10, 25, 50, 100];
 
   ngOnInit(): void {
