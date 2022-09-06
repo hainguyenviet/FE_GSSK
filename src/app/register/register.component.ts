@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit {
         this.notificate.showSuccess('Đăng kí tài khoản thành công', 'Vui lòng đăng nhập để tiếp tục')
       },
       error: (error) => {
-        this.notificate.showError("Email đã tồn tại", "Vui lòng sử dụng email khác hoặc đăng nhập để ti")
+        this.notificate.showError("Email đã tồn tại", "Vui lòng sử dụng email khác hoặc đăng nhập để tiếp tục")
       }
     })
   }
