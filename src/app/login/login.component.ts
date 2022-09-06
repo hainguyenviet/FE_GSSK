@@ -28,6 +28,10 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    if (localStorage.getItem('confirm-token') != null)
+    {
+      localStorage.removeItem('confirm-token');
+    }
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],

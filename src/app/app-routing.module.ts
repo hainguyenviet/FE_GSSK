@@ -12,6 +12,9 @@ import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './server_service/AuthService/auth.guard';
 import { AuthService } from './server_service/AuthService/auth.service';
 import { ThankyoupageComponent } from './thankyoupage/thankyoupage.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { DirectConfirmComponent } from './forgot-password/direct-confirm/direct-confirm.component';
+import { ConfirmPasswordComponent } from './forgot-password/confirm-password/confirm-password.component';
 
 const routes: Routes = [
   {
@@ -44,6 +47,18 @@ const routes: Routes = [
   {
     path: 'info',
     component: DirectingComponent
+  },
+  {
+    path: 'forgot_password',
+    component: ForgotPasswordComponent
+  },
+  {
+    path: 'confirm',
+    component: DirectConfirmComponent
+  },
+  {
+    path: 'confirm_password',
+    component: ConfirmPasswordComponent
   },
   { path: '**', redirectTo: '', canActivate: [AuthGuard] },
   

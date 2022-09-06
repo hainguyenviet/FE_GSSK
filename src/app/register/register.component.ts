@@ -18,6 +18,14 @@ export class RegisterComponent implements OnInit {
   public userForm!: FormGroup
   submitted = false;
   public showPassword!: boolean
+  spinnerButtonOptions: any = {
+    active: false,
+    text: 'Spinner Button',
+    spinnerSize: 18,
+    raised: true,
+    buttonColor: 'primary',
+    spinnerColor: 'accent'
+  }
   constructor(private service: AuthService, private fb: FormBuilder, private router: Router, private notificate: NotificationService) { }
 
   ngOnInit(): void {

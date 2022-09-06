@@ -29,6 +29,14 @@ export class AuthService {
   singup(data: any) {
     return this.http.post(`${this.baseURL}/api/registration/register`, data, {responseType: 'text'})
   }
+  
+  forgotPassword(data: any) {
+    return this.http.post(`${this.baseURL}/api/registration/forgot_password`, data, {responseType: 'text'})
+  }
+
+  resetPassword(data: any) {
+    return this.http.post(`${this.baseURL}/api/registration/reset_password`, data, {responseType: 'text'})
+  }
 
   isLoggedIn() {
     return localStorage.getItem('access_token') && localStorage.getItem('ROLE')

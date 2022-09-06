@@ -53,7 +53,12 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { SidenavComponent } from './admin/sidenav/sidenav.component';
 import { HeaderComponent } from './admin/header/header.component';
 import { PersonDetailComponent } from './person-detail/person-detail.component';
-import {NgxPaginationModule } from 'ngx-pagination'
+import {NgxPaginationModule } from 'ngx-pagination';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ConfirmPasswordComponent } from './forgot-password/confirm-password/confirm-password.component';
+import { DirectConfirmComponent } from './forgot-password/direct-confirm/direct-confirm.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -76,6 +81,9 @@ import {NgxPaginationModule } from 'ngx-pagination'
     SidenavComponent,
     HeaderComponent,
     PersonDetailComponent,
+    ForgotPasswordComponent,
+    ConfirmPasswordComponent,
+    DirectConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,7 +117,8 @@ import {NgxPaginationModule } from 'ngx-pagination'
     MomentDateModule,
     MatSidenavModule,
     MatListModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatProgressSpinnerModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent],
